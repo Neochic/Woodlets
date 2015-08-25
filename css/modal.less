@@ -1,0 +1,37 @@
+@import (once) "../bower_components/lesshat/build/lesshat";
+
+body.neochic-woodlets-modal-active {
+  overflow:hidden;
+}
+
+.neochic-woodlets-modal {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100vh;
+  z-index:100060;
+  background-color:rgba(0,0,0,0.7);
+}
+.neochic-woodlets-modal-content {
+  max-width:800px;
+  .calc(max-height, ~'100vh - 130px');
+  background: #ffffff;
+  margin:40px auto;
+  padding:30px 20px 20px;
+  overflow:auto;
+  position:relative;
+
+  .tb-close-icon {
+    overflow:hidden;
+    text-indent:100%;
+    cursor:pointer;
+
+    &:before {
+      text-indent: 0;
+      position: absolute;
+      left: 6px;
+      top: 0;
+    }
+  }
+}

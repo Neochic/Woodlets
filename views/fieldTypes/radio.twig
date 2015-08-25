@@ -1,0 +1,9 @@
+<p>{{ field.config.label ?: field.name }}</p>
+{% for optionValue, label in field.config.options %}
+<p>
+    <label for="{{ id }}_{{ loop.index }}">
+        <input id="{{ id }}_{{ loop.index }}" name="{{ name }}" type="radio" value="{{ optionValue }}"{% if optionValue == value %} checked="checked"{% endif %} />
+        {{ label }}
+    </label>
+</p>
+{% endfor %}

@@ -1,0 +1,7 @@
+.idea/
+bower_components/
+node_modules/
+vendor/
+css/*.css
+js/main-build.js
+composer.phar

@@ -1,0 +1,27 @@
+<li data-widget="{{ widgetId }}" data-instance="{{ instance|json_encode }}">
+    <div class="widget-top widget-title">
+        <h4>{{ widget.name }}</h4>
+    </div>
+    {% set preview = widget.widgetPreview(instance) %}
+    <div class="neochic-woodlets-widget-preview">
+    {% if preview %}
+        {{ preview|raw }}
+    {% else %}
+        {# let's try to do some fallback preview #}
+        {% for key, value in instance %}
+            <div>
+            <strong>{{ key }}:</strong>
+            {% if value is iterable %}
+                value|length
+            {% elseif value is same as(false) %}
+                no
+            {% elseif value is same as(true) %}
+                yes
+            {% else %}
+                {{ value[:30] }}{% if value|length > 30 %} [...]{% endif %}
+            {% endif %}
+            </div>
+        {% endfor %}
+    {% endif %}
+    </div>
+</li>

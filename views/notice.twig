@@ -1,0 +1,13 @@
+{% from _self import wrapMessage %}
+
+{% macro wrapMessage(message) %}
+    <strong>Woodlets Plugin:</strong> {{ message }}
+{% endmacro %}
+
+<div class="{{ class }}">
+    {% if class != 'update-nag' %}
+        <p>{{ wrapMessage(message) }}</p>
+    {% else %}
+        {{ wrapMessage(message) }}
+    {% endif %}
+</div>

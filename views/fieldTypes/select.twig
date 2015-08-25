@@ -1,0 +1,9 @@
+{% extends '@woodlets/fieldType.twig' %}
+
+{% block field %}
+    <select class="widefat" id="{{ id }}" name="{{ name }}">
+        {% for optionValue, label in field.config.options %}
+            <option value="{{ optionValue }}"{% if optionValue == value %} selected="selected"{% endif %}>{{ label }}</option>
+        {% endfor %}
+    </select>
+{% endblock %}

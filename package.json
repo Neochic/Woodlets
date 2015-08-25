@@ -1,0 +1,20 @@
+{
+  "name": "@neochic/woodlets",
+  "version": "0.0.1",
+  "description": "Create WordPress Widgets using Twig Templates",
+  "scripts": {
+    "postinstall": "npm run install:composer && npm run install:bower && npm run build",
+    "install:composer": "php composer.phar install || curl -sS https://getcomposer.org/installer | php || php composer.phar install",
+    "install:bower": "bower install --config.interactive=false",
+    "build": "npm run build:js && npm run build:less",
+    "build:js": "node node_modules/requirejs/bin/r.js -o BaseUrl=js/ name=../bower_components/requirejs/require include=main.js mainConfigFile=js/requirejs-config.js out=js/main-build.js",
+    "build:less": "lessc css/main.less --clean-css > css/main.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bower": "^1.4.1",
+    "less": "^2.5.1",
+    "less-plugin-clean-css": "^1.5.1",
+    "requirejs": "^2.1.20"
+  }
+}

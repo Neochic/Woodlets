@@ -1,0 +1,14 @@
+{% if widgets|length > 0 %}
+    <ul class="neochic-woodlets-widget-list widget-list">
+    {% for key, widget in widgets %}
+        <li class="widget" data-widget="{{ key }}">
+            <div class="widget-top widget-title">
+                <h4>{{ widget.name }}</h4>
+            </div>
+            <p>{{ widget.widget_options.description|raw }}</p>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <i>There are no allowed widgets for this column.</i>
+{% endif %}

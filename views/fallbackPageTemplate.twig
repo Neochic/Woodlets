@@ -1,0 +1,11 @@
+{% block form %}
+    {{
+        woodlet.addCol('main', 'Main Col', {
+            'allowed': true
+        })
+    }}
+{% endblock %}
+
+{% block view %}
+    {{ woodlet.getCol('main') }}
+{% endblock %}

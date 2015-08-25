@@ -1,0 +1,27 @@
+{
+    "name": "neochic\\woodlets",
+    "type": "wordpress-plugin",
+    "description": "Create WordPress Widgets using Twig Templates",
+    "keywords": ["twig", "wordpress", "widget"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Christoph Stickel",
+            "email": "christoph@neochic.de",
+            "homepage": "http://www.neochic.de"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/Neochic/woodlets/issues",
+        "source": "https://github.com/Neochic/woodlets/"
+    },
+    "require": {
+        "twig/twig": "^1.19",
+        "pimple/pimple": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Neochic\\Woodlets\\": "src/"
+        }
+    }
+}
