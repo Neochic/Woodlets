@@ -4,7 +4,7 @@
   "description": "Create WordPress Widgets using Twig Templates",
   "scripts": {
     "postinstall": "npm run install:composer && npm run install:bower",
-    "install:composer": "php composer.phar install || curl -sS https://getcomposer.org/installer | php || php composer.phar install",
+    "install:composer": "php composer.phar install || curl -sS https://getcomposer.org/installer | php && php composer.phar install",
     "install:bower": "bower install --config.interactive=false",
     "build": "npm install && npm run build:js && npm run build:less && npm run build:artifact",
     "build:js": "node node_modules/requirejs/bin/r.js -o BaseUrl=js/ name=../bower_components/requirejs/require include=main.js mainConfigFile=js/requirejs-config.js out=js/main-build.js",

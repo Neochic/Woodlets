@@ -1,34 +1,47 @@
 var fs = require('fs');
-
 var archiver = require('archiver');
-var archive = archiver('zip');
 
 var tag = process.env.TRAVIS_TAG;
 var name = 'woodlets-'+(tag ? tag : 'latest');
-var output = fs.createWriteStream(name+'.zip');
 
-output.on('close', function() {
-    console.log(archive.pointer() + ' total bytes');
-});
+function createArchive(name) {
+    var archive = archiver('zip');
+    var output = fs.createWriteStream(name + '.zip');
 
-archive.on('error', function(err) {
-    throw err;
-});
+    output.on('close', function () {
+        console.log(archive.pointer() + ' total bytes');
+    });
 
-archive.pipe(output);
+    archive.on('error', function (err) {
+        throw err;
+    });
+
+    archive.pipe(output);
+
+    return archive;
+}
+
+var archive = createArchive(name);
+var bundle = createArchive(name+'-bundled');
+
+var files = [
+    'css/main.css',
+    'js/main-build.js',
+    'src/**/*',
+    'views/**/*',
+    'LICENSE',
+    'README.md',
+    'woodlets.php'
+];
 
 archive.bulk([
-    { src: [
-        'css/main.css',
-        'js/main-build.js',
-        'src/**/*',
-        'views/**/*',
-        'vendor/**/*',
-        'composer.json',
-        'LICENSE',
-        'README.md',
-        'woodlets.php'
-    ], dest: name }
+    { src: ['composer.json'].concat(files), dest: 'woodlets' }
 ]);
 
+bundle.bulk([
+    { src: ['vendor/**/*'].concat(files), dest: 'woodlets' }
+]);
+
+
 archive.finalize();
+bundle.finalize();
