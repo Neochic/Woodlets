@@ -3,6 +3,8 @@
  * preview of media element.
  */
 
+/* globals document, wp */
+
 define(['jquery'], function($) {
     $(document).on('neochic-woodlets-form-init', function (e, form) {
         var $form = $(form);
@@ -36,8 +38,8 @@ define(['jquery'], function($) {
             createPreview($(this));
         });
 
-        $form.on('click', '.neochic-woodlets-upload, .neochic-woodlets-preview, .neochic-woodlets-media label', function() {
-            event.preventDefault();
+        $form.on('click', '.neochic-woodlets-upload, .neochic-woodlets-preview, .neochic-woodlets-media label', function(e) {
+            e.preventDefault();
 
             var $input = $(this).siblings('input');
             var wpMedia = $input.data('wpMedia');
@@ -63,8 +65,8 @@ define(['jquery'], function($) {
             wpMedia.open();
         });
 
-        $form.on('click', '.neochic-woodlets-remove', function() {
-            event.preventDefault();
+        $form.on('click', '.neochic-woodlets-remove', function(e) {
+            e.preventDefault();
 
             var $input = $(this).siblings('input');
 

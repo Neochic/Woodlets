@@ -1,3 +1,4 @@
+/* globals ajaxurl, document */
 requirejs([
     'jquery',
     'modal',
