@@ -32,7 +32,7 @@ Woodlets is not yet registered at packagist, therefore it has to be added to "re
     }
   ],
   "require": {
-    "neochic\\woodlets": "~0.0.4"
+    "neochic/woodlets": "~0.0.4"
   }
 }
 ```
