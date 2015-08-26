@@ -5,3 +5,6 @@ vendor/
 css/*.css
 js/main-build.js
 composer.phar
+woodlets-*.zip
+npm-debug.log
+composer.lock

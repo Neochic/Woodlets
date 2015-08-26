@@ -1,5 +1,15 @@
 language: php
 php:
   - 5.4
-install: npm install
+install: npm build
 script: npm test
+deploy:
+  provider: releases
+  api_key:
+    secure: H2H80h53mXHfy8Zc2vfhkiUVeNuPvvJCWGQCjDIMvzYUzf44S5zkd/+NxoZM6BQmj9wfMOM0en2fElNPDIMzJp6iYSJ8LoUw01fFP3dDfdaTkH2nJQsG910lUd0WuW1L2fLwPLQ1207s985jKt6DIac8tSiSxHVNTTezzh4FT1pv5RbSyN54k/PxTmiQm3qJ7/VVkOQT9ofErKemWcuJxdR63O2jql5p+YCwU3FqxuKFe9rOLmyfh6xPum+AeNtD4QixBP0YvAehRGIi+qSRGY+pRy6hszl8ONFuKowdM1JpcB3R9q9e133STdEgG5ZfiMOHA0dFv8UuPXfphqOvDCxmIgbrDd+Y8Szw3gYcbwJQWXumP1s1hX8gbsAN29E1FaUmlQi4KY2k+HyhIHDlx0fQyyZ/bwFqmdtXxlbUf44rfkSDbnfomltxouTCVgAClcsLG+0o/xbWgC9zg7sjHazJvZDbjeB7+6JuLwWrur0FGY3VenaN1D/UU8I098kDxKEy/jG0nzcdBIpNGq8/ji298bktGYUQyONG05i0BHxIZv2Xh13qyTF7RdwsFDYp6yQIuHvszYyUjrAF8u0PyjShAlfx7LUXc/B50X3Nlk6mePPvszUVCzCFSZ3bGwro6NJ2g18zOoXMgbCgwndEtq9roNqwSdW6X1ClSa890WA=
+  file_glob: true
+  file: woodlets-*.zip
+  skip_cleanup: true
+  on:
+    repo: Neochic/Woodlets
+    tags: true
