@@ -26,7 +26,14 @@ Woodlets is not yet registered at packagist, therefore it has to be added to "re
           "url": "https://github.com/Neochic/Woodlets/releases/download/v0.0.4/woodlets-v0.0.4.zip"
         },
         "require": {
+          "twig/twig": "^1.19",
+          "pimple/pimple": "^3.0",
           "composer/installers": "^1.0"
+        },
+        "autoload": {
+          "psr-4": {
+            "Neochic\\Woodlets\\": "src/"
+          }
         }
       }
     }
