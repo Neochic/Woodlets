@@ -11,14 +11,16 @@ class Widget extends WP_Widget implements WidgetInterface
     protected $fieldTypeManager;
     protected $twig;
     protected $wpWrapper;
+    protected $container;
 
-    public function __construct($id, $name, $templateName, $twig, $wpWrapper, $fieldTypeManager) {
+    public function __construct($id, $name, $templateName, $container, $twig, $wpWrapper, $fieldTypeManager) {
         $configurator = new WidgetConfigurator();
 
         $this->template = $twig->loadTemplate($templateName);
         $this->template->renderBlock('form', array('woodlet' => $configurator));
 
         $this->config = $configurator->getConfig();
+        $this->container = $container;
         $this->twig = $twig;
         $this->wpWrapper = $wpWrapper;
 
@@ -47,6 +49,8 @@ class Widget extends WP_Widget implements WidgetInterface
         if(!is_array($instance)) {
             $instance = array();
         }
+
+        $instance['woodlet'] = $this->container['twigHelper'];
         echo $this->template->renderBlock('view', $instance);
     }
 

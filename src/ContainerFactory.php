@@ -40,7 +40,7 @@ class ContainerFactory
         };
 
         $container['widgetManager'] = function ($c) {
-            return new WidgetManager($c['twig'], $c['wordpressWrapper'], $c['fieldTypeManager']);
+            return new WidgetManager($c, $c['twig'], $c['wordpressWrapper'], $c['fieldTypeManager']);
         };
 
         $container['noticeManager'] = function ($c) {
