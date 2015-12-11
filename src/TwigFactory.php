@@ -63,6 +63,8 @@ class TwigFactory
             $twig->addExtension(new Twig_Extension_Debug());
         }
 
+        $twig = $wpWrapper->applyFilters('twig', $twig);
+
         return $twig;
     }
 }
