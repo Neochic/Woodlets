@@ -35,11 +35,12 @@ class Woodlet
 
             $editorManager = $this->container['editorManager'];
 
-            //todo: add diable functionality
+            //todo: add disable functionality
             //be sure editor should be replaced and
             //woodlets is not disabled for this page
 
-            return $editorManager->getEditor();
+            //note: escape % because wp is throwing it through printf
+            return str_replace("%", "%%", $editorManager->getEditor());
         });
 
         $this->wpWrapper->addAction('save_post', function () {
@@ -55,7 +56,7 @@ class Woodlet
         });
 
         $this->wpWrapper->addFilter('the_content', function ($content) {
-            //todo: add diable functionality
+            //todo: add disable functionality
 
             if ($this->wpWrapper->isPage()) {
                 return $this->container['templateManager']->display();
