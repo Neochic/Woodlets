@@ -12,6 +12,7 @@ define(['jquery'], function($) {
     contentFrame.appendTo(overlay);
 
     var open = function(content) {
+        close();
         contentFrame.html('');
         contentFrame.append(closeButton);
         contentFrame.append(content);

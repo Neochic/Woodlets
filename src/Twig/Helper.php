@@ -43,7 +43,9 @@ class Helper
         if ($data && $data['cols'] && isset($data['cols'][$id])) {
             foreach ($data['cols'][$id] as $widgetData) {
                 $widget = $this->widgetManager->getWidget($widgetData['widgetId']);
-                $widget->widget(null, $widgetData['instance']);
+                if($widget) {
+                    $widget->widget(null, $widgetData['instance']);
+                }
             }
         }
     }

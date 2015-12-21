@@ -39,7 +39,7 @@ class WidgetManager
 
     public function getWidget($name) {
         $widgets = $this->getWidgets();
-        if($widgets[$name]) {
+        if(isset($widgets[$name])) {
             return $widgets[$name];
         }
         return null;

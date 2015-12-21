@@ -16,6 +16,7 @@ requirejs([
     $('.neochic-woodlets-col > ul').sortable({
         connectWith: '.neochic-woodlets-col > ul',
         placeholder: "neochic-woodlets-placeholder",
+        delay: 250,
         update: updateData,
         receive: function (e, ui) {
             var widgetId = ui.item.data('widget');
@@ -75,7 +76,15 @@ requirejs([
         });
     });
 
-    editor.on('click', '.neochic-woodlets-col li', function () {
+    editor.on('click', '.neochic-woodlets-col li .delete', function (e) {
+        $(e.target).parents('.neochic-woodlets-widget').remove();
+        updateData();
+    });
+
+    editor.on('click', '.neochic-woodlets-col li', function (e) {
+        if ($(e.target).parents().filter('.row-actions').length > 0) {
+            return;
+        }
         var widget = $(this).data('widget');
         var el = $(this);
         var data = {

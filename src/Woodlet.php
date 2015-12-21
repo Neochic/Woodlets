@@ -89,7 +89,10 @@ class Woodlet
         $this->wpWrapper->addAction('wp_ajax_neochic_woodlets_get_widget_form', function () {
             $instance = isset($_REQUEST['instance']) ? $_REQUEST['instance'] : array();
             $widgetManager = $this->container['widgetManager'];
-            echo $widgetManager->getWidget($_REQUEST['widget'])->form($instance);
+            $widget = $widgetManager->getWidget($_REQUEST['widget']);
+            if($widget) {
+                $widget->form($instance);
+            }
             wp_die();
         });
 
