@@ -23,7 +23,15 @@ class TemplateManager
     public function display() {
         $templateName = $this->getTemplateName();
         $template = $this->twig->loadTemplate($templateName);
-        return $template->render(array('woodlet' => $this->twigHelper));
+
+        /*
+         * If template is extending or no view/form block combination is used
+         * the template should be rendered directly, else just render the view block.
+         */
+        if($template->getParent(array()) || !$template->hasBlock('view')) {
+            return $template->render(array('woodlet' => $this->twigHelper));
+        }
+        return $template->renderBlock('view', array('woodlet' => $this->twigHelper));
     }
 
     public function getTemplateName() {
