@@ -43,12 +43,14 @@ class EditorManager
         $this->wpWrapper->addMetaBox('page-settings', 'Woodlets', function () {
             $template = $this->twig->loadTemplate('@woodlets/metaBox.twig');
             $data = $this->_getData();
+            $postType = $this->wpWrapper->getPostType();
+
             echo $template->render(array(
-                'templates' => $this->templateManager->getTemplateList(),
-                'template' => $this->templateManager->getTemplateName(),
+                'templates' => $this->templateManager->getTemplateList($postType),
+                'template' => $this->templateManager->getTemplateName($postType),
                 'disabled' => isset($data['disabled']) ? $data['disabled'] : false
             ));
-        }, 'page', 'side', 'core');
+        }, ['page', 'post'], 'side', 'core');
     }
 
     public function save()
@@ -76,8 +78,8 @@ class EditorManager
         }
 
         //save woodlets settings
-        if (isset($_POST["neochic_woodlet_page_template"])) {
-            $data['template'] = $_POST["neochic_woodlet_page_template"];
+        if (isset($_POST["neochic_woodlet_template"])) {
+            $data['template'] = $_POST["neochic_woodlet_template"];
         }
 
         if (isset($_POST["neochic_woodlet_disabled"])) {

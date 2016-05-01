@@ -18,6 +18,10 @@ class Woodlet
             echo $this->container['templateManager']->display();
         });
 
+        $this->wpWrapper->addAction('plugins_loaded', function () {
+            $this->wpWrapper->loadPluginTextdomain('woodlets', false, $this->container["basedir"] . "/languages");
+        });
+
         $this->wpWrapper->addAction('widgets_init', function () {
             $this->container['widgetManager']->addWidgets();
         });
@@ -44,15 +48,11 @@ class Woodlet
         });
 
         $this->wpWrapper->addAction('save_post', function () {
-            if ($this->wpWrapper->isPage()) {
-                $this->container['editorManager']->save();
-            }
+            $this->container['editorManager']->save();
         });
 
         $this->wpWrapper->addAction('add_meta_boxes', function () {
-            if ($this->wpWrapper->isPage()) {
-                $this->container['editorManager']->addMetaBox();
-            }
+            $this->container['editorManager']->addMetaBox();
         });
 
         $this->wpWrapper->addFilter('the_content', function ($content) {

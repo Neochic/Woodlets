@@ -10,6 +10,17 @@ class TemplateManager
     protected $templates;
     protected $twigHelper;
     protected $widgetManager;
+    protected $defaultTemplates = array(
+        "page" => "pages/default.twig",
+        "post" => "posts/default.twig",
+        "attachment" => "attachment.twig",
+        "404" => "404.twig",
+        "category" => "category.twig",
+        "tag" => "tag.twig",
+        "archive" => "archive.twig",
+        "search" => "search.twig",
+        "list" => "list.twig"
+    );
 
     public function __construct($twig, $wpWrapper, $widgetManager, $fieldTypeManager, $twigHelper) {
         $this->twig = $twig;
@@ -17,11 +28,14 @@ class TemplateManager
         $this->widgetManager = $widgetManager;
         $this->fieldTypeManager = $fieldTypeManager;
         $this->twigHelper = $twigHelper;
-        $this->templates = $this->wpWrapper->applyFilters('templates', $this->twig->getLoader()->searchTemplates('pages/*.twig'));
+        $this->templates = array(
+            "page" => $this->wpWrapper->applyFilters('page_templates', $this->twig->getLoader()->searchTemplates('pages/*.twig')),
+            "post" => $this->wpWrapper->applyFilters('post_templates', $this->twig->getLoader()->searchTemplates('posts/*.twig'))
+        );
     }
 
     public function display() {
-        $templateName = $this->getTemplateName();
+        $templateName = $this->getTemplateName($this->wpWrapper->getTemplateType());
         $template = $this->twig->loadTemplate($templateName);
 
         /*
@@ -34,23 +48,29 @@ class TemplateManager
         return $template->renderBlock('view', array('woodlet' => $this->twigHelper));
     }
 
-    public function getTemplateName() {
-        $template = $this->wpWrapper->applyFilters('default_template', '@woodlets/fallbackPageTemplate.twig');
+    public function getTemplateName($type = "page")
+    {
+        if (!isset($this->defaultTemplates[$type])) {
+            $type = "404";
+        }
+        $template = $this->wpWrapper->applyFilters('default_template_' . $type, $this->defaultTemplates[$type]);
         $data = $this->wpWrapper->getPostMeta();
-        if($data && isset($data['template']) && isset($this->templates[$data['template']])) {
+        $postType = $this->wpWrapper->getPostType();
+
+        if ($data && isset($data['template']) && $postType && isset($this->templates[$postType][$data['template']])) {
             $template = $data['template'];
         }
 
         //add main namespace to template to normalize the name
-        if(strrpos($template, '@') !== 0) {
-            $template = '@__main__/'.$template;
+        if (strrpos($template, '@') !== 0) {
+            $template = '@__main__/' . $template;
         }
 
         return $this->wpWrapper->applyFilters('template', $template);
     }
 
-    public function getTemplateList() {
-        return $this->templates;
+    public function getTemplateList($type = "page") {
+        return $this->templates[$type];
     }
 
     public function getConfiguration() {

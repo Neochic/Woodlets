@@ -1,0 +1,5 @@
+{% extends 'posts/default.twig' %}
+
+{% block postContent %}
+    {{ woodlet.wp_get_attachment_image(post.ID, "large")|raw }}
+{% endblock %}

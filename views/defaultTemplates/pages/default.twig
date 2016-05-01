@@ -1,0 +1,13 @@
+{% extends 'layouts/default.twig' %}
+
+{% block form %}
+    {{
+    woodlet.addCol('main', 'Main Col',{
+        'allowed': ['text']
+    })
+    }}
+{% endblock %}
+
+{% block view %}
+    {{ woodlet.getCol('main') }}
+{% endblock %}

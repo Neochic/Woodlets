@@ -1,7 +1,7 @@
 {% if templates|length %}
 <p>
     <label for="neochic-woodlet-page-template-input"><strong>Template</strong></label>
-    <select class="wide" id="neochic-woodlet-page-template-input" name="neochic_woodlet_page_template">
+    <select class="wide" id="neochic-woodlet-page-template-input" name="neochic_woodlet_template">
         {% for key, label in templates %}
             <option value="{{ key }}"{% if key == template %} selected="selected"{% endif %}>{{ label }}</option>
         {% endfor %}

@@ -1,0 +1,39 @@
+{% extends 'layouts/default.twig' %}
+
+{% block view %}
+    {% for post in woodlet.getPosts() %}
+        <article>
+            <header>
+                <h1>{{ post.title }}</h1>
+            </header>
+            <div class="entry-content">
+                {% block postContent %}
+                    {{ post.content|raw }}
+                {% endblock %}
+            </div>
+
+            <footer>
+                <span class="posted-on">{{ post.date }}</span>
+                <span class="author">{{ post.author_link }}</span>
+            </footer>
+        </article>
+
+        {% if not woodlet.post_password_required() %}
+            <div id="comments">
+                {{ woodlet.comment_form() }}
+                {% if woodlet.get_comments_number() %}
+                    <h2 class="comments-title">{{ "comments_title"|trans("woodlets", [woodlet.get_comments_number(), post.title]) }}</h2>
+                    <ol>
+                        {{
+                            woodlet.wp_list_comments({
+                                'style': 'ol',
+                                'short_ping': true,
+                                'avatar_size': 56
+                            }, post.comments)
+                        }}
+                    </ol>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

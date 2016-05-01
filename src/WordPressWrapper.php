@@ -42,11 +42,31 @@ class WordPressWrapper
         return call_user_func_array('wp_verify_nonce', func_get_args());
     }
 
+    public function loadPluginTextdomain() {
+        return call_user_func_array('load_plugin_textdomain', func_get_args());
+    }
+
+    public function translate($text, $domain = 'default', $parameters = null) {
+        $translation = call_user_func_array('translate', func_get_args());
+
+        if (is_array($parameters)) {
+            $translation = vsprintf($translation, $parameters);
+        }
+
+        return $translation;
+    }
+
     public function getPostMeta($key = null, $postId = null) {
-        if($key === null) {
+        if (!is_admin() && !is_singular()) {
+            // do not retrieve meta data for first post on list views
+            return null;
+        }
+
+        if ($key === null) {
             $key = $this->dataKey;
         }
-        if($postId === null) {
+
+        if ($postId === null) {
             $postId = $this->getPost() ? $this->getPost()->ID : null;
         }
 
@@ -123,6 +143,54 @@ class WordPressWrapper
     public function isPage() {
         $post = $this->getPost();
         return $post && $post->post_type === 'page';
+    }
+
+    public function getPostType() {
+        $post = $this->getPost();
+        if ($post) {
+            return $post->post_type;
+        }
+        return null;
+    }
+
+    public function getTemplateType() {
+        if (is_attachment()) {
+            return "attachment";
+        }
+
+        if (is_single()) {
+            return "post";
+        }
+
+        if (is_page()) {
+            return "page";
+        }
+
+        if (is_404()) {
+            return "404";
+        }
+
+        if (is_category()) {
+            return "category";
+        }
+
+        if (is_tag()) {
+            return "tag";
+        }
+
+        if (is_archive()) {
+            return "archive";
+        }
+
+        if (is_search()) {
+            return "search";
+        }
+
+        if (!is_singular()) {
+            return "list";
+        }
+
+        return null;
     }
 
     public function wpDie() {

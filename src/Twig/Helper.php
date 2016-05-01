@@ -9,7 +9,11 @@ class Helper
         'ID',
         'guid',
         'excerpt',
-        'content'
+        'content',
+        'date',
+        'author',
+        'author_link',
+        'author_posts_link'
     );
 
     protected $posts = null;
@@ -67,11 +71,9 @@ class Helper
             $post = array();
             the_post();
             foreach ($this->loopFunctions as $attribute) {
-                ob_start();
-                call_user_func('the_' . $attribute);
-                $post[$attribute] = ob_get_contents();
-                ob_end_clean();
+                $post[$attribute] = call_user_func('get_the_' . $attribute);
             }
+            $post["comments"] = get_comments();
             array_push($this->posts, $post);
         }
     }

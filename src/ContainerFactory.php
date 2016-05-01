@@ -16,11 +16,15 @@ class ContainerFactory
         };
 
         $container['twig'] = function ($c) {
-            return TwigFactory::createTwig($c['wordpressWrapper'], $c['basedir']);
+            return TwigFactory::createTwig($c['wordpressWrapper'], $c['basedir'], $c['twigI18n']);
         };
 
         $container['twigHelper'] = function ($c) {
             return new Twig\Helper($c['wordpressWrapper'], $c['widgetManager']);
+        };
+
+        $container['twigI18n'] = function ($c) {
+            return new Twig\I18n($c['wordpressWrapper']);
         };
 
         $container['editorManager'] = function ($c) {
@@ -50,7 +54,6 @@ class ContainerFactory
         $container['wordpressWrapper'] = function ($c) {
             return new WordPressWrapper($c['dataKey']);
         };
-
 
         return $container;
     }
