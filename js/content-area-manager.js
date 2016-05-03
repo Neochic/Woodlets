@@ -73,7 +73,7 @@ define([
                     });
                 };
 
-                $widgets = $content.find('.widget-top');
+                var $widgets = $content.find('.widget-top');
                 if ($widgets.length === 1) {
                     selectWidget($widgets, true);
                     return;

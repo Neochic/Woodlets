@@ -1,4 +1,3 @@
-/* globals ajaxurl, document */
 requirejs([
     'jquery',
     'content-area-manager',

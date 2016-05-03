@@ -2,7 +2,7 @@
  * Handles content area field type.
  */
 
-/* globals document, ajaxurl */
+/* globals document */
 define([
     'jquery',
     'content-area-manager'
