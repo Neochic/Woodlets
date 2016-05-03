@@ -45,11 +45,23 @@ class Helper
     {
         $data = $this->wpWrapper->getPostMeta();
         if ($data && $data['cols'] && isset($data['cols'][$id])) {
-            foreach ($data['cols'][$id] as $widgetData) {
-                $widget = $this->widgetManager->getWidget($widgetData['widgetId']);
-                if($widget) {
-                    $widget->widget(null, $widgetData['instance']);
-                }
+            $this->contentArea($data['cols'][$id]);
+        }
+    }
+
+    public function contentArea($widgets) {
+        if (is_string($widgets)) {
+            $widgets = json_decode($widgets, true);
+        }
+
+        if (!is_array($widgets)) {
+            return;
+        }
+
+        foreach ($widgets as $widgetData) {
+            $widget = $this->widgetManager->getWidget($widgetData['widgetId']);
+            if($widget) {
+                $widget->widget(null, $widgetData['instance']);
             }
         }
     }

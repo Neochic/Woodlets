@@ -4,7 +4,8 @@ require.config({
         'jquery-ui.sortable': '../bower_components/jquery-ui/ui/sortable',
         'jquery-ui.core': '../bower_components/jquery-ui/ui/core',
         'jquery-ui.mouse': '../bower_components/jquery-ui/ui/mouse',
-        'jquery-ui.widget': '../bower_components/jquery-ui/ui/widget'
+        'jquery-ui.widget': '../bower_components/jquery-ui/ui/widget',
+        'bluebird': '../bower_components/bluebird/js/browser/bluebird.core'
     },
     shim: {
     },

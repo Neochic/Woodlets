@@ -2,7 +2,7 @@
     <input type="hidden" name="neochic_woodlets_data" value="{{ data|json_encode }}" />
     <div class="neochic-woodlets-row">
         {% for col in config.columns %}
-            <div class="neochic-woodlets-col postbox" data-id="{{ col.id }}" data-allowed="{{ col.allowed|json_encode }}">
+            <div class="woodlets-content-area neochic-woodlets-col postbox" data-id="{{ col.id }}" data-allowed="{{ col.allowed|json_encode }}">
                 <h4>{{ col.title }}</h4>
                 <a href="#" class="button add-element">Add element</a>
                 <ul>

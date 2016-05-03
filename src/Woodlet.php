@@ -83,12 +83,15 @@ class Woodlet
         });
 
         $this->wpWrapper->addAction('wp_ajax_neochic_woodlets_get_widget_preview', function () {
-            echo $this->container['editorManager']->getWidgetPreview($_REQUEST['widget'], $_REQUEST['instance']);
+            $instance = $this->wpWrapper->unslash($_REQUEST['instance']);
+            $widget = $this->wpWrapper->unslash($_REQUEST['widget']);
+            echo $this->container['editorManager']->getWidgetPreview($widget, $instance);
             wp_die();
         });
 
         $this->wpWrapper->addAction('wp_ajax_neochic_woodlets_get_widget_form', function () {
             $instance = isset($_REQUEST['instance']) ? $_REQUEST['instance'] : array();
+            $instance = $this->wpWrapper->unslash($instance);
             $widgetManager = $this->container['widgetManager'];
             $widget = $widgetManager->getWidget($_REQUEST['widget']);
             if($widget) {
@@ -99,8 +102,12 @@ class Woodlet
 
         $this->wpWrapper->addAction('wp_ajax_neochic_woodlets_get_widget_update', function () {
             $widgetManager = $this->container['widgetManager'];
-            $widget = $widgetManager->getWidget($_REQUEST['widget']);
-            echo json_encode($widget->update(current($_REQUEST['widget-' . $widget->id_base]), array()));
+            $widgetName = $this->wpWrapper->unslash($_REQUEST['widget']);
+            $widget = $widgetManager->getWidget($widgetName);
+
+            $widgetData = $this->wpWrapper->unslash($_REQUEST['widget-' . $widget->id_base]);
+
+            echo json_encode($widget->update(current($widgetData), array()));
             wp_die();
         });
     }

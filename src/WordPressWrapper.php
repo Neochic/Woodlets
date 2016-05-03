@@ -136,6 +136,14 @@ class WordPressWrapper
         return admin_url('admin-ajax.php');
     }
 
+    public function unslash($val) {
+        return wp_unslash($val);
+    }
+
+    public function slash($val) {
+        return wp_slash($val);
+    }
+
     public function isDebug() {
         return WP_DEBUG ? true : false;
     }

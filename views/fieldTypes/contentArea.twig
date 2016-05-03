@@ -1,0 +1,13 @@
+<div class="woodlets-content-area" data-id="{{ id }}" data-allowed="{{ field.config.allowed|json_encode }}">
+    <h4>{{ field.config.label ?: field.name }}</h4>
+    <input class="widefat" type="hidden" id="{{ id }}" name="{{ name }}" value="{{ value }}" />
+    <div>
+        <span class="button add-element">Add element</span>
+        <ul>
+            <li class="no-elements">There are no elements in this content area yet.</li>
+            {% for widget in widgets %}
+                {% include '@woodlets/widgetPreview.twig' with { 'widget': widget.widget, 'instance': widget.instance, 'widgetId': widget.widgetId } only %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>

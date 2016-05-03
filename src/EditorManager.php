@@ -71,7 +71,7 @@ class EditorManager
 
         //save woodlets page data
         if (isset($_POST["neochic_woodlets_data"])) {
-            $cols = json_decode(stripslashes($_POST["neochic_woodlets_data"]), true);
+            $cols = $this->wpWrapper->slash(json_decode(stripslashes($_POST["neochic_woodlets_data"]), true));
             if ($cols) {
                 $data['cols'] = $cols;
             }

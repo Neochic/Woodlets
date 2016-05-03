@@ -38,8 +38,11 @@
 
 .neochic-woodlets-editor {
   .add-element {
-    margin-bottom:20px;
+    margin-bottom: 20px;
   }
+}
+
+.neochic-woodlets-editor, .woodlets-content-area {
   .no-elements {
     font-style:italic;
     display:none;
@@ -58,6 +61,32 @@
     .row-actions {
       visibility: visible; //old wp versions
       left: 0; //new wp versions
+    }
+  }
+}
+
+.woodlets-breadcrumb {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: inline-block;
+    font-weight: bold;
+
+    &[role=button] {
+      cursor: pointer;
+      font-weight: normal;
+    }
+
+    &:after {
+      content: "»";
+      display: inline-block;
+      margin: 0 4px;
+    }
+
+    &:last-child:after {
+      display: none;
     }
   }
 }
