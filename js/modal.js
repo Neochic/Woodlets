@@ -12,6 +12,7 @@ define(['jquery'], function($) {
     var stack = [];
 
     var clear = function() {
+        $(contentFrame).trigger('neochic-woodlets-modal-stack', contentFrame);
         closeButton.detach();
         breadCrumbTrail.detach();
         contentFrame.detach();
@@ -56,6 +57,7 @@ define(['jquery'], function($) {
         if (stack.length > 0) {
             var data = stack.pop();
             open(data.content, data.title);
+            $(contentFrame).trigger('neochic-woodlets-modal-unstack', contentFrame);
             return;
         }
 

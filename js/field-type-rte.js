@@ -6,7 +6,7 @@
 /* globals tinymce, document */
 
 define(['jquery'], function($) {
-    $(document).on('neochic-woodlets-form-init', function (e, form) {
+    function init(form) {
         $(form).find('.neochic-woodlets-rte').each(function () {
             var id = $(this).attr('id');
 
@@ -15,6 +15,10 @@ define(['jquery'], function($) {
             tinymce.execCommand('mceRemoveEditor', false, id);
             new tinymce.Editor(id, settings, tinymce.EditorManager).render();
         });
+    }
+
+    $(document).on('neochic-woodlets-form-init', function (e, form) {
+        init(form);
     });
 
     $(document).on('neochic-woodlets-form-end', function (e, form) {
@@ -22,5 +26,9 @@ define(['jquery'], function($) {
             var id = $(this).attr('id');
             $(this).val(tinymce.get(id).getContent());
         });
+    });
+
+    $(document).on('neochic-woodlets-modal-unstack', function (e, form) {
+        init(form);
     });
 });

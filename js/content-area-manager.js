@@ -107,7 +107,7 @@ define([
             var widget = $(this).data('widget');
 
             //this should be done more elegant!
-            var name = $(this).find("h4").text();
+            var name = $(this).find(".widget-title h4").text();
 
             var el = $(this);
             var data = {
