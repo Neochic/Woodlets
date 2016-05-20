@@ -54,10 +54,24 @@ class Woodlet
         });
 
         $this->wpWrapper->addAction('save_post', function () {
+            $post = $this->wpWrapper->getPost();
+
+            //check nonce to prevent XSS
+            if (!isset($_POST['_wpnonce']) || !$this->wpWrapper->verifyNonce($_POST['_wpnonce'], 'update-post_' . $post->ID)) {
+                return;
+            }
+
+            //check user permission
+            if (!$this->wpWrapper->isAllowed('edit_page', $post->ID)) {
+                return;
+            }
+
+            $this->container['pageConfigurationManager']->save();
             $this->container['editorManager']->save();
         });
 
         $this->wpWrapper->addAction('add_meta_boxes', function () {
+            $this->container['pageConfigurationManager']->addMetaBoxes();
             $this->container['editorManager']->addMetaBox();
         });
 

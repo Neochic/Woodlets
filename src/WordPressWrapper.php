@@ -76,7 +76,7 @@ class WordPressWrapper
             $postId = $this->getPost() ? $this->getPost()->ID : null;
         }
 
-        return get_post_meta($postId, $key, true);
+        return get_post_meta($postId, $key, true) ?: array();
     }
 
     public function setPostMeta($value, $key = null, $postId = null) {

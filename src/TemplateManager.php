@@ -57,7 +57,7 @@ class TemplateManager
         $data = $this->wpWrapper->getPostMeta();
         $postType = $this->wpWrapper->getPostType();
 
-        if ($data && isset($data['template']) && $postType && isset($this->templates[$postType][$data['template']])) {
+        if (isset($data['template']) && $postType && isset($this->templates[$postType][$data['template']])) {
             $template = $data['template'];
         }
 
@@ -74,7 +74,7 @@ class TemplateManager
     }
 
     public function getConfiguration() {
-        $templateName = $this->getTemplateName();
+        $templateName = $this->getTemplateName($this->wpWrapper->getTemplateType());
         $template = new Template($templateName, $this->twig, $this->widgetManager, $this->fieldTypeManager);
         return $template->getConfig();
     }

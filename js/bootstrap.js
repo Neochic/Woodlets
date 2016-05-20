@@ -9,6 +9,9 @@ requirejs([
 ], function ($, contentAreaManager) {
     $.noConflict(true);
 
+    /*
+     * init main content editor
+     */
     var $editor = $('.neochic-woodlets-editor');
     var $input = $editor.children('input[name=neochic_woodlets_data]');
 
@@ -20,8 +23,20 @@ requirejs([
         $input.val(JSON.stringify(data));
     });
 
+    /*
+     * init customizer
+     */
     var $cc = $('#customize-controls');
     if($cc.length) {
         $(document).trigger('neochic-woodlets-form-init', $cc);
     }
+
+    /*
+     * init page config
+     */
+
+    var $pageSections = $("[id^='neochic-woodlets-page_section_']");
+    $pageSections.each(function() {
+      $(this).trigger('neochic-woodlets-form-init', $(this));
+    });
 });

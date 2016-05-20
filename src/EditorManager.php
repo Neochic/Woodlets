@@ -55,18 +55,6 @@ class EditorManager
 
     public function save()
     {
-        $post = $this->wpWrapper->getPost();
-
-        //check nonce to prevent XSS
-        if (!isset($_POST['_wpnonce']) || !$this->wpWrapper->verifyNonce($_POST['_wpnonce'], 'update-post_' . $post->ID)) {
-            return;
-        }
-
-        //check user permission
-        if (!$this->wpWrapper->isAllowed('edit_page', $post->ID)) {
-            return;
-        }
-
         $data = $this->_getData();
 
         //save woodlets page data
@@ -102,6 +90,11 @@ class EditorManager
 
     protected function _getData()
     {
-        return $this->wpWrapper->getPostMeta() ?: array('cols' => array());
+        $data = $this->wpWrapper->getPostMeta();
+        if (!isset($data['cols'])) {
+            $data['cols'] = array();
+        }
+
+        return $data;
     }
 }

@@ -19,11 +19,13 @@ class Helper
     protected $posts = null;
     protected $widgetManager;
     protected $wpWrapper;
+    protected $postMeta;
 
     public function __construct($wpWrapper, $widgetManager)
     {
         $this->widgetManager = $widgetManager;
         $this->wpWrapper = $wpWrapper;
+        $this->postMeta = $wpWrapper->getPostMeta();
     }
 
     public function getPosts()
@@ -43,10 +45,17 @@ class Helper
 
     public function getCol($id)
     {
-        $data = $this->wpWrapper->getPostMeta();
-        if ($data && $data['cols'] && isset($data['cols'][$id])) {
-            $this->contentArea($data['cols'][$id]);
+        if ($this->postMeta['cols'] && isset($this->postMeta['cols'][$id])) {
+            $this->contentArea($this->postMeta['cols'][$id]);
         }
+    }
+
+    public function getPageConfig() {
+        if (isset($this->postMeta['data'])) {
+            return $this->postMeta['data'];
+        }
+
+        return array();
     }
 
     public function contentArea($widgets) {

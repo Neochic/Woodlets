@@ -39,6 +39,10 @@ class ContainerFactory
             return new FieldTypeManager($c['wordpressWrapper'], $c['twig'], $c);
         };
 
+        $container['pageConfigurationManager'] = function($c) {
+            return new PageConfigurationManager($c['wordpressWrapper'], $c["formManager"], $c["templateManager"]);
+        };
+
         $container['scriptsManager'] = function ($c) {
             return new ScriptsManager($c['baseurl'], $c['wordpressWrapper']);
         };

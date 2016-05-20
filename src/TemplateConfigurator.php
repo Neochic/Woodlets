@@ -7,16 +7,19 @@ class TemplateConfigurator
     protected $config;
     protected $widgetManager;
 
-    public function __construct($widgetManager) {
+    public function __construct($widgetManager)
+    {
         $this->widgetManager = $widgetManager;
         $this->config = array(
             'settings' => array(),
-            'columns' => array()
+            'columns' => array(),
+            'forms' => array()
         );
     }
 
-    public function addCol($id, $title, $config = null) {
-        $col =  array(
+    public function addCol($id, $title, $config = null)
+    {
+        $col = array(
             'id' => $id,
             'title' => $title);
 
@@ -24,7 +27,7 @@ class TemplateConfigurator
 
         $col['allowed'] = $config && isset($config['allowed']) && is_array($config['allowed']) ? $config['allowed'] : $widgets;
 
-        if($config && isset($config['disallowed'])) {
+        if ($config && isset($config['disallowed'])) {
             $col['allowed'] = array_diff($col['allowed'], $config['disallowed']);
         }
 
@@ -32,12 +35,26 @@ class TemplateConfigurator
         return $this;
     }
 
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->config['settings']['title'] = $title;
         return $this;
     }
 
-    public function getConfig() {
+    public function section($title)
+    {
+        $formConfigurator = new FormConfigurator();
+
+        array_push($this->config['forms'], array(
+            'title' => $title,
+            'config' => $formConfigurator
+        ));
+
+        return $formConfigurator;
+    }
+
+    public function getConfig()
+    {
         return $this->config;
     }
 
