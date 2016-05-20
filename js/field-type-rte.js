@@ -5,12 +5,24 @@
 
 /* globals tinymce, document */
 
-define(['jquery'], function($) {
+define(['jquery', 'native-change'], function($, nativeChange) {
     function init(form) {
         $(form).find('.neochic-woodlets-rte').each(function () {
-            var id = $(this).attr('id');
+            var $input = $(this);
+            var id = $input.attr('id');
 
-            var settings = $.extend({}, tinymce.settings, $(this).data('settings'));
+            var settings = $.extend({},
+                tinymce.settings,
+                $(this).data('settings'),
+                {
+                    setup: function(editor) {
+                        editor.on('input change keyup', function() {
+                            $input.val(tinymce.get(id).getContent());
+                            nativeChange($input.get(0));
+                        });
+                    }
+                }
+            );
 
             tinymce.execCommand('mceRemoveEditor', false, id);
             new tinymce.Editor(id, settings, tinymce.EditorManager).render();
@@ -19,13 +31,6 @@ define(['jquery'], function($) {
 
     $(document).on('neochic-woodlets-form-init', function (e, form) {
         init(form);
-    });
-
-    $(document).on('neochic-woodlets-form-end', function (e, form) {
-        $(form).find('.neochic-woodlets-rte').each(function () {
-            var id = $(this).attr('id');
-            $(this).val(tinymce.get(id).getContent());
-        });
     });
 
     $(document).on('neochic-woodlets-modal-unstack', function (e, form) {

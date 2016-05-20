@@ -17,4 +17,9 @@ requirejs([
     contentAreaManager($('.neochic-woodlets-col'), function(data) {
         $input.val(JSON.stringify(data));
     });
+
+    var $cc = $('#customize-controls');
+    if($cc.length) {
+        $(document).trigger('neochic-woodlets-form-init', $cc);
+    }
 });

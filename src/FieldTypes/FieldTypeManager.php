@@ -5,8 +5,11 @@ namespace Neochic\Woodlets\FieldTypes;
 class FieldTypeManager
 {
     protected $fieldTypes;
+    protected $twig;
 
-    public function __construct($wpWrapper, $container) {
+    public function __construct($wpWrapper, $twig, $container) {
+        $this->twig = $twig;
+
         $fieldTypes = array(
             'text' => new FieldType('text', 'woodlets'),
             'textarea' => new FieldType('textarea', 'woodlets'),
@@ -23,5 +26,20 @@ class FieldTypeManager
 
     public function getFieldTypes() {
         return $this->fieldTypes;
+    }
+
+    public function field($field, $context, $id, $name, $isThemeConfig = false) {
+        if(!isset($this->fieldTypes[$field['type']])) {
+            return;
+        }
+
+        echo $this->fieldTypes[$field['type']]->input(
+            $this->twig,
+            $id,
+            $name,
+            isset($context[$field['name']]) ? $context[$field['name']] : null,
+            $field,
+            $context,
+            $isThemeConfig);
     }
 }

@@ -1,6 +1,7 @@
+{% import '@woodlets/fieldType.twig' as macros %}
 <p>
     <label for="{{ id }}">
-        <input id="{{ id }}" name="{{ name }}" type="checkbox" value="1"{% if value %} checked="checked"{% endif %} />
+        <input id="{{ id }}" {{ macros.nameOrLink(customizer, name) }} type="checkbox" value="1"{% if value %} checked="checked"{% endif %} />
         {{ field.config.label ?: field.name }}
     </label>
 </p>

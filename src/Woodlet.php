@@ -26,6 +26,12 @@ class Woodlet
             $this->container['widgetManager']->addWidgets();
         });
 
+        $this->wpWrapper->addAction('customize_register', function ($wp_customize) {
+            $themeCustomizer = new ThemeCustomizer($wp_customize, $this->container);
+            $this->wpWrapper->doAction('theme', $themeCustomizer);
+            $themeCustomizer->addControls();
+        });
+
         $this->wpWrapper->addFilter('the_editor', function ($editor) {
             //we only do want to change main editor and keep reply editor intact
             if (strpos($editor, 'id="content"') === false) {
@@ -65,8 +71,8 @@ class Woodlet
         });
 
         $this->wpWrapper->addAction('admin_enqueue_scripts', function ($hook) {
-            $post = $this->wpWrapper->getPost();
-            if (in_array($hook, array('post-new.php', 'post.php')) && $post->post_type === 'page') {
+            $isCustomize = ($hook === 'widgets.php' && $this->wpWrapper->pageNow() === 'customize.php');
+            if (in_array($hook, array('post-new.php', 'post.php')) || $isCustomize) {
                 $this->container['scriptsManager']->addScripts();
             }
         });

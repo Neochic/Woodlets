@@ -96,7 +96,7 @@ define([
             updateData();
         });
 
-        $areas.on('click', 'li', function (e) {
+        $areas.on('click', 'li:not(.no-elements)', function (e) {
             /*
              * do not open widget form if an action (like "delete") is clicked
              */

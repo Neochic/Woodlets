@@ -6,13 +6,13 @@ class WidgetManager
 {
     protected $twig;
     protected $wpWrapper;
-    protected $fieldTypeManager;
+    protected $formManager;
     protected $container;
 
-    public function __construct($container, $twig, $wpWrapper, $fieldTypeManager) {
+    public function __construct($container, $twig, $wpWrapper, $formManager) {
         $this->twig = $twig;
         $this->wpWrapper = $wpWrapper;
-        $this->fieldTypeManager = $fieldTypeManager;
+        $this->formManager = $formManager;
         $this->container = $container;
     }
 
@@ -20,7 +20,7 @@ class WidgetManager
         $widgets = $this->twig->getLoader()->searchTemplates('widgets/*.twig');
         foreach($widgets as $template => $name) {
             $id = str_replace('/', '\\', substr($template, 1, -5));
-            $this->wpWrapper->registerWidget('Neochic\\Woodlets\\_Widgets\\'.$id, new Widget($id, $name, $template, $this->container, $this->twig, $this->wpWrapper, $this->fieldTypeManager));
+            $this->wpWrapper->registerWidget('Neochic\\Woodlets\\_Widgets\\'.$id, new Widget($id, $name, $template, $this->container, $this->twig, $this->wpWrapper, $this->formManager));
         }
     }
 

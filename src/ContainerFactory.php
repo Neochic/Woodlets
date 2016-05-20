@@ -36,15 +36,19 @@ class ContainerFactory
         };
 
         $container['fieldTypeManager'] = function ($c) {
-            return new FieldTypeManager($c['wordpressWrapper'], $c);
+            return new FieldTypeManager($c['wordpressWrapper'], $c['twig'], $c);
         };
 
         $container['scriptsManager'] = function ($c) {
             return new ScriptsManager($c['baseurl'], $c['wordpressWrapper']);
         };
 
+        $container['formManager'] = function($c) {
+            return new FormManager($c['fieldTypeManager'], $c['twig']);
+        };
+
         $container['widgetManager'] = function ($c) {
-            return new WidgetManager($c, $c['twig'], $c['wordpressWrapper'], $c['fieldTypeManager']);
+            return new WidgetManager($c, $c['twig'], $c['wordpressWrapper'], $c['formManager']);
         };
 
         $container['noticeManager'] = function ($c) {

@@ -1,3 +1,7 @@
+{% macro nameOrLink(customizer, name) %}
+    {% if customizer %}data-customize-setting-link{% else %}name{% endif %}="{{ name }}"
+{% endmacro %}
+{% import _self as macros %}
 <p>
     <label for="{{ id }}">{{ field.config.label ?: field.name }}
         {% block field %}{% endblock %}

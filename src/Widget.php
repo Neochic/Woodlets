@@ -13,7 +13,7 @@ class Widget extends WP_Widget implements WidgetInterface
     protected $wpWrapper;
     protected $container;
 
-    public function __construct($id, $name, $templateName, $container, $twig, $wpWrapper, $fieldTypeManager) {
+    public function __construct($id, $name, $templateName, $container, $twig, $wpWrapper, $formManager) {
         $configurator = new WidgetConfigurator();
 
         $this->template = $twig->loadTemplate($templateName);
@@ -24,7 +24,7 @@ class Widget extends WP_Widget implements WidgetInterface
         $this->twig = $twig;
         $this->wpWrapper = $wpWrapper;
 
-        $this->fieldTypeManager = $fieldTypeManager;
+        $this->formManager = $formManager;
 
         $baseId = 'neochic_woodlets_'.strtolower(str_replace('\\', '_', $id));
 
@@ -62,38 +62,15 @@ class Widget extends WP_Widget implements WidgetInterface
     }
 
     public function form( $instance ) {
-        $fieldTypes =  $this->fieldTypeManager->getFieldTypes();
-        foreach($this->config['fields'] as $field) {
-
-            if(!isset($fieldTypes[$field['type']])) {
-                continue;
-            }
-
-            echo $fieldTypes[$field['type']]->input(
-                $this->twig,
-                $this->get_field_id($field['name']),
-                $this->get_field_name($field['name']),
-                isset($instance[$field['name']]) ? $instance[$field['name']] : null,
-                $field,
-                $instance);
-        }
+        $this->formManager->form($this->config, $instance, function($name) {
+            return array(
+                'id' => $this->get_field_id($name),
+                'name' => $this->get_field_name($name)
+            );
+        });
     }
 
     public function update( $new_instance, $old_instance ) {
-        $instance = array();
-        $fieldTypes =  $this->fieldTypeManager->getFieldTypes();
-        foreach($this->config['fields'] as $field) {
-            if(!isset($fieldTypes[$field['type']])) {
-                continue;
-            }
-
-            $instance[$field['name']] = $fieldTypes[$field['type']]->update(
-                isset($new_instance[$field['name']]) ? $new_instance[$field['name']] : null,
-                isset($old_instance[$field['name']]) ? $old_instance[$field['name']] : null,
-                $new_instance,
-                $old_instance
-            );
-        }
-        return $instance;
+        return $this->formManager->update($this->config, $new_instance, $old_instance);
     }
 }

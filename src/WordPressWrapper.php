@@ -24,6 +24,12 @@ class WordPressWrapper
         return call_user_func_array('add_action', func_get_args());
     }
 
+    public function doAction($tag,  $arg = '') {
+        $args = func_get_args();
+        $args[0] = 'neochic_woodlets_'.$args[0];
+        return call_user_func_array('do_action', $args);
+    }
+
     public function getPluginVersion() {
         $plugins = get_plugins();
 
@@ -151,6 +157,13 @@ class WordPressWrapper
     public function isPage() {
         $post = $this->getPost();
         return $post && $post->post_type === 'page';
+    }
+
+    public function pageNow() {
+        if(isset($GLOBALS['pagenow'])) {
+            return $GLOBALS['pagenow'];
+        }
+        return null;
     }
 
     public function getPostType() {

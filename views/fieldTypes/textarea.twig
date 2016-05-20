@@ -1,5 +1,5 @@
 {% extends '@woodlets/fieldType.twig' %}
 
 {% block field %}
-    <textarea class="widefat" id="{{ id }}" name="{{ name }}">{{ value }}</textarea>
+    <textarea class="widefat" id="{{ id }}" {{ macros.nameOrLink(customizer, name) }}>{{ value }}</textarea>
 {% endblock %}

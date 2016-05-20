@@ -5,7 +5,7 @@
 
 /* globals document, wp */
 
-define(['jquery'], function($) {
+define(['jquery', 'native-change'], function($, nativeChange) {
     $(document).on('neochic-woodlets-form-init', function (e, form) {
         var $form = $(form);
 
@@ -56,6 +56,7 @@ define(['jquery'], function($) {
                 var attachment = wpMedia.state().get('selection').first().toJSON();
 
                 $input.val(attachment.id);
+                nativeChange($input.get(0));
                 $input.data('value', attachment);
                 $input.parent().removeClass('neochic-woodlets-media-empty');
 
@@ -71,6 +72,7 @@ define(['jquery'], function($) {
             var $input = $(this).siblings('input');
 
             $input.val('');
+            nativeChange($input.get(0));
             $input.parent().addClass('neochic-woodlets-media-empty');
 
             removePreview($input);

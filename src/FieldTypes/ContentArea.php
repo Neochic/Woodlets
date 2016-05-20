@@ -12,7 +12,7 @@ class ContentArea extends FieldType
         $this->container = $container;
     }
 
-    protected function __createRenderContext($id, $name, $value, $field, $context) {
+    protected function __createRenderContext($id, $name, $value, $field, $context, $customizer) {
         $renderContext = call_user_func_array('parent::__createRenderContext', func_get_args());
         $renderContext["widgets"] = json_decode($value, true);
 
