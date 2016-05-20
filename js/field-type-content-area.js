@@ -14,7 +14,7 @@ define([
         contentAreaManager($areas, function(data) {
             $areas.each(function(key, area) {
                 var $area = $(area);
-                $input = $area.find("input");
+                var $input = $area.find("input");
                 $input.val(JSON.stringify(data[$area.data("id")]));
                 nativeChange($input.get(0));
             });

@@ -1,3 +1,5 @@
+/* globals document */
+
 requirejs([
     'jquery',
     'content-area-manager',
