@@ -10,7 +10,8 @@ class WidgetConfigurator extends FormConfigurator
     {
         parent::__construct();
         $this->config['settings'] = array(
-            'alias' => null
+            'alias' => null,
+            'register' => false
         );
     }
 
@@ -29,6 +30,12 @@ class WidgetConfigurator extends FormConfigurator
     public function setAlias($alias)
     {
         $this->config['settings']['alias'] = $alias;
+        return $this;
+    }
+
+    public function register()
+    {
+        $this->config['settings']['register'] = true;
         return $this;
     }
 }

@@ -73,4 +73,8 @@ class Widget extends WP_Widget implements WidgetInterface
     public function update( $new_instance, $old_instance ) {
         return $this->formManager->update($this->config, $new_instance, $old_instance);
     }
+
+    public function isInternal() {
+        return isset($this->config['settings']['register']) ? !$this->config['settings']['register'] : true;
+    }
 }

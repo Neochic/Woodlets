@@ -8,6 +8,7 @@ class WidgetManager
     protected $wpWrapper;
     protected $formManager;
     protected $container;
+    protected $internalWidgets = array();
 
     public function __construct($container, $twig, $wpWrapper, $formManager) {
         $this->twig = $twig;
@@ -20,7 +21,12 @@ class WidgetManager
         $widgets = $this->twig->getLoader()->searchTemplates('widgets/*.twig');
         foreach($widgets as $template => $name) {
             $id = str_replace('/', '\\', substr($template, 1, -5));
-            $this->wpWrapper->registerWidget('Neochic\\Woodlets\\_Widgets\\'.$id, new Widget($id, $name, $template, $this->container, $this->twig, $this->wpWrapper, $this->formManager));
+            $widget = new Widget($id, $name, $template, $this->container, $this->twig, $this->wpWrapper, $this->formManager);
+            if ($widget->isInternal()) {
+                $this->internalWidgets[$widget->getReadableKey()] = $widget;
+            } else {
+                $this->wpWrapper->registerWidget('Neochic\\Woodlets\\_Widgets\\'.$id, $widget);
+            }
         }
     }
 
@@ -34,7 +40,7 @@ class WidgetManager
     }
 
     public function getWidgets() {
-        return $this->wpWrapper->getWidgets();
+        return array_merge($this->wpWrapper->getWidgets(), $this->internalWidgets);
     }
 
     public function getWidget($name) {
