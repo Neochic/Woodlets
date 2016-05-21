@@ -20,7 +20,7 @@ class ContainerFactory
         };
 
         $container['twigHelper'] = function ($c) {
-            return new Twig\Helper($c['wordpressWrapper'], $c['widgetManager']);
+            return new Twig\Helper($c['wordpressWrapper'], $c['widgetManager'], $c);
         };
 
         $container['twigI18n'] = function ($c) {

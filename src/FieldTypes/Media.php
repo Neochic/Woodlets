@@ -24,7 +24,7 @@ class Media extends FieldType
         ));
     }
 
-    protected function __createRenderContext($id, $name, $value, $field, $context, $customizer) {
+    protected function __createRenderContext($id, $name, $value, $field, $context, $customizer, $useValues = null) {
         $renderContext = call_user_func_array('parent::__createRenderContext', func_get_args());
 
         $settings = $this->defaultSettings;

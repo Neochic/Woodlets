@@ -21,6 +21,10 @@ class PageConfigurationManager
             $data['data'] = array();
         }
 
+        if (!isset($data['useValues'])) {
+            $data['useValues'] = array();
+        }
+
         foreach($config['forms'] as $key => $section) {
             $this->wpWrapper->addMetaBox('page_section_' . $key, $section['title'], function () use ($data, $section) {
                 $this->formManager->form($section['config']->getConfig(), $data['data'], function($name) {
@@ -28,7 +32,7 @@ class PageConfigurationManager
                         "id" => 'woodlets_page_setting_' . $name,
                         "name" => 'woodlets_page_settings['. $name . ']'
                     );
-                });
+                }, false, $data['useValues']);
             }, ['page', 'post'], 'normal', 'core');
         }
     }
@@ -47,7 +51,11 @@ class PageConfigurationManager
         foreach($config['forms'] as $key => $section) {
             $data['data'] = $this->formManager->update($section['config']->getConfig(), $_POST['woodlets_page_settings'], $data['data']);
         }
-        
+
+        $useValues = isset($_POST["woodlets_page_use_values"]) ? $_POST["woodlets_page_use_values"] : array();
+        $inherit = isset($_POST["woodlets_page_inherit"]) ? $_POST["woodlets_page_inherit"] : array();
+        $data['useValues'] = array_diff($useValues, $inherit);
+
         $this->wpWrapper->setPostMeta($data);
     }
 }

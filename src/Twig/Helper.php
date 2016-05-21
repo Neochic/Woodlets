@@ -20,12 +20,15 @@ class Helper
     protected $widgetManager;
     protected $wpWrapper;
     protected $postMeta;
+    protected $pageConfig = null;
+    protected $container;
 
-    public function __construct($wpWrapper, $widgetManager)
+    public function __construct($wpWrapper, $widgetManager, $container)
     {
         $this->widgetManager = $widgetManager;
         $this->wpWrapper = $wpWrapper;
-        $this->postMeta = $wpWrapper->getPostMeta();
+        $this->container = $container;
+        $this->postMeta = $this->wpWrapper->getPostMeta();
     }
 
     public function getPosts()
@@ -51,11 +54,57 @@ class Helper
     }
 
     public function getPageConfig() {
-        if (isset($this->postMeta['data'])) {
-            return $this->postMeta['data'];
+        if ($this->pageConfig) {
+            return $this->pageConfig;
         }
 
-        return array();
+        $data = $this->postMeta;
+        $templateManager = $this->container['templateManager'];
+        $templateConfig = $templateManager->getConfiguration();
+
+        if (!isset($data['data'])) {
+            $data['data'] = array();
+        }
+
+        if (!isset($data['useValues'])) {
+            $data['useValues'] = array();
+        }
+
+        $fields = array();
+        foreach($templateConfig['forms'] as $form) {
+            $config = $form['config']->getConfig();
+            foreach($config['fields'] as $field) {
+                array_push($fields, $field['name']);
+            }
+        }
+
+        $toInherit = array_diff($fields, $data['useValues']);
+        $currentPost = $this->wpWrapper->getPost();
+
+        foreach($toInherit as $inheritKey) {
+            unset($data['data'][$inheritKey]);
+        }
+
+        while(count($toInherit) > 0 && $currentPost->post_parent) {
+            $inheritData = $this->wpWrapper->getPostMeta(null, $currentPost->post_parent);
+            if (!isset($inheritData['useValues'])) {
+                $inheritData['useValues'] = array();
+            }
+            foreach($toInherit as $inheritKey) {
+                if (in_array($inheritKey, $inheritData['useValues'])) {
+                    if (isset($inheritData['data'][$inheritKey])) {
+                        $data['data'][$inheritKey] = $inheritData['data'][$inheritKey];
+                    }
+
+                    $toInherit = array_diff($toInherit, array($inheritKey));
+                }
+            }
+            $currentPost = $this->wpWrapper->getPost($currentPost->post_parent);
+        }
+
+        $this->pageConfig = $data['data'];
+
+        return $this->pageConfig;
     }
 
     public function contentArea($widgets) {

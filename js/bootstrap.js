@@ -5,7 +5,8 @@ requirejs([
     'content-area-manager',
     'field-type-media',
     'field-type-rte',
-    'field-type-content-area'
+    'field-type-content-area',
+    'page-config-inheritance'
 ], function ($, contentAreaManager) {
     $.noConflict(true);
 

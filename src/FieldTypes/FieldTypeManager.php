@@ -28,7 +28,7 @@ class FieldTypeManager
         return $this->fieldTypes;
     }
 
-    public function field($field, $context, $id, $name, $isThemeConfig = false) {
+    public function field($field, $context, $id, $name, $isThemeConfig = false, $useValues = null) {
         if(!isset($this->fieldTypes[$field['type']])) {
             return;
         }
@@ -40,6 +40,7 @@ class FieldTypeManager
             isset($context[$field['name']]) ? $context[$field['name']] : null,
             $field,
             $context,
-            $isThemeConfig);
+            $isThemeConfig,
+            $useValues);
     }
 }

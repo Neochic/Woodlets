@@ -1,7 +1,10 @@
-{% import '@woodlets/fieldType.twig' as macros %}
-<p class="neochic-woodlets-media{% if not value %} neochic-woodlets-media-empty{% endif %}">
-    <label for="{{ id }}">{{ field.config.label ?: field.name }}</label>
-    <a class="neochic-woodlets-upload button" href="#">Select media</a>
-    <a class="neochic-woodlets-remove button" href="#">Remove</a>
-    <input class="neochic-woodlets-media-input" id="{{ id }}" {{ macros.nameOrLink(customizer, name) }} type="hidden" value="{{ value.id }}" data-value="{{ value|json_encode }}" data-settings="{{ mediaSettings|json_encode }}" />
-</p>
+{% extends '@woodlets/fieldType.twig' %}
+
+{% block field %}
+    <p class="neochic-woodlets-media{% if not value %} neochic-woodlets-media-empty{% endif %}">
+        <label for="{{ id }}">{{ field.config.label ?: field.name }}</label>
+        <a class="neochic-woodlets-upload button" href="#">Select media</a>
+        <a class="neochic-woodlets-remove button" href="#">Remove</a>
+        <input class="neochic-woodlets-media-input" id="{{ id }}" {{ macros.nameOrLink(customizer, name) }} type="hidden" value="{{ value.id }}" data-value="{{ value|json_encode }}" data-settings="{{ mediaSettings|json_encode }}" />
+    </p>
+{% endblock %}

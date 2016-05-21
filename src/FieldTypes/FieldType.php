@@ -17,9 +17,9 @@ class FieldType implements FieldTypeInterface
         $this->name = $name;
     }
 
-    public function input( $twig, $id, $name, $value, $field, $context, $customizer = false) {
+    public function input( $twig, $id, $name, $value, $field, $context, $customizer = false, $useValues = null) {
         $template = $twig->loadTemplate($this->getTemplateName());
-        $renderContext = $this->__createRenderContext($id, $name, $value, $field, $context, $customizer);
+        $renderContext = $this->__createRenderContext($id, $name, $value, $field, $context, $customizer, $useValues);
         return $template->render($renderContext);
     }
 
@@ -35,14 +35,15 @@ class FieldType implements FieldTypeInterface
         return $newValue;
     }
 
-    protected function __createRenderContext($id, $name, $value, $field, $context, $customizer) {
+    protected function __createRenderContext($id, $name, $value, $field, $context, $customizer, $useValues = null) {
         return array(
             'id' => $id,
             'name' => $name,
             'value' => $value,
             'field' => $field,
             'customizer' => $customizer,
-            'context' => $context
+            'context' => $context,
+            'useValues' => $useValues
         );
     }
 }

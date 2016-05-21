@@ -15,7 +15,7 @@ class FormManager
         $this->twig = $twig;
     }
 
-    public function form($config = array(), $instance = array(), $getFieldAttributes, $isThemeConfig = false) {
+    public function form($config = array(), $instance = array(), $getFieldAttributes, $isThemeConfig = false, $useValues = null) {
         foreach($config['fields'] as $field) {
             /*
              * todo: we should definitely use a more OO way
@@ -24,7 +24,7 @@ class FormManager
              */
             $fieldAttributes = $getFieldAttributes($field['name']);
 
-            $this->fieldTypeManager->field($field, $instance, $fieldAttributes['id'], $fieldAttributes['name'], $isThemeConfig);
+            $this->fieldTypeManager->field($field, $instance, $fieldAttributes['id'], $fieldAttributes['name'], $isThemeConfig, $useValues);
         }
     }
     

@@ -1,4 +1,6 @@
-{% import '@woodlets/fieldType.twig' as macros %}
+{% extends '@woodlets/fieldType.twig' %}
+
+{% block field %}
 <div class="woodlets-content-area" data-id="{{ id }}" data-allowed="{{ field.config.allowed|json_encode }}">
     <h4>{{ field.config.label ?: field.name }}</h4>
     <input class="widefat" type="hidden" id="{{ id }}" {{ macros.nameOrLink(customizer, name) }} value="{{ value }}" />
@@ -12,3 +14,4 @@
         </ul>
     </div>
 </div>
+{% endblock %}

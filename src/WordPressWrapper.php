@@ -222,11 +222,15 @@ class WordPressWrapper
         return wp_prepare_attachment_for_js($attachment_id);
     }
 
-    public function getPost() {
-        if(isset($GLOBALS['post'])) {
-            return $GLOBALS['post'];
+    public function getPost($postId = null) {
+        if($postId === null) {
+            if(isset($GLOBALS['post'])) {
+                return $GLOBALS['post'];
+            }
+            return null;
         }
-        return null;
+
+        return get_post($postId);
     }
 
 }

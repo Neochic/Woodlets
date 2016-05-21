@@ -40,7 +40,7 @@ class RichtextEditor extends FieldType
         _WP_Editors::editor_settings('woodlets_tiny_mce', $set);
     }
 
-    protected function __createRenderContext($id, $name, $value, $field, $context, $customizer)
+    protected function __createRenderContext($id, $name, $value, $field, $context, $customizer, $useValues = null)
     {
         $renderContext = call_user_func_array('parent::__createRenderContext', func_get_args());
 

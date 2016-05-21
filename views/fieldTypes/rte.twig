@@ -1,8 +1,10 @@
-{% import '@woodlets/fieldType.twig' as macros %}
+{% extends '@woodlets/fieldType.twig' %}
 
-<div class="woodlets-rte-frame">
-    <label for="{{ id }}">{{ field.config.label ?: field.name }}</label>
-    <div class="wp-editor-container">
-        <textarea class="neochic-woodlets-rte" id="{{ id }}" {{ macros.nameOrLink(customizer, name) }} data-settings="{{ rteSettings|json_encode }}">{{ value }}</textarea>
+{% block field %}
+    <div class="woodlets-rte-frame">
+        <label for="{{ id }}">{{ field.config.label ?: field.name }}</label>
+        <div class="wp-editor-container">
+            <textarea class="neochic-woodlets-rte" id="{{ id }}" {{ macros.nameOrLink(customizer, name) }} data-settings="{{ rteSettings|json_encode }}">{{ value }}</textarea>
+        </div>
     </div>
-</div>
+{% endblock %}
