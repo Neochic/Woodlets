@@ -19,7 +19,6 @@ class EditorManager
 
     public function getEditor()
     {
-        $this->wpWrapper->enableThickbox();
         $template = $this->twig->loadTemplate('@woodlets/editor.twig');
 
         $config = $this->templateManager->getConfiguration();

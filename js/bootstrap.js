@@ -1,4 +1,4 @@
-/* globals document */
+/* globals document, jQuery */
 
 requirejs([
     'jquery',
@@ -39,5 +39,36 @@ requirejs([
     var $pageSections = $("[id^='neochic-woodlets-page_section_']");
     $pageSections.each(function() {
       $(this).trigger('neochic-woodlets-form-init', $(this));
+    });
+
+    /*
+     * init widgets for sidebars
+     */
+
+    /*
+     * we need to use the WordPress jQuery to listen to WordPress events
+     * therefor global jQuery is used instead of local $
+     *
+     * todo: we need to find a good and reliable solution for widget
+     *       initialization
+     */
+    var initWidgets = function() {
+        $('.widget:not(#available-widgets .widget)')
+            .filter('[id*="neochic_woodlets"]')
+            .find('.widget-content')
+            .each(function () {
+                if ($(this).contents().get(0).nodeValue !== ' woodlets initialized ') {
+                    $(this).prepend('<!-- woodlets initialized -->');
+                    $(this).trigger('neochic-woodlets-form-init', $(this));
+                }
+            });
+    };
+
+    if($('.widget-liquid-right').length) {
+        initWidgets();
+    }
+
+    jQuery(document).on('widget-added widget-updated', function() {
+        initWidgets();
     });
 });

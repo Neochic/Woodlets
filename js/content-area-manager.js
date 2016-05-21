@@ -98,6 +98,11 @@ define([
 
         $areas.on('click', 'li:not(.no-elements)', function (e) {
             /*
+             * stop propagation to prevent widget getting collapsed by WordPress
+             */
+            e.stopPropagation();
+
+            /*
              * do not open widget form if an action (like "delete") is clicked
              */
             if ($(e.target).closest('.row-actions').length > 0) {

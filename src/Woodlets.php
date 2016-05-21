@@ -86,7 +86,9 @@ class Woodlets
 
         $this->wpWrapper->addAction('admin_enqueue_scripts', function ($hook) {
             $isCustomize = ($hook === 'widgets.php' && $this->wpWrapper->pageNow() === 'customize.php');
-            if (in_array($hook, array('post-new.php', 'post.php')) || $isCustomize) {
+            $isWidgets = ($hook === 'widgets.php' && $this->wpWrapper->pageNow() === 'widgets.php');
+
+            if (in_array($hook, array('post-new.php', 'post.php')) || $isCustomize || $isWidgets) {
                 $this->container['scriptsManager']->addScripts();
             }
         });
