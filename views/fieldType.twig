@@ -10,11 +10,13 @@
 </p>
 {% endblock %}
 {% if useValues is iterable %}
-<p>
     <input id="{{ id }}_use_value" name="woodlets_page_use_values[]" type="hidden" value="{{ field.name }}" />
-    <label for="{{ id }}_inherit">
-        <input id="{{ id }}_inherit" class="inherit-input" name="woodlets_page_inherit[]" type="checkbox" value="{{ field.name }}"{% if field.name not in useValues %} checked="checked"{% endif %} />
-        Inherit value
-    </label>
-</p>
+    {% if field.config.inherit %}
+        <p>
+            <label for="{{ id }}_inherit">
+                <input id="{{ id }}_inherit" class="inherit-input" name="woodlets_page_inherit[]" type="checkbox" value="{{ field.name }}"{% if field.name not in useValues %} checked="checked"{% endif %} />
+                Inherit value
+            </label>
+        </p>
+    {% endif %}
 {% endif %}

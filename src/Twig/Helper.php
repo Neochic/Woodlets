@@ -74,7 +74,9 @@ class Helper
         foreach($templateConfig['forms'] as $form) {
             $config = $form['config']->getConfig();
             foreach($config['fields'] as $field) {
-                array_push($fields, $field['name']);
+                if(isset($field['config']['inherit']) && $field['config']['inherit']) {
+                    array_push($fields, $field['name']);
+                }
             }
         }
 
