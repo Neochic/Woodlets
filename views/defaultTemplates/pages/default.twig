@@ -2,12 +2,12 @@
 
 {% block form %}
     {{
-    woodlet.addCol('main', 'Main Col',{
+    woodlets.addCol('main', 'Main Col',{
         'allowed': ['text']
     })
     }}
 {% endblock %}
 
 {% block view %}
-    {{ woodlet.getCol('main') }}
+    {{ woodlets.getCol('main') }}
 {% endblock %}

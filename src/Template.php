@@ -11,7 +11,7 @@ class Template
         $configurator = new TemplateConfigurator($widgetManager);
 
         $this->template = $twig->loadTemplate($templateName);
-        $this->template->renderBlock('form', array('woodlet' => $configurator));
+        $this->template->renderBlock('form', array('woodlets' => $configurator));
 
         $this->config = $configurator->getConfig();
         $this->twig = $twig;

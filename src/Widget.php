@@ -17,7 +17,7 @@ class Widget extends WP_Widget implements WidgetInterface
         $configurator = new WidgetConfigurator();
 
         $this->template = $twig->loadTemplate($templateName);
-        $this->template->renderBlock('form', array('woodlet' => $configurator));
+        $this->template->renderBlock('form', array('woodlets' => $configurator));
 
         $this->config = $configurator->getConfig();
         $this->container = $container;
@@ -50,7 +50,7 @@ class Widget extends WP_Widget implements WidgetInterface
             $instance = array();
         }
 
-        $instance['woodlet'] = $this->container['twigHelper'];
+        $instance['woodlets'] = $this->container['twigHelper'];
         echo $this->template->renderBlock('view', $instance);
     }
 

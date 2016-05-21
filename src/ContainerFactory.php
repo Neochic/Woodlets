@@ -11,8 +11,8 @@ class ContainerFactory
 
         $container['dataKey'] = '_neochic-woodlets-data';
 
-        $container['woodlet'] = function ($c) {
-            return new Woodlet($c, $c['wordpressWrapper']);
+        $container['woodlets'] = function ($c) {
+            return new Woodlets($c, $c['wordpressWrapper']);
         };
 
         $container['twig'] = function ($c) {

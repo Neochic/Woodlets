@@ -1,8 +1,8 @@
 {% extends 'layouts/default.twig' %}
 
 {% block view %}
-    {% if woodlet.getPosts()|length %}
-        {% for post in woodlet.getPosts() %}
+    {% if woodlets.getPosts()|length %}
+        {% for post in woodlets.getPosts() %}
             <article>
                 <header>
                     <h2>
@@ -25,7 +25,7 @@
             </article>
         {% endfor %}
         {{
-            woodlet.the_posts_pagination({
+            woodlets.the_posts_pagination({
                 'screen_reader_text': 'posts_navigation_screen_reader_text'|trans('woodlets'),
                 'prev_text': 'posts_navigation_previous_page'|trans('woodlets'),
                 'next_text': 'posts_navigation_next_page'|trans('woodlets')

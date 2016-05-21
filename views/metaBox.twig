@@ -1,7 +1,7 @@
 {% if templates|length %}
 <p>
-    <label for="neochic-woodlet-page-template-input"><strong>Template</strong></label>
-    <select class="wide" id="neochic-woodlet-page-template-input" name="neochic_woodlet_template">
+    <label for="neochic-woodlets-page-template-input"><strong>Template</strong></label>
+    <select class="wide" id="neochic-woodlets-page-template-input" name="neochic_woodlets_template">
         {% for key, label in templates %}
             <option value="{{ key }}"{% if key == template %} selected="selected"{% endif %}>{{ label }}</option>
         {% endfor %}
@@ -10,8 +10,8 @@
 {% endif %}
 {# todo: add diable functionality
 <p>
-    <input type="hidden" name="neochic_woodlet_disabled" value="0" />
-    <input type="checkbox" id="neochic-woodlet-disable-input" name="neochic_woodlet_disabled" value="1"{% if disabled %}checked="checked"{% endif %} />
-    <label for="neochic-woodlet-disable-input">Disable Woodlets for this page.</label>
+    <input type="hidden" name="neochic_woodlets_disabled" value="0" />
+    <input type="checkbox" id="neochic-woodlets-disable-input" name="neochic_woodlets_disabled" value="1"{% if disabled %}checked="checked"{% endif %} />
+    <label for="neochic-woodlets-disable-input">Disable Woodlets for this page.</label>
 </p>
 #}

@@ -1,7 +1,7 @@
 <?php
 namespace Neochic\Woodlets;
 
-class Woodlet
+class Woodlets
 {
     protected $wpWrapper;
     protected $container;

@@ -66,12 +66,12 @@ class EditorManager
         }
 
         //save woodlets settings
-        if (isset($_POST["neochic_woodlet_template"])) {
-            $data['template'] = $_POST["neochic_woodlet_template"];
+        if (isset($_POST["neochic_woodlets_template"])) {
+            $data['template'] = $_POST["neochic_woodlets_template"];
         }
 
-        if (isset($_POST["neochic_woodlet_disabled"])) {
-            $data['disabled'] = $_POST["neochic_woodlet_disabled"];
+        if (isset($_POST["neochic_woodlets_disabled"])) {
+            $data['disabled'] = $_POST["neochic_woodlets_disabled"];
         }
 
         $this->wpWrapper->setPostMeta($data);

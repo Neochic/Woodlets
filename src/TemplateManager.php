@@ -43,9 +43,9 @@ class TemplateManager
          * the template should be rendered directly, else just render the view block.
          */
         if($template->getParent(array()) || !$template->hasBlock('view')) {
-            return $template->render(array('woodlet' => $this->twigHelper));
+            return $template->render(array('woodlets' => $this->twigHelper));
         }
-        return $template->renderBlock('view', array('woodlet' => $this->twigHelper));
+        return $template->renderBlock('view', array('woodlets' => $this->twigHelper));
     }
 
     public function getTemplateName($type = "page")

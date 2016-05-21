@@ -38,6 +38,6 @@ call_user_func(function () {
     $container['autoloader'] = $autoloader;
     $container['basedir'] = __DIR__;
     $container['baseurl'] = plugins_url('', __FILE__);
-    $woodlet = $container['woodlet'];
-    $woodlet->init();
+    $woodlets = $container['woodlets'];
+    $woodlets->init();
 });
