@@ -28,7 +28,15 @@ class Helper
         $this->widgetManager = $widgetManager;
         $this->wpWrapper = $wpWrapper;
         $this->container = $container;
+        $this->reloadPostMeta();
+    }
+
+    public function reloadPostMeta() {
         $this->postMeta = $this->wpWrapper->getPostMeta();
+    }
+
+    public function setPostMeta($postMeta) {
+        $this->postMeta = $postMeta;
     }
 
     public function getPosts()
@@ -142,7 +150,14 @@ class Helper
         while (have_posts()) {
             $post = array();
             the_post();
+
             foreach ($this->loopFunctions as $attribute) {
+                if ($attribute === 'content') {
+                    ob_start();
+                    the_content();
+                    $post[$attribute] = ob_get_clean();
+                    continue;
+                }
                 $post[$attribute] = call_user_func('get_the_' . $attribute);
             }
             $post["comments"] = get_comments();

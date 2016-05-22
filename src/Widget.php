@@ -30,6 +30,13 @@ class Widget extends WP_Widget implements WidgetInterface
 
         $options = array();
 
+        /*
+         * set the number if it's an internal widget
+         */
+        if ($this->isInternal()) {
+            $this->_set(0);
+        }
+
         if(isset($this->config['settings']['description'])) {
             $options['description'] = $this->config['settings']['description'];
         }

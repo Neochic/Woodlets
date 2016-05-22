@@ -31,7 +31,23 @@ class TemplateConfigurator
             $col['allowed'] = array_diff($col['allowed'], $config['disallowed']);
         }
 
+        /*
+         * By default main column is the first added column
+         */
+        if (!isset($this->config['settings']['mainCol'])) {
+            $this->mainCol($id);
+        }
+
         array_push($this->config['columns'], $col);
+        return $this;
+    }
+
+    /*
+     * Define the main column. That column is used to replace the content
+     * of the_content function, which is also used for excerpts
+     */
+    public function mainCol($id) {
+        $this->config['settings']['mainCol'] = $id;
         return $this;
     }
 

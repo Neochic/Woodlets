@@ -53,7 +53,25 @@ class Woodlets
             return str_replace("%", "%%", $editorManager->getEditor());
         });
 
-        $this->wpWrapper->addAction('save_post', function () {
+        $this->wpWrapper->addFilter('content_save_pre', function($content) {
+            if (!$this->wpWrapper->isPage()) {
+                return $content;
+            }
+
+            $data = null;
+
+            if ($this->wpWrapper->pageNow() === 'revision.php' && $_GET['action'] === 'restore') {
+                $data = $this->wpWrapper->getPostMeta(null, $_GET['revision'], true);
+            } else {
+                $data = $this->container['editorManager']->preparePostData();
+            }
+
+            $data = $this->wpWrapper->unslash($data);
+            $this->container['twigHelper']->setPostMeta($data);
+            return $this->container['templateManager']->display(true);
+        });
+
+        $this->wpWrapper->addAction('save_post', function ($postId) {
             $post = $this->wpWrapper->getPost();
 
             //check nonce to prevent XSS
@@ -67,20 +85,34 @@ class Woodlets
             }
 
             $this->container['pageConfigurationManager']->save();
-            $this->container['editorManager']->save();
+            $this->container['editorManager']->save($postId);
         });
 
+        $this->wpWrapper->addAction('wp_restore_post_revision', function($postId, $revisionId) {
+            $this->container['editorManager']->revert($revisionId);
+        }, 90, 2);
+        
         $this->wpWrapper->addAction('add_meta_boxes', function () {
             $this->container['pageConfigurationManager']->addMetaBoxes();
             $this->container['editorManager']->addMetaBox();
         });
 
         $this->wpWrapper->addFilter('the_content', function ($content) {
-            //todo: add disable functionality
-
             if ($this->wpWrapper->isPage()) {
-                return $this->container['templateManager']->display();
+                $this->container['twigHelper']->reloadPostMeta();
+                $templateConfig = $this->container['templateManager']->getConfiguration();
+
+                //if there is no column just display the whole template
+                if (count($templateConfig["columns"]) < 1) {
+                    return $this->container['templateManager']->display(true);
+                }
+
+                //else display the main column
+                ob_start();
+                $this->container['twigHelper']->getCol($templateConfig['settings']['mainCol']);
+                return ob_get_clean();
             }
+
             return $content;
         });
 

@@ -20,7 +20,7 @@ class WordPressWrapper
         return call_user_func_array('apply_filters', $args);
     }
 
-    public function addAction($tag, $function_to_add, $priority = 90) {
+    public function addAction($tag, $function_to_add, $priority = 90, $accepted_args = 1) {
         return call_user_func_array('add_action', func_get_args());
     }
 
@@ -62,8 +62,8 @@ class WordPressWrapper
         return $translation;
     }
 
-    public function getPostMeta($key = null, $postId = null) {
-        if (!is_admin() && !is_singular()) {
+    public function getPostMeta($key = null, $postId = null, $useRevision = false) {
+        if (!is_admin() && !is_singular() && !$this->inTheLoop()) {
             // do not retrieve meta data for first post on list views
             return null;
         }
@@ -76,6 +76,10 @@ class WordPressWrapper
             $postId = $this->getPost() ? $this->getPost()->ID : null;
         }
 
+        if ($useRevision) {
+            return get_metadata('post', $postId, $key, true) ?: array();
+        }
+
         return get_post_meta($postId, $key, true) ?: array();
     }
 
@@ -85,6 +89,13 @@ class WordPressWrapper
         }
         if($postId === null) {
             $postId = $this->getPost()->ID;
+        }
+
+        /*
+         * if it's a revision save it also to the revision
+         */
+        if (wp_is_post_revision($postId)) {
+            add_metadata('post', $postId, $key, $value);
         }
 
         return update_post_meta($postId, $key, $value);
@@ -159,6 +170,10 @@ class WordPressWrapper
         return $post && $post->post_type === 'page';
     }
 
+    public function inTheLoop() {
+        return in_the_loop();
+    }
+
     public function pageNow() {
         if(isset($GLOBALS['pagenow'])) {
             return $GLOBALS['pagenow'];
@@ -175,6 +190,10 @@ class WordPressWrapper
     }
 
     public function getTemplateType() {
+        if (in_the_loop()) {
+            return $this->getPost()->post_type;
+        }
+
         if (is_attachment()) {
             return "attachment";
         }

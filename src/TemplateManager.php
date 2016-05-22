@@ -34,7 +34,7 @@ class TemplateManager
         );
     }
 
-    public function display() {
+    public function display($withoutParent = false) {
         $templateName = $this->getTemplateName($this->wpWrapper->getTemplateType());
         $template = $this->twig->loadTemplate($templateName);
 
@@ -42,9 +42,10 @@ class TemplateManager
          * If template is extending or no view/form block combination is used
          * the template should be rendered directly, else just render the view block.
          */
-        if($template->getParent(array()) || !$template->hasBlock('view')) {
+        if(($template->getParent(array()) && !$withoutParent) || !$template->hasBlock('view')) {
             return $template->render(array('woodlets' => $this->twigHelper));
         }
+
         return $template->renderBlock('view', array('woodlets' => $this->twigHelper));
     }
 

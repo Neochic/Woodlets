@@ -13,7 +13,9 @@
 </head>
 <body {{ woodlets.body_class() }}>
 {% block body %}
-    {% block view %}{% endblock %}
+    {% block content %}
+        {% block view %}{% endblock %}
+    {% endblock %}
     {{ woodlets.wp_footer() }}
 {% endblock %}
 </body>

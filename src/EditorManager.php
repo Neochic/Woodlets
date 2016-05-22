@@ -52,7 +52,7 @@ class EditorManager
         }, ['page', 'post'], 'side', 'core');
     }
 
-    public function save()
+    public function preparePostData()
     {
         $data = $this->_getData();
 
@@ -73,7 +73,19 @@ class EditorManager
             $data['disabled'] = $_POST["neochic_woodlets_disabled"];
         }
 
-        $this->wpWrapper->setPostMeta($data);
+        return $data;
+    }
+
+    public function save($postId)
+    {
+        $data = $this->preparePostData();
+        $this->wpWrapper->setPostMeta($data, null, $postId);
+    }
+
+    public function revert($postId)
+    {
+        $revisionMeta = $this->wpWrapper->getPostMeta(null, $postId, true);
+        return $this->wpWrapper->setPostMeta($revisionMeta);
     }
 
     public function getWidgetPreview($name, $instance)
