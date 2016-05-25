@@ -95,3 +95,5 @@ It works like the ```view```-block, but is used to preview the users content in 
     {% endif %}
 {% endblock %}
 ```
+
+*Note: Your new widget needs to be enabled for a column or widget area to be available in the backend. Lern [how to create page templates](page-templates.md) and enable widgets in their columns.*

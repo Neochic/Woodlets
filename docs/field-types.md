@@ -3,6 +3,15 @@ Woodlets provides a set of the most important field types. They should be fine f
 However it's planned that you can easily write your own field types or install plugins that provide additional field types in future.
 
 ## Available field types
+* [Text](#text)
+* [Textarea](#textarea)
+* [Rich Text Editor](#rich-text-editor)
+* [Selectbox](#selectbox)
+* [Radio-Select](#radio-select)
+* [Checkbox](#checkbox)
+* [WordPress Media Selector](#wordpress-media-selector)
+* [Content Area](#content-area)
+
 ### Text
 The Text type adds a one-line plain-text input element.
 
@@ -141,6 +150,8 @@ The WordPress Media Selector type adds a form control to select items from WordP
 
 ### Content Area
 The Content Area type is the most powerful type in Woodlets so far. It allows you to add a list of widgets into your widget. It works pretty much the same as the columns in the [page templates](page-templates.md).
+
+*Note: Use the ```contentArea()``` method of the [view helper](view-helper.md) to display the widgets in the frontend.*
 
 #### Configuration
 * ```label``` - The label text for the form control.
