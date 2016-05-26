@@ -194,6 +194,13 @@ class WordPressWrapper
             return $this->getPost()->post_type;
         }
 
+        if ($this->pageNow() === 'post-new.php') {
+            if (isset($_REQUEST['post_type'])) {
+                return $_REQUEST['post_type'];
+            }
+            return "post";
+        }
+
         if (is_attachment()) {
             return "attachment";
         }
