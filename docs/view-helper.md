@@ -7,7 +7,8 @@ The view helper object is available as ```woodlets``` in all twig templates, but
 * ```getSidebar($id)``` - Displays the sidebar with the ```$id```. It's a wrapper for ```dynamic_sidebar()``` that checks ```is_active_sidebar()``` automatically.
 * ```getCol($id)``` - Displays the column with the ```$id```.
 * ```getPageConfig()``` - Returns the additional page fields.
-* ```contentArea($config)``` - Displays the content area. Expects the value of the content area field type as parameter.  
+* ```contentArea($config)``` - Displays the content area. Expects the value of the content area field type as parameter.
+* ```isDebug()``` - Returns if the debug mode ([WP_DEBUG](https://codex.wordpress.org/WP_DEBUG)) is enabled.
 
 ## Call global PHP functions
 Since WordPress heavily relies on global PHP functions to access or display data the view helper can be used to access any global PHP function.

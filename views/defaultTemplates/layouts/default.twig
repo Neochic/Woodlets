@@ -10,6 +10,9 @@
         {% block viewport %}
             <meta name="viewport" content="width=device-width, user-scalable=yes">
         {% endblock %}
+        {% block style %}
+            <link rel="stylesheet" href="{{ woodlets.get_stylesheet_uri() }}" type="text/css" media="all" />
+        {% endblock %}
     {% endblock %}
 </head>
 <body {{ woodlets.body_class() }}>

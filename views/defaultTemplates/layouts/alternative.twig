@@ -1,0 +1,23 @@
+{% extends '@woodlets/defaultTemplates/layouts/default.twig' %}
+
+{% block head %}
+    {{ parent() }}
+    {% block favicon %}
+        {% if not woodlets.get_option('site_icon') %}
+            <link rel="shortcut icon" href="{{ woodlets.get_stylesheet_directory_uri() }}/favicon.ico" type="image/x-icon" />
+            <link rel="icon" href="{{ woodlets.get_stylesheet_directory_uri() }}/favicon.ico" type="image/x-icon" />
+        {% endif %}
+    {% endblock %}
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    {% block script %}
+        {% if woodlets.isDebug() %}
+            <script src="{{ woodlets.get_stylesheet_directory_uri() }}/bower_components/requirejs/require.js" data-main="{{ woodlets.get_stylesheet_directory_uri() }}/js/main"></script>
+        {% else %}
+            <script src="{{ woodlets.get_stylesheet_directory_uri() }}/js/main-build.js" type="text/javascript"></script>
+        {% endif %}
+    {% endblock %}
+{% endblock %}

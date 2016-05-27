@@ -134,6 +134,10 @@ class Helper
         }
     }
 
+    public function isDebug() {
+        return $this->wpWrapper->isDebug();
+    }
+
     public function __call($name, $arguments)
     {
         if (!function_exists($name)) {
