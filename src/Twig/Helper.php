@@ -56,7 +56,7 @@ class Helper
 
     public function getCol($id)
     {
-        if ($this->postMeta['cols'] && isset($this->postMeta['cols'][$id])) {
+        if (isset($this->postMeta['cols']) && isset($this->postMeta['cols'][$id])) {
             $this->contentArea($this->postMeta['cols'][$id]);
         }
     }
