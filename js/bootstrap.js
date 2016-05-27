@@ -6,7 +6,8 @@ requirejs([
     'field-type-media',
     'field-type-rte',
     'field-type-content-area',
-    'page-config-inheritance'
+    'page-config-inheritance',
+    'init-external-scripts'
 ], function ($, contentAreaManager) {
     $.noConflict(true);
 
