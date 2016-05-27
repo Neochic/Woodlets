@@ -11,35 +11,37 @@ requirejs([
 ], function ($, contentAreaManager) {
     $.noConflict(true);
 
-    /*
-     * init main content editor
-     */
-    var $editor = $('.neochic-woodlets-editor');
-    var $input = $editor.children('input[name=neochic_woodlets_data]');
+    $(document).ready(function() {
+        /*
+         * init main content editor
+         */
+        var $editor = $('.neochic-woodlets-editor');
+        var $input = $editor.children('input[name=neochic_woodlets_data]');
 
-    if ($editor) {
-        $('body').addClass('neochic-woodlets-editor-active');
-    }
+        if ($editor) {
+            $('body').addClass('neochic-woodlets-editor-active');
+        }
 
-    contentAreaManager($('.neochic-woodlets-col'), function(data) {
-        $input.val(JSON.stringify(data));
-    });
+        contentAreaManager($('.neochic-woodlets-col'), function(data) {
+            $input.val(JSON.stringify(data));
+        });
 
-    /*
-     * init customizer
-     */
-    var $cc = $('#customize-controls');
-    if($cc.length) {
-        $(document).trigger('neochic-woodlets-form-init', $cc);
-    }
+        /*
+         * init customizer
+         */
+        var $cc = $('#customize-controls');
+        if($cc.length) {
+            $(document).trigger('neochic-woodlets-form-init', $cc);
+        }
 
-    /*
-     * init page config
-     */
+        /*
+         * init page config
+         */
 
-    var $pageSections = $("[id^='neochic-woodlets-page_section_']");
-    $pageSections.each(function() {
-      $(this).trigger('neochic-woodlets-form-init', $(this));
+        var $pageSections = $("[id^='neochic-woodlets-page_section_']");
+        $pageSections.each(function() {
+          $(this).trigger('neochic-woodlets-form-init', $(this));
+        });
     });
 
     /*
@@ -65,9 +67,11 @@ requirejs([
             });
     };
 
-    if($('.widget-liquid-right').length) {
-        initWidgets();
-    }
+    $(document).ready(function() {
+        if($('.widget-liquid-right').length) {
+            initWidgets();
+        }
+    });
 
     jQuery(document).on('widget-added widget-updated', function() {
         initWidgets();
