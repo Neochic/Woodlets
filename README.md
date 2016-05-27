@@ -23,10 +23,10 @@ Woodlets is not yet registered at packagist, therefore it has to be added to "re
       "package": {
         "name": "neochic/woodlets",
         "type": "wordpress-plugin",
-        "version": "0.1.0",
+        "version": "0.1.1",
         "dist": {
           "type": "zip",
-          "url": "https://github.com/Neochic/Woodlets/releases/download/v0.1.0/woodlets-v0.1.0.zip"
+          "url": "https://github.com/Neochic/Woodlets/releases/download/v0.1.1/woodlets-v0.1.1.zip"
         },
         "require": {
           "twig/twig": "^1.19",
@@ -42,11 +42,11 @@ Woodlets is not yet registered at packagist, therefore it has to be added to "re
     }
   ],
   "require": {
-    "neochic/woodlets": "~0.1.0"
+    "neochic/woodlets": "~0.1.1"
   }
 }
 ```
-Don't forget to replace 0.1.0 with the current release if a more recent one is available. You can find the latest release on [releases page](https://github.com/Neochic/Woodlets/releases).
+Don't forget to replace 0.1.1 with the current release if a more recent one is available. You can find the latest release on [releases page](https://github.com/Neochic/Woodlets/releases).
 ### Install manually
 1. Go to [releases page](https://github.com/Neochic/Woodlets/releases) and download the latest bundled release.
 2. Extract the zip archive to your WordPress plugins directory (usually "wp-content/plugins/").
