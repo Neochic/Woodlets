@@ -47,7 +47,7 @@ The Textarea type adds a multi-line plain-text input element.
 ### Rich Text Editor
 The Rich Text Editor type adds a form control that shows a form control with the WordPress bundled TinyMCE.
 
-*Note: You may use ```neochic_woodlets_rte_settings```-filter to set default settings for your Rich Text Editors. Read more on [actions and filters page](docs/actions-and-filters.md).*
+*Note: You may use ```neochic_woodlets_rte_settings```-filter to set default settings for your Rich Text Editors. Read more on [actions and filters page](actions-and-filters.md).*
 
 #### Configuration
 * ```label``` - The label text for the form control.

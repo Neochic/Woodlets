@@ -85,7 +85,7 @@ add_filter('neochic_woodlets_template', function ($template) {
 ```
 
 ####  Rich Text Editor type default settings
-The ```neochic_woodlets_rte_settings``` filter can be used to set the default settings for the [Rich Text Editor type](fielt-types.md#rich-text-editor).
+The ```neochic_woodlets_rte_settings``` filter can be used to set the default settings for the [Rich Text Editor type](field-types.md#rich-text-editor).
 
 ```php
 add_filter('neochic_woodlets_rte_settings', function ($settings) {

@@ -56,10 +56,11 @@ Don't forget to replace 0.1.1 with the current release if a more recent one is a
 1. Be sure Woodlets plugin is [installed](#installation) and activated.
 2. Create a new theme (as [WordPress documentation says](https://codex.wordpress.org/Theme_Development#Basic_Templates) it should at least contain ```style.css``` and ```index.php```)
 3. Put the following lines into your ```index.php```:
-```php
-<?php
-do_action('neochic_woodlets_render_template');
-```
+
+    ```php
+    <?php
+    do_action('neochic_woodlets_render_template');
+    ```
     The action ```neochic_woodlets_render_template``` initializes the template rendering.
 4. Activate your new theme.
 5. Edit a page or create and try the Woodlets column editor.
