@@ -3,8 +3,7 @@ php:
   - 5.4
 install: npm run build --@neochic/woodlets:version=$TRAVIS_TAG
 before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq calibre
+  - sudo -v && wget -nv -O- https://raw.githubusercontent.com/kovidgoyal/calibre/master/setup/linux-installer.py | sudo python -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main()"
   - npm install svgexport -g
 script: npm test
 deploy:
