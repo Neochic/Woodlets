@@ -4,8 +4,8 @@ php:
 install: npm run build --@neochic/woodlets:version=$TRAVIS_TAG
 before_install:
   - sudo -v && wget -nv -O- https://raw.githubusercontent.com/kovidgoyal/calibre/master/setup/linux-installer.py | sudo python -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main()"
-  - sudo chown -R travis:travis /home/travis/.config/configstore/
   - npm install svgexport -g
+  - npm install bower -g
 script: npm test
 deploy:
   provider: releases
