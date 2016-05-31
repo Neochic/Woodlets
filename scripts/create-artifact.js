@@ -29,6 +29,7 @@ var files = [
     'js/main-build.js',
     'src/**/*',
     'views/**/*',
+    'languages/**/*',
     'LICENSE',
     'README.md',
     'woodlets.php'

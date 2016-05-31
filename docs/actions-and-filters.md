@@ -96,7 +96,7 @@ add_filter('neochic_woodlets_rte_settings', function ($settings) {
 ```
 
 #### WordPress Media Selector type default settings
-The ```neochic_woodlets_media_settings``` filter can be used to set the default settings for the [WordPress Media Selector type](fielt-types.md#wordpress-media-selector).
+The ```neochic_woodlets_media_settings``` filter can be used to set the default settings for the [WordPress Media Selector type](field-types.md#wordpress-media-selector).
 
 ```php
 add_filter('neochic_woodlets_media_settings', function ($settings) {
