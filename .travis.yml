@@ -1,7 +1,7 @@
 language: php
 php:
   - 5.4
-install: npm run build --@neochic/woodlets:version=$TRAVIS_TAG
+install: npm run build --@neochic/woodlets:version=${TRAVIS_TAG:-latest}
 before_install:
   - sudo -v && wget -nv -O- https://raw.githubusercontent.com/kovidgoyal/calibre/master/setup/linux-installer.py | sudo python -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main()"
   - npm install svgexport -g
