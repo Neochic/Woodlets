@@ -2,7 +2,8 @@
 **Caution: This plugin is alpha. Everything might change at any time. Please do not use in production yet.  
 However most of functionality is ready to be tested. Feedback and feature requests are welcome!**
 
-Woodlets is a WordPress plugin that makes theme development more productive and fun. The main features are:
+Woodlets is a WordPress plugin that makes theme development more productive and fun.  
+The main features are:
 * Heavily Twig based theme development
 * Create widgets with a single Twig-Template file
 * Multi column page layouts
