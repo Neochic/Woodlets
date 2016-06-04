@@ -14,40 +14,26 @@ The main features are:
 ## Installation
 Installation via composer is recommended. But there is also a bundled version that can be installed manually, since using composer is not that common in the WordPress world.
 ### Install via composer
-Woodlets is not yet registered at packagist, therefore it has to be added to "repositories" manually. *(This will change soon.)*  
+You need to to set [installer path](https://getcomposer.org/doc/faqs/how-do-i-install-a-package-to-a-custom-path-for-my-framework.md) for ```wordpress-plugin``` type.
 ```json
-//composer.json
 {
-  "repositories": [
-    {
-      "type": "package",
-      "package": {
-        "name": "neochic/woodlets",
-        "type": "wordpress-plugin",
-        "version": "0.1.1",
-        "dist": {
-          "type": "zip",
-          "url": "https://github.com/Neochic/Woodlets/releases/download/v0.1.1/woodlets-v0.1.1.zip"
-        },
-        "require": {
-          "twig/twig": "^1.19",
-          "pimple/pimple": "^3.0",
-          "composer/installers": "^1.0"
-        },
-        "autoload": {
-          "psr-4": {
-            "Neochic\\Woodlets\\": "src/"
-          }
+    "extra": {
+        "installer-paths": {
+          "vendor/WordPress/wp-content/plugins/{$name}/": [
+            "type:wordpress-plugin"
+          ]
         }
-      }
     }
-  ],
-  "require": {
-    "neochic/woodlets": "~0.1.1"
-  }
 }
 ```
-Don't forget to replace 0.1.1 with the current release if a more recent one is available. You can find the latest release on [releases page](https://github.com/Neochic/Woodlets/releases).
+
+Install Woodlets via composer:
+```
+composer require neochic/woodlets
+```
+
+Check ["Woodlets Seed"-Theme composer.json](https://github.com/Neochic/Woodlets-Seed/blob/master/composer.json) for a working example.
+
 ### Install manually
 1. Go to [releases page](https://github.com/Neochic/Woodlets/releases) and download the latest bundled release.
 2. Extract the zip archive to your WordPress plugins directory (usually "wp-content/plugins/").
@@ -69,7 +55,7 @@ Don't forget to replace 0.1.1 with the current release if a more recent one is a
 6. Check the content you added in the frontend.
    Woodlets provides very basic layout and page templates as base for your own layouts. Learn [how to create your own page templates](docs/page-templates.md).
 
-For the creation of new Woodlets themes you may download the ["Woodlets Seed"-Theme](https://github.com/Neochic/Woodlets-Seed/releases) instead of starting from scratch.
+For the creation of new Woodlets themes you may download the ["Woodlets Seed"-Theme](https://github.com/Neochic/Woodlets-Seed) instead of starting from scratch.
 It might also be a good idea to take a look at the ["Woodlets Example"-Theme](https://github.com/Neochic/Woodlets-Example).
 
 ### Further Reading:
