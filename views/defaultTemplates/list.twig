@@ -4,24 +4,35 @@
     {% if woodlets.getPosts()|length %}
         {% for post in woodlets.getPosts() %}
             <article>
-                <header>
-                    <h2>
-                        <a href="{{ post.guid }}" rel="bookmark">{{ post.title }}</a>
-                    </h2>
-                </header>
+                {% block postArticle %}
+                    <header>
+                        {% block postHeader %}
+                            <h2>
+                                <a href="{{ post.guid }}" rel="bookmark">{{ post.title }}</a>
+                            </h2>
+                            {% if post.post_thumbnail %}
+                                {{ post.post_thumbnail|raw }}
+                            {% endif %}
+                        {% endblock %}
+                    </header>
 
-                <div class="entry-content">
-                    {{ post.excerpt|raw }}
-                </div>
+                    <div class="entry-content">
+                        {% block postContent %}
+                            {{ post.excerpt|raw }}
+                        {% endblock %}
+                    </div>
 
-                <footer>
-                    <span class="posted-on">
-                        <a href="{{ post.guid }}" rel="bookmark">{{ post.date }}</a>
-                    </span>
-                    <span class="author">
-                        {{ post.author_link }}
-                    </span>
-                </footer>
+                    <footer>
+                        {% block postFooter %}
+                            <span class="posted-on">
+                                <a href="{{ post.guid }}" rel="bookmark">{{ post.date }}</a>
+                            </span>
+                            <span class="author">
+                                {{ post.author_link }}
+                            </span>
+                        {% endblock %}
+                    </footer>
+                {% endblock %}
             </article>
         {% endfor %}
         {{

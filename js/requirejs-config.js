@@ -1,4 +1,4 @@
-require.config({
+var localRequire = requirejs.config({
     paths: {
         'jquery': '../bower_components/jquery/dist/jquery',
         'jquery-ui.sortable': '../bower_components/jquery-ui/ui/sortable',
@@ -22,3 +22,8 @@ require.config({
     wrap: true,
     findNestedDependencies: true
 });
+
+//make requirejs sync
+requirejs.s.contexts._.nextTick = function (fn) {
+    fn();
+};

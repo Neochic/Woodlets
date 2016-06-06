@@ -13,7 +13,8 @@ class Helper
         'date',
         'author',
         'author_link',
-        'author_posts_link'
+        'author_posts_link',
+        'post_thumbnail'
     );
 
     protected $posts = null;
@@ -164,7 +165,7 @@ class Helper
                 }
                 $post[$attribute] = call_user_func('get_the_' . $attribute);
             }
-            $post["comments"] = get_comments();
+            $post["comments"] = get_comments(array('post_id' => $post['ID']));
             array_push($this->posts, $post);
         }
     }
