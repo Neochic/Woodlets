@@ -1,4 +1,4 @@
-var localRequire = requirejs.config({
+requirejs.config({
     paths: {
         'jquery': '../bower_components/jquery/dist/jquery',
         'jquery-ui.sortable': '../bower_components/jquery-ui/ui/sortable',
