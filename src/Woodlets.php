@@ -19,7 +19,7 @@ class Woodlets
         });
 
         $this->wpWrapper->addAction('plugins_loaded', function () {
-            $this->wpWrapper->loadPluginTextdomain('woodlets', false, $this->container["basedir"] . "/languages");
+            $this->wpWrapper->loadPluginTextdomain('woodlets', false, basename($this->container["basedir"]) . "/languages");
         });
 
         $this->wpWrapper->addAction('widgets_init', function () {
