@@ -1,3 +1,5 @@
+/* globals document */
+
 /*
  * Trivial modal to replace Thickbox from WordPress,
  * since it doesn't work as expected.
