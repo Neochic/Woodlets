@@ -8,8 +8,12 @@ define(['jquery'], function($) {
     var contentFrame = null;
     var closeButton = $('<div class="tb-close-icon">Close</div>');
     var breadCrumbTrail = $('<ul class="woodlets-breadcrumb"></ul>');
-    var $body = $('body');
+    var $body = $();
     var stack = [];
+
+    $(document).ready(function() {
+       $body = $('body');
+    });
 
     var clear = function() {
         $(contentFrame).trigger('neochic-woodlets-modal-stack', contentFrame);
