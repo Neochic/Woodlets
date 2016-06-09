@@ -22,7 +22,7 @@
                 <footer>
                     {% block postFooter %}
                         <span class="posted-on">{{ post.date }}</span>
-                        <span class="author">{{ post.author_link }}</span>
+                        <span class="author">{{ post.author_link|raw }}</span>
                     {% endblock %}
                 </footer>
             {% endblock %}

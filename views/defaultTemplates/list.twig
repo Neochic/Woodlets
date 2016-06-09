@@ -28,7 +28,7 @@
                                 <a href="{{ post.guid }}" rel="bookmark">{{ post.date }}</a>
                             </span>
                             <span class="author">
-                                {{ post.author_link }}
+                                {{ post.author_link|raw }}
                             </span>
                         {% endblock %}
                     </footer>
