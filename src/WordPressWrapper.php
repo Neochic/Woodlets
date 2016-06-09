@@ -201,6 +201,10 @@ class WordPressWrapper
             return "post";
         }
 
+        if ($this->pageNow() === 'post.php') {
+            return $this->getPost()->post_type;
+        }
+
         if (is_attachment()) {
             return "attachment";
         }
