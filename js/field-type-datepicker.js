@@ -3,7 +3,7 @@
  * Datepicker field type.
  */
 
-/* globals document */
+/* globals document, window */
 
 define(['jquery', 'native-change', 'jquery-ui.datepicker'], function($, nativeChange) {
     function init(form) {
