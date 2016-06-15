@@ -14,7 +14,8 @@ class Helper
         'author',
         'author_link',
         'author_posts_link',
-        'post_thumbnail'
+        'post_thumbnail',
+        'permalink'
     );
 
     protected $posts = null;

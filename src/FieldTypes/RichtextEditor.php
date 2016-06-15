@@ -15,11 +15,6 @@ class RichtextEditor extends FieldType
             'toolbar1' => 'bold, italic, underline, strikethrough, bullist, numlist, link, unlink, removeformat',
             'toolbar2' => ''
         ));
-
-        /*
-         * load tinymce scripts via WordPress
-         */
-        $this->__loadTinyMce();
     }
 
     protected function __loadTinyMce()
@@ -38,6 +33,16 @@ class RichtextEditor extends FieldType
         ));
 
         _WP_Editors::editor_settings('woodlets_tiny_mce', $set);
+    }
+
+
+    public function input( $twig, $id, $name, $value, $field, $context, $customizer = false, $useValues = null) {
+        /*
+         * load tinymce scripts via WordPress
+         */
+        $this->__loadTinyMce();
+
+        return call_user_func_array('parent::__construct', func_get_args());
     }
 
     protected function __createRenderContext($id, $name, $value, $field, $context, $customizer, $useValues = null)
