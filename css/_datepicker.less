@@ -1,0 +1,67 @@
+.neochic-woodlets-date-jquery-ui {
+  display: none;
+}
+
+.neochic-woodlets-date-fallback {
+  .neochic-woodlets-date {
+    display: none;
+  }
+
+  .neochic-woodlets-date-jquery-ui {
+    display: inline-block;
+  }
+}
+
+.neochic-woodlets-datepicker {
+  z-index:100061 !important;
+  background-color: #fff;
+  padding: 10px;
+  border:1px solid #e5e5e5;
+  box-shadow: 0 1px 1px rgba(0,0,0,.04);
+
+  .wp-customizer & {
+    z-index:500002 !important;
+  }
+
+  .ui-datepicker-prev, .ui-datepicker-next {
+    display: inline-block;
+    cursor: pointer;
+    width: 50%;
+  }
+
+  .ui-datepicker-next {
+    text-align: right;
+  }
+
+  .ui-datepicker-title {
+    font-weight: 700;
+    font-size: 14px;
+    display: block;
+    margin: 5px 0 10px;
+    text-align: center;
+  }
+
+  .ui-state-active {
+    color: #fff;
+    background-color: #0085ba;
+  }
+
+  thead {
+    background-color: #f5f5f5;
+
+    span {
+      text-align: center;
+      display: block;
+      padding: 5px;
+    }
+  }
+
+  table {
+    border-collapse: collapse;
+    a {
+      text-align: center;
+      display: block;
+      padding: 5px;
+    }
+  }
+}

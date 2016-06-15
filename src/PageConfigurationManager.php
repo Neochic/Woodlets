@@ -56,6 +56,8 @@ class PageConfigurationManager
         $inherit = isset($_POST["woodlets_page_inherit"]) ? $_POST["woodlets_page_inherit"] : array();
         $data['useValues'] = array_diff($useValues, $inherit);
 
+        $data = $this->wpWrapper->applyFilters('save_page_data', $data);
+
         $this->wpWrapper->setPostMeta($data);
     }
 }

@@ -5,6 +5,7 @@ requirejs([
     'content-area-manager',
     'field-type-media',
     'field-type-rte',
+    'field-type-datepicker',
     'field-type-content-area',
     'page-config-inheritance',
     'init-external-scripts'

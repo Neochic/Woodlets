@@ -5,6 +5,7 @@ requirejs.config({
         'jquery-ui.core': '../bower_components/jquery-ui/ui/core',
         'jquery-ui.mouse': '../bower_components/jquery-ui/ui/mouse',
         'jquery-ui.widget': '../bower_components/jquery-ui/ui/widget',
+        'jquery-ui.datepicker': '../bower_components/jquery-ui/ui/datepicker',
         'bluebird': '../bower_components/bluebird/js/browser/bluebird.core'
     },
     shim: {
@@ -17,6 +18,9 @@ requirejs.config({
         },
         'jquery-ui.mouse': {
             'widget': 'jquery-ui.widget'
+        },
+        'jquery-ui.datepicker': {
+            'core': 'jquery-ui.core'
         }
     },
     wrap: true,

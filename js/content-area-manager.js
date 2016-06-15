@@ -1,10 +1,9 @@
 /* globals document, ajaxurl */
 define([
     'jquery',
-    'bluebird',
     'modal',
     'jquery-ui.sortable'
-], function ($, bluebird, modal) {
+], function ($, modal) {
     return function(areas, callback) {
         var $areas = $(areas);
 
