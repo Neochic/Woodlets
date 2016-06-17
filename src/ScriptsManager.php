@@ -14,6 +14,7 @@ class ScriptsManager
 
     public function addScripts() {
         $this->wpWrapper->enableThickbox();
+        $this->wpWrapper->enableMediaUploader();
         $this->wpWrapper->addStyle('main-style', $this->baseurl.'/css/main.css');
 
         if($this->wpWrapper->applyFilters('debug', false)) {

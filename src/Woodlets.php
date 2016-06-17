@@ -125,11 +125,24 @@ class Woodlets
             return $content;
         });
 
+        $this->wpWrapper->addAction( 'show_user_profile', function($user) {
+            $this->container['profileManager']->form($user);
+        });
+        $this->wpWrapper->addAction( 'edit_user_profile', function($user) {
+            $this->container['profileManager']->form($user);
+        });
+        $this->wpWrapper->addAction( 'personal_options_update', function($userId) {
+            $this->container['profileManager']->save($userId);
+        });
+        $this->wpWrapper->addAction( 'edit_user_profile_update', function($userId) {
+            $this->container['profileManager']->save($userId);
+        });
+
         $this->wpWrapper->addAction('admin_enqueue_scripts', function ($hook) {
             $isCustomize = ($hook === 'widgets.php' && $this->wpWrapper->pageNow() === 'customize.php');
             $isWidgets = ($hook === 'widgets.php' && $this->wpWrapper->pageNow() === 'widgets.php');
 
-            if (in_array($hook, array('post-new.php', 'post.php')) || $isCustomize || $isWidgets) {
+            if (in_array($hook, array('post-new.php', 'post.php', 'profile.php')) || $isCustomize || $isWidgets) {
                 $this->container['scriptsManager']->addScripts();
             }
         });

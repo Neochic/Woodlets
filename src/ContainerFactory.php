@@ -59,6 +59,10 @@ class ContainerFactory
             return new NoticeManager($c['wordpressWrapper'], $c['twig']);
         };
 
+        $container['profileManager'] = function($c) {
+            return new ProfileManager($c['wordpressWrapper'], $c['twig'], $c['formManager']);
+        };
+
         $container['wordpressWrapper'] = function ($c) {
             return new WordPressWrapper($c['dataKey']);
         };

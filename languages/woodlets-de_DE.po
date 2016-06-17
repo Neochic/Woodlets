@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2016-05-01 01:29+0100\n"
-"PO-Revision-Date: 2016-06-06 13:18+0200\n"
+"PO-Revision-Date: 2016-06-17 15:54+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -36,3 +36,9 @@ msgstr "Keine Ergebnisse."
 
 msgid "no_search_result_body"
 msgstr "Entschuldigung, aber für die Suchanfrage wurden keine Ergebnisse gefunden."
+
+msgid "profile_headline"
+msgstr "Zusätzliche Informationen"
+
+msgid "profile_additional_details"
+msgstr "Profildetails"

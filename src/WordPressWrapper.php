@@ -101,6 +101,22 @@ class WordPressWrapper
         return update_post_meta($postId, $key, $value);
     }
 
+    public function getUserMeta($userId, $key = null) {
+        if($key === null) {
+            $key = $this->dataKey;
+        }
+
+        return get_user_meta($userId, $key, true) ?: array();
+    }
+
+    public function setUserMeta($userId, $value, $key = null) {
+        if($key === null) {
+            $key = $this->dataKey;
+        }
+
+        return update_user_meta($userId, $key, $value);
+    }
+
     public function addStyle($name, $url) {
         wp_register_style('neochic-woodlets-'.$name, $url, array(), $this->getPluginVersion());
         wp_enqueue_style('neochic-woodlets-'.$name);
@@ -143,6 +159,10 @@ class WordPressWrapper
 
     public function enableThickbox() {
         add_thickbox();
+    }
+    
+    public function enableMediaUploader() {
+        wp_enqueue_media();
     }
 
     public function wpEditor($content, $editor_id, $settings = array()) {
