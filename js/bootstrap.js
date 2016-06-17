@@ -6,6 +6,8 @@ requirejs([
     'field-type-media',
     'field-type-rte',
     'field-type-datepicker',
+    'field-type-location',
+    'debounce',
     'field-type-content-area',
     'page-config-inheritance',
     'init-external-scripts'

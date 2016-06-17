@@ -6,9 +6,14 @@ requirejs.config({
         'jquery-ui.mouse': '../bower_components/jquery-ui/ui/mouse',
         'jquery-ui.widget': '../bower_components/jquery-ui/ui/widget',
         'jquery-ui.datepicker': '../bower_components/jquery-ui/ui/datepicker',
-        'bluebird': '../bower_components/bluebird/js/browser/bluebird.core'
+        'bluebird': '../bower_components/bluebird/js/browser/bluebird.core',
+        'async': '../bower_components/requirejs-plugins/src/async',
+        'jquery-locationpicker': '../bower_components/jquery-locationpicker-plugin/src/locationpicker.jquery'
     },
     shim: {
+        'jquery-locationpicker': {
+            deps: ['jquery', 'async!https://maps.googleapis.com/maps/api/js?libraries=places']
+        }
     },
     map: {
         'jquery-ui.sortable': {

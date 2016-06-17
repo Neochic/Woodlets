@@ -16,6 +16,8 @@
     "jquery": "~2.1.4",
     "jquery-ui": "~1.11.4",
     "lesshat": "~3.0.2",
-    "bluebird": "^3.3.5"
+    "bluebird": "^3.3.5",
+    "requirejs-plugins": "^1.0.3",
+    "jquery-locationpicker-plugin": "Logicify/jquery-locationpicker-plugin#^0.1.12"
   }
 }
