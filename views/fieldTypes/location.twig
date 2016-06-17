@@ -12,22 +12,25 @@
 
 {% block input %}
     <div class="neochic-woodlets-location-picker">
-        <input class="neochic-woodlets-location-search" type="text"/>
+        <input id="{{ id }}" class="neochic-woodlets-location-search" type="text"/>
         <input class="neochic-woodlets-location-change-listener-helper-lat" type="hidden" />
         <input class="neochic-woodlets-location-change-listener-helper-lng" type="hidden" />
-        <input class="neochic-woodlets-location-value" type="hidden" id="{{ id }}" {{ macros.nameOrLink(customizer, name) }} value="{{ value }}" />
+        <input class="neochic-woodlets-location-value" type="hidden" {{ macros.nameOrLink(customizer, name) }} value="{{ value }}" />
         <div class="map-pane" style="height:400px;"></div>
-        <div class="neochic_container">
-            <div>
-                {{ functions.previewField("streetName", "street") }}
-                {{ functions.previewField("streetNumber", "street_number") }}
-                {{ functions.previewField("city", "city") }}
+        <fieldset>
+            <legend>{{ "location_saved_data"|trans("woodlets") }}</legend>
+            <div class="neochic_container">
+                <div>
+                    {{ functions.previewField("streetName", "street") }}
+                    {{ functions.previewField("streetNumber", "street_number") }}
+                    {{ functions.previewField("city", "city") }}
+                </div>
+                <div>
+                    {{ functions.previewField("zip", "zip") }}
+                    {{ functions.previewField("state", "state") }}
+                    {{ functions.previewField("country", "country") }}
+                </div>
             </div>
-            <div>
-                {{ functions.previewField("zip", "zip") }}
-                {{ functions.previewField("state", "state") }}
-                {{ functions.previewField("country", "country") }}
-            </div>
-        </div>
+        </fieldset>
     </div>
 {% endblock %}
