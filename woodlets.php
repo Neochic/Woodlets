@@ -3,7 +3,7 @@
 Plugin Name: Woodlets
 Description: Create WordPress Widgets using Twig Templates
 Author: Christoph Stickel <christoph@neochic.de>
-Version: 0.1.8
+Version: 0.1.9
 Author URI: http://www.neochic.de/
 Text Domain: Neochic\Woodlets
 */
