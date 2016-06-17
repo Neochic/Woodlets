@@ -1,0 +1,11 @@
+{% extends '@woodlets/fieldType.twig' %}
+
+{% block input %}
+    <div class="neochic-woodlets-location-picker">
+        <input class="neochic-woodlets-location-search" type="text"/>
+        <input class="neochic-woodlets-location-change-listener-helper-lat" type="hidden" />
+        <input class="neochic-woodlets-location-change-listener-helper-lng" type="hidden" />
+        <input class="neochic-woodlets-location-value" type="hidden" id="{{ id }}" {{ macros.nameOrLink(customizer, name) }} value="{{ value }}" />
+        <div class="map-pane" style="height:400px;"></div>
+    </div>
+{% endblock %}
