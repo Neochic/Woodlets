@@ -29,6 +29,13 @@ define([
             var mapPane = e.find(".map-pane");
             var savedData;
 
+            var streetNumberPreview = e.find("input.streetNumber");
+            var streetNamePreview = e.find("input.streetName");
+            var cityPreview = e.find("input.city");
+            var statePreview = e.find("input.state");
+            var zipPreview = e.find("input.zip");
+            var countryPreview = e.find("input.country");
+
             searchInput.on("keypress", function(e) {
                 if (e.keyCode === 13) {
                     e.preventDefault();
@@ -113,12 +120,12 @@ define([
                 newData.lat = location.latitude;
                 newData.lng = location.longitude;
 
-                $("input.streetNumber").val(newData.streetNumber ? newData.streetNumber : notAvailable);
-                $("input.streetName").val(newData.streetName ? newData.streetName : notAvailable);
-                $("input.city").val(newData.city ? newData.city : notAvailable);
-                $("input.state").val(newData.state ? newData.state : notAvailable);
-                $("input.zip").val(newData.zip ? newData.zip : notAvailable);
-                $("input.country").val(newData.country ? newData.country : notAvailable);
+                streetNumberPreview.val(newData.streetNumber ? newData.streetNumber : notAvailable);
+                streetNamePreview.val(newData.streetName ? newData.streetName : notAvailable);
+                cityPreview.val(newData.city ? newData.city : notAvailable);
+                statePreview.val(newData.state ? newData.state : notAvailable);
+                zipPreview.val(newData.zip ? newData.zip : notAvailable);
+                countryPreview.val(newData.country ? newData.country : notAvailable);
 
                 valueInput.val(JSON.stringify(newData));
             }

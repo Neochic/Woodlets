@@ -4,7 +4,7 @@
 {% macro previewField(class, label) %}
     <div class="post-img">
         <label>
-            {{ label }}
+            {{ ("location_" ~ label)|trans("woodlets") }}
             <input type="text" disabled="disabled" class="{{ class }}" />
         </label>
     </div>
@@ -19,14 +19,14 @@
         <div class="map-pane" style="height:400px;"></div>
         <div class="neochic_container">
             <div>
-                {{ functions.previewField("streetName", "Street") }}
-                {{ functions.previewField("streetNumber", "Street") }}
-                {{ functions.previewField("city", "City") }}
+                {{ functions.previewField("streetName", "street") }}
+                {{ functions.previewField("streetNumber", "street_number") }}
+                {{ functions.previewField("city", "city") }}
             </div>
             <div>
-                {{ functions.previewField("zip", "ZIP") }}
-                {{ functions.previewField("state", "State") }}
-                {{ functions.previewField("country", "Country") }}
+                {{ functions.previewField("zip", "zip") }}
+                {{ functions.previewField("state", "state") }}
+                {{ functions.previewField("country", "country") }}
             </div>
         </div>
     </div>
