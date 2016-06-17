@@ -39,22 +39,23 @@ class Woodlets
             }
 
             //don't replace editor if we're not on page editing page
-            if (!$this->wpWrapper->isPage()) {
+            if (!in_array($this->wpWrapper->pageNow() ,array("post.php", "post-new.php"))) {
                 return $editor;
             }
 
             $editorManager = $this->container['editorManager'];
+            $woodletsEditor = $editorManager->getEditor();
 
-            //todo: add disable functionality
-            //be sure editor should be replaced and
-            //woodlets is not disabled for this page
+            if(!$woodletsEditor) {
+                return $editor;
+            }
 
             //note: escape % because wp is throwing it through printf
-            return str_replace("%", "%%", $editorManager->getEditor());
+            return str_replace("%", "%%", $woodletsEditor);
         });
 
         $this->wpWrapper->addFilter('content_save_pre', function($content) {
-            if (!$this->wpWrapper->isPage()) {
+            if (!in_array($this->wpWrapper->pageNow() ,array("post.php", "post-new.php", "revision.php"))) {
                 return $content;
             }
 
@@ -66,9 +67,17 @@ class Woodlets
                 $data = $this->container['editorManager']->preparePostData();
             }
 
+
+            $templateManager = $this->container['templateManager'];
             $data = $this->wpWrapper->unslash($data);
             $this->container['twigHelper']->setPostMeta($data);
-            return $this->container['templateManager']->display(true);
+
+            $config = $templateManager->getConfiguration();
+            if (!is_array($config["columns"]) || count($config["columns"]) < 1) {
+                return $content;
+            }
+
+            return $templateManager->display(true);
         });
 
         $this->wpWrapper->addAction('save_post', function ($postId) {
