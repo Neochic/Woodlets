@@ -45,6 +45,13 @@ requirejs([
         $pageSections.each(function() {
           $(this).trigger('neochic-woodlets-form-init', $(this));
         });
+
+        /*
+         * init profile page
+         */
+
+        var $profileForm = $(".neochic-woodlets-profile-form");
+        $(this).trigger('neochic-woodlets-form-init', $profileForm);
     });
 
     /*
