@@ -93,8 +93,8 @@ class Woodlets
                 return;
             }
 
-            $this->container['pageConfigurationManager']->save();
             $this->container['editorManager']->save($postId);
+            $this->container['pageConfigurationManager']->save();
         });
 
         $this->wpWrapper->addAction('wp_restore_post_revision', function($postId, $revisionId) {
