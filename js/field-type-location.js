@@ -16,8 +16,6 @@ define([
 
     function init(form) {
 
-        //init map + take care the value gets saved to the field on location picking
-
         form = $(form);
         
         form.find('.neochic-woodlets-location-picker').each(function(i, e) {
