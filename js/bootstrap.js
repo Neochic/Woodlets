@@ -21,7 +21,7 @@ requirejs([
         var $editor = $('.neochic-woodlets-editor');
         var $input = $editor.children('input[name=neochic_woodlets_data]');
 
-        if ($editor) {
+        if ($editor.length) {
             $('body').addClass('neochic-woodlets-editor-active');
         }
 

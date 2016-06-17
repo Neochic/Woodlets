@@ -30,6 +30,10 @@ class EditorManager
             }
         }
 
+        if (!is_array($config["columns"]) || count($config["columns"]) < 1) {
+            return null;
+        }
+
         return $template->render(array(
             'config' => $config,
             'data' => $data['cols'],
