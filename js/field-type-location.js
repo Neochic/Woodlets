@@ -50,7 +50,7 @@ define([
 
             try {
                 savedData = JSON.parse(valueInput.val());
-            } catch(e) {
+            } catch(exception) {
                 savedData = null;
             }
 
@@ -107,7 +107,7 @@ define([
             }
 
         });
-    };
+    }
 
     $(document).on('neochic-woodlets-form-init', function (e, form) {
         init(form);
