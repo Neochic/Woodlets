@@ -1,4 +1,14 @@
 {% extends '@woodlets/fieldType.twig' %}
+{% import _self as functions %}
+
+{% macro previewField(class, label) %}
+    <div class="post-img">
+        <label>
+            {{ label }}
+            <input type="text" disabled="disabled" class="{{ class }}" />
+        </label>
+    </div>
+{% endmacro %}
 
 {% block input %}
     <div class="neochic-woodlets-location-picker">
@@ -7,5 +17,17 @@
         <input class="neochic-woodlets-location-change-listener-helper-lng" type="hidden" />
         <input class="neochic-woodlets-location-value" type="hidden" id="{{ id }}" {{ macros.nameOrLink(customizer, name) }} value="{{ value }}" />
         <div class="map-pane" style="height:400px;"></div>
+        <div class="neochic_container">
+            <div>
+                {{ functions.previewField("streetName", "Street") }}
+                {{ functions.previewField("streetNumber", "Street") }}
+                {{ functions.previewField("city", "City") }}
+            </div>
+            <div>
+                {{ functions.previewField("zip", "ZIP") }}
+                {{ functions.previewField("state", "State") }}
+                {{ functions.previewField("country", "Country") }}
+            </div>
+        </div>
     </div>
 {% endblock %}

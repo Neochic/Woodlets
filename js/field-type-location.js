@@ -48,9 +48,17 @@ define([
                 }
             });
 
+            searchInput.on("keyup", function(){
+                if ($.trim(searchInput.val()) === "") {
+                    searchInput.val("");
+                    valueInput.val(JSON.stringify({}));
+                }
+            });
+
             try {
                 savedData = JSON.parse(valueInput.val());
-            } catch(e) {
+            } catch(exception) {
+                valueInput.val(JSON.stringify({}));
                 savedData = null;
             }
 
@@ -93,9 +101,11 @@ define([
 
             function updateLocationData() {
                 var newData = {};
+                var notAvailable = "";
                 var location = mapPane.locationpicker("map").location;
 
-                newData.street = location.addressComponents.addressLine1;
+                newData.streetNumber = location.addressComponents.streetNumber;
+                newData.streetName = location.addressComponents.streetName;
                 newData.city = location.addressComponents.city;
                 newData.state = location.addressComponents.stateOrProvince;
                 newData.zip = location.addressComponents.postalCode;
@@ -103,11 +113,18 @@ define([
                 newData.lat = location.latitude;
                 newData.lng = location.longitude;
 
+                $("input.streetNumber").val(newData.streetNumber ? newData.streetNumber : notAvailable);
+                $("input.streetName").val(newData.streetName ? newData.streetName : notAvailable);
+                $("input.city").val(newData.city ? newData.city : notAvailable);
+                $("input.state").val(newData.state ? newData.state : notAvailable);
+                $("input.zip").val(newData.zip ? newData.zip : notAvailable);
+                $("input.country").val(newData.country ? newData.country : notAvailable);
+
                 valueInput.val(JSON.stringify(newData));
             }
 
         });
-    };
+    }
 
     $(document).on('neochic-woodlets-form-init', function (e, form) {
         init(form);
