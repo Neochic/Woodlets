@@ -102,10 +102,6 @@ class WordPressWrapper
     }
 
     public function getUserMeta($userId, $key = null) {
-        if($key === null) {
-            $key = $this->dataKey;
-        }
-
         return get_user_meta($userId, $key, true) ?: array();
     }
 

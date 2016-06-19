@@ -19,8 +19,12 @@ class ProfileManager
         $this->wpWrapper->doAction('profile', $profileConfigurator);
         $template = $this->twig->loadTemplate('@woodlets/profile.twig');
 
+        $context = array_map(function ($value) {
+            return $value[0];
+        }, $this->wpWrapper->getUserMeta($user->ID));
+
         ob_start();
-        $this->formManager->form($profileConfigurator->getConfig(), $this->wpWrapper->getUserMeta($user->ID), function($name) {
+        $this->formManager->form($profileConfigurator->getConfig(), $context, function($name) {
             return array(
                 "id" => 'woodlets_profile_' . $name,
                 "name" => 'woodlets_profile['. $name . ']'
@@ -35,7 +39,11 @@ class ProfileManager
 
     function save($userId) {
         if ( current_user_can('edit_user',$userId) ) {
-            $this->wpWrapper->setUserMeta($userId, $_REQUEST['woodlets_profile']);
+            if (isset($_REQUEST['woodlets_profile']) && is_array($_REQUEST['woodlets_profile'])) {
+                foreach($_REQUEST['woodlets_profile'] as $attribute => $value) {
+                    $this->wpWrapper->setUserMeta($userId, $value, $attribute);
+                }
+            }
         }
     }
 }
