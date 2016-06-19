@@ -1,7 +1,7 @@
 /* globals window */
 
 define(function() {
-    
+
     function debounce(func, wait, immediate) {
         var timeout;
         return function() {

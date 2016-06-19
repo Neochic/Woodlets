@@ -4,7 +4,25 @@
   }
   .map-pane {
     height: 400px;
-    margin-top: 20px;
+    margin: 1em 0;
+  }
+  .neochic_container {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin: 10px -10px;
+    > * {
+      position: relative;
+      width: 200px;
+      padding: 0 10px;
+    }
+    input{
+      width: 100%;
+    }
+  }
+  fieldset {
+    padding: 10px;
+    border: 1px solid #eee;
   }
 }
 .pac-container:after{
