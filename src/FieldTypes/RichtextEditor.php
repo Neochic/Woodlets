@@ -42,7 +42,7 @@ class RichtextEditor extends FieldType
          */
         $this->__loadTinyMce();
 
-        return call_user_func_array('parent::__construct', func_get_args());
+        return call_user_func_array('parent::input', func_get_args());
     }
 
     protected function __createRenderContext($id, $name, $value, $field, $context, $customizer, $useValues = null)
