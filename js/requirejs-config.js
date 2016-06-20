@@ -16,6 +16,8 @@ requirejs.config({
         }
     },
     map: {
+        '*': { 'jquery': 'jquery-private' },
+        'jquery-private': { 'jquery': 'jquery' },
         'jquery-ui.sortable': {
             'core': 'jquery-ui.core',
             'mouse': 'jquery-ui.mouse',

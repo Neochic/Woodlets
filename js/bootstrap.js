@@ -12,8 +12,6 @@ requirejs([
     'page-config-inheritance',
     'init-external-scripts'
 ], function ($, contentAreaManager) {
-    $.noConflict(true);
-
     $(document).ready(function() {
         /*
          * init main content editor
