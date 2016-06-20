@@ -3,7 +3,7 @@
 {% block field %}
 <div class="woodlets-content-area" data-id="{{ id }}" data-allowed="{{ field.config.allowed|json_encode }}">
     <h4>{{ field.config.label ?: field.name }}</h4>
-    <input class="widefat" type="hidden" id="{{ id }}" {{ macros.nameOrLink(customizer, name) }} value="{{ value }}" />
+    <input class="widefat" type="hidden" id="{{ id }}" {{ macros.nameOrLink(customizer, name) }} value="{{ value|maybe_json_encode }}" />
     <div>
         <span class="button add-element">Add element</span>
         <ul>

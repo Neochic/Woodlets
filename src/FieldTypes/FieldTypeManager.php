@@ -17,13 +17,17 @@ class FieldTypeManager
             'radio' => new FieldType('radio', 'woodlets'),
             'checkbox' => new FieldType('checkbox', 'woodlets'),
             'date' => new FieldType('date', 'woodlets'),
-            'location' => new FieldType('location', 'woodlets'),
+            'location' => new JsonFieldType('location', 'woodlets'),
             'contentArea' => new ContentArea('contentArea', 'woodlets', $container),
             'rte' => new RichtextEditor('rte', 'woodlets', $wpWrapper),
             'media' => new Media('media', 'woodlets', $wpWrapper)
         );
         
         $this->fieldTypes = $wpWrapper->applyFilters('field_types', $fieldTypes);
+    }
+
+    public function getFieldType($id) {
+        return isset($this->fieldTypes[$id]) ? $this->fieldTypes[$id] : null;
     }
 
     public function getFieldTypes() {

@@ -17,6 +17,9 @@ class FieldType implements FieldTypeInterface
         $this->name = $name;
     }
 
+    public function prepare() {
+    }
+
     public function input( $twig, $id, $name, $value, $field, $context, $customizer = false, $useValues = null) {
         $template = $twig->loadTemplate($this->getTemplateName());
         $renderContext = $this->__createRenderContext($id, $name, $value, $field, $context, $customizer, $useValues);

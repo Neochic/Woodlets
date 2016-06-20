@@ -15,7 +15,7 @@
         <input id="{{ id }}" class="neochic-woodlets-location-search" type="text"/>
         <input class="neochic-woodlets-location-change-listener-helper-lat" type="hidden" />
         <input class="neochic-woodlets-location-change-listener-helper-lng" type="hidden" />
-        <input class="neochic-woodlets-location-value" type="hidden" {{ macros.nameOrLink(customizer, name) }} value="{{ value }}" />
+        <input class="neochic-woodlets-location-value" type="hidden" {{ macros.nameOrLink(customizer, name) }} value="{{ value|maybe_json_encode }}" />
         <div class="map-pane" style="height:400px;"></div>
         <fieldset>
             <legend>{{ "location_saved_data"|trans("woodlets") }}</legend>

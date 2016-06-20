@@ -60,7 +60,7 @@ class ContainerFactory
         };
 
         $container['profileManager'] = function($c) {
-            return new ProfileManager($c['wordpressWrapper'], $c['twig'], $c['formManager']);
+            return new ProfileManager($c['wordpressWrapper'], $c['twig'], $c['fieldTypeManager'], $c['formManager']);
         };
 
         $container['wordpressWrapper'] = function ($c) {

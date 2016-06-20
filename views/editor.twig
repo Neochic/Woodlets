@@ -8,7 +8,7 @@
                 <ul>
                     <li class="no-elements">There are no elements in this column yet.</li>
                     {% for widget in data[col.id] %}
-                        {% include '@woodlets/widgetPreview.twig' with { 'widget':widget.widget, 'instance': widget.instance, 'widgetId': widget.widgetId } only %}
+                        {% include '@woodlets/widgetPreview.twig' with { 'widget':widgets[widget.widgetId], 'instance': widget.instance, 'widgetId': widget.widgetId } only %}
                     {% endfor %}
                 </ul>
             </div>

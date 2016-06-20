@@ -23,7 +23,10 @@ class FormManager
              * maybe this class should be a trait
              */
             $fieldAttributes = $getFieldAttributes($field['name']);
-
+            $fieldType = $this->fieldTypeManager->getFieldType($field['type']);
+            if($fieldType) {
+                $fieldType->prepare();
+            }
             $this->fieldTypeManager->field($field, $instance, $fieldAttributes['id'], $fieldAttributes['name'], $isThemeConfig, $useValues);
         }
     }

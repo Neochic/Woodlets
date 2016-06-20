@@ -23,10 +23,11 @@ class EditorManager
 
         $config = $this->templateManager->getConfiguration();
         $data = $this->_getData();
+        $widgets = array();
 
         foreach ($data['cols'] as $col => $widgets) {
             foreach ($widgets as $key => $widget) {
-                $data['cols'][$col][$key]['widget'] = $this->widgetManager->getWidget($widget['widgetId']);
+                $widgets[$widget['widgetId']] = $this->widgetManager->getWidget($widget['widgetId']);
             }
         }
 
@@ -37,6 +38,7 @@ class EditorManager
         return $template->render(array(
             'config' => $config,
             'data' => $data['cols'],
+            'widgets' => $widgets,
             'ajaxUrl' => $this->wpWrapper->ajaxUrl()
         ));
     }

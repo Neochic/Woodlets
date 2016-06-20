@@ -76,6 +76,15 @@ class TwigFactory
             $twig->addExtension(new Twig_Extension_Debug());
         }
 
+        /*
+         * temporary add a json_encode filter that only encodes, if it's not already json.
+         * just to recover data from old versions.
+         * don't rely on that functionality, since it will be removed in future releases.
+         */
+        $twig->addFilter(new \Twig_SimpleFilter('maybe_json_encode', function ($val) {
+            return is_string($val) ? $val : json_encode($val);
+        }));
+
         $twig = $wpWrapper->applyFilters('twig', $twig);
 
         return $twig;

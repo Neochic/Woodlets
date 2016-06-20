@@ -2,7 +2,7 @@
 
 namespace Neochic\Woodlets\FieldTypes;
 
-class ContentArea extends FieldType
+class ContentArea extends JsonFieldType
 {
     protected $container;
 
@@ -14,7 +14,7 @@ class ContentArea extends FieldType
 
     protected function __createRenderContext($id, $name, $value, $field, $context, $customizer, $useValues = null) {
         $renderContext = call_user_func_array('parent::__createRenderContext', func_get_args());
-        $renderContext["widgets"] = json_decode($value, true);
+        $renderContext["widgets"] = is_string($value) ? json_decode($value, true) : $value;
 
         if ($renderContext["widgets"]) {
             $widgetManager = $this->container["widgetManager"];

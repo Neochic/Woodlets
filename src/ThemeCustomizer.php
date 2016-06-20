@@ -31,11 +31,25 @@ class ThemeCustomizer
     public function addControls() {
         foreach($this->forms as $id => $form) {
             $formConfig = $form->getConfig();
+
             foreach($formConfig['fields'] as $field) {
-                $this->manager->add_setting($field['name']);
+                $this->manager->add_setting($field['name'], array(
+                    'sanitize_callback' => function ($value) use ($field) {
+                        $fieldType = $this->container['fieldTypeManager']->getFieldType($field['type']);
+                        if ($fieldType) {
+                            return $fieldType->update($value, $value, array(
+                                $field['name'] => $value
+                            ), array(
+                                $field['name'] => $value
+                            ));
+                        }
+                        return $value;
+                    }
+                ));
+
                 $this->manager->add_control(new ThemeControl($this->manager, $field['name'], array(
                     'section' => $id,
-                    'settings' => $field['name'],
+                    'settings' => $field['name']
                 ), $field, $this->container));
             }
         }

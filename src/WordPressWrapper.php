@@ -177,6 +177,10 @@ class WordPressWrapper
         return wp_slash($val);
     }
 
+    public function mayBeUnserialize($val) {
+        return maybe_unserialize($val);
+    }
+
     public function isDebug() {
         return WP_DEBUG ? true : false;
     }
