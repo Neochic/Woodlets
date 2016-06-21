@@ -84,7 +84,7 @@ class Woodlets
             $post = $this->wpWrapper->getPost();
 
             //check nonce to prevent XSS
-            if (!isset($_POST['_wpnonce']) || !$this->wpWrapper->verifyNonce($_POST['_wpnonce'], 'update-post_' . $post->ID)) {
+            if (!isset($_POST['_wpnonce']) || !$this->wpWrapper->verifyNonce($_POST['_wpnonce'], 'update-post_' . $postId)) {
                 return;
             }
 
@@ -159,7 +159,7 @@ class Woodlets
         });
 
         $this->wpWrapper->addAction('wp_ajax_neochic_woodlets_get_widget_preview', function () {
-            $instance = $this->wpWrapper->unslash($_REQUEST['instance']);
+            $instance = json_decode($this->wpWrapper->unslash($_REQUEST['instance']), true);
             $widget = $this->wpWrapper->unslash($_REQUEST['widget']);
             echo $this->container['editorManager']->getWidgetPreview($widget, $instance);
             wp_die();
@@ -167,7 +167,7 @@ class Woodlets
 
         $this->wpWrapper->addAction('wp_ajax_neochic_woodlets_get_widget_form', function () {
             $instance = isset($_REQUEST['instance']) ? $_REQUEST['instance'] : array();
-            $instance = $this->wpWrapper->unslash($instance);
+            $instance = json_decode($this->wpWrapper->unslash($instance), true);
             $widgetManager = $this->container['widgetManager'];
             $widget = $widgetManager->getWidget($_REQUEST['widget']);
             if($widget) {

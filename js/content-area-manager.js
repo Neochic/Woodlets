@@ -114,10 +114,11 @@ define([
             var name = $(this).find(".widget-title h4").text();
 
             var el = $(this);
+
             var data = {
                 action: "neochic_woodlets_get_widget_form",
                 widget: widget,
-                instance: $(this).data('instance')
+                instance: JSON.stringify(el.data('instance'))
             };
 
             $.ajax({
@@ -134,14 +135,16 @@ define([
                         data: $(this).serialize() + '&widget=' + widget + '&action=neochic_woodlets_get_widget_update'
                     }).done(function (result) {
                         var instance = $.parseJSON(result);
+
                         el.data('instance', instance);
+
                         $.ajax({
                             method: "post",
                             url: ajaxurl,
                             data: {
                                 "action": "neochic_woodlets_get_widget_preview",
                                 "widget": widget,
-                                "instance": instance
+                                "instance": JSON.stringify(instance)
                             }
                         }).done(function (result) {
                             el.replaceWith(result);
