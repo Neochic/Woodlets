@@ -31,6 +31,7 @@ requirejs.config({
         }
     },
     wrap: true,
+    wrapShim: true,
     findNestedDependencies: true
 });
 
