@@ -3,7 +3,7 @@
  * Location field type.
  */
 
-/* globals document, google */
+/* globals document, google, window */
 
 define([
     "jquery",

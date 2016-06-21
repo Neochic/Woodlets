@@ -1,4 +1,4 @@
-/* globals document, jQuery */
+/* globals document, window */
 
 requirejs([
     'jquery',
