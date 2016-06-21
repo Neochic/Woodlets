@@ -81,7 +81,7 @@ requirejs([
         }
     });
 
-    jQuery(document).on('widget-added widget-updated', function() {
+    window.jQuery(document).on('widget-added widget-updated', function() {
         initWidgets();
     });
 });

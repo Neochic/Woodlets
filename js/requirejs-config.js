@@ -8,11 +8,11 @@ requirejs.config({
         'jquery-ui.datepicker': '../bower_components/jquery-ui/ui/datepicker',
         'bluebird': '../bower_components/bluebird/js/browser/bluebird.core',
         'async': '../bower_components/requirejs-plugins/src/async',
-        'jquery-locationpicker': '../bower_components/jquery-locationpicker-plugin/src/locationpicker.jquery'
+        'jquery-locationpicker': '../bower_components/jquery-locationpicker-plugin/dist/locationpicker.jquery'
     },
     shim: {
         'jquery-locationpicker': {
-            deps: ['jquery', 'async!https://maps.googleapis.com/maps/api/js?libraries=places']
+            deps: ['jquery-private', 'async!https://maps.googleapis.com/maps/api/js?libraries=places']
         }
     },
     map: {

@@ -1,3 +1,5 @@
+var jQuery = null;
 define(['jquery'], function ($) {
-    return $.noConflict(true);
+    jQuery = $.noConflict(true);
+    return jQuery;
 });
