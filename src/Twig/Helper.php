@@ -56,10 +56,10 @@ class Helper
         }
     }
 
-    public function getCol($id)
+    public function getCol($id, $config = array())
     {
         if (isset($this->postMeta['cols']) && isset($this->postMeta['cols'][$id])) {
-            $this->contentArea($this->postMeta['cols'][$id]);
+            $this->contentArea($this->postMeta['cols'][$id], $config);
         }
     }
 
@@ -119,7 +119,7 @@ class Helper
         return $this->pageConfig;
     }
 
-    public function contentArea($widgets) {
+    public function contentArea($widgets, $config = array()) {
         if (is_string($widgets)) {
             $widgets = json_decode($widgets, true);
         }
@@ -130,8 +130,24 @@ class Helper
 
         foreach ($widgets as $widgetData) {
             $widget = $this->widgetManager->getWidget($widgetData['widgetId']);
+
             if($widget) {
-                $widget->widget(null, $widgetData['instance']);
+                $beforeWidget = $data = $this->wpWrapper->applyFilters('before_widget', '<div class="widget %2$s">', $widgetData['widgetId'], $widget);
+                $beforeWoodletsWidget = $data = $this->wpWrapper->applyFilters('woodlets_before_widget', '', $widgetData['widgetId'], $widget);
+
+                $widgetConfig = array_merge(array(
+                    'before_widget' => $beforeWidget,
+                    'after_widget'  => $this->wpWrapper->applyFilters('after_widget', '</div>', $widgetData['widgetId'], $widget),
+                    'before_title'  => $this->wpWrapper->applyFilters('before_title', '<h2>', $widgetData['widgetId'], $widget),
+                    'after_title'   => $this->wpWrapper->applyFilters('after_title', '</h2>', $widgetData['widgetId'], $widget),
+                    'woodlets_before_widget' => $beforeWoodletsWidget,
+                    'woodlets_after_widget'  => $this->wpWrapper->applyFilters('woodlets_after_widget', '', $widgetData['widgetId'], $widget)
+                ), $config, array('woodlets_content_area' => true));
+
+                $widgetConfig['before_widget'] = sprintf($widgetConfig['before_widget'], '', $widget->id_base . '-' . $widget->widget_options['classname']);
+                $widgetConfig['woodlets_before_widget'] = sprintf($widgetConfig['woodlets_before_widget'], '', $widget->id_base . '-' . $widget->widget_options['classname']);
+
+                $widget->widget($widgetConfig, $widgetData['instance']);
             }
         }
     }

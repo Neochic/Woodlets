@@ -143,11 +143,7 @@ class WordPressWrapper
     public function getWidgets() {
         $widgets = array();
         foreach($GLOBALS['wp_widget_factory']->widgets as $widget) {
-            /*
-             * respect alias id for woodlets widgets and use id_base for native WordPress widgets
-             */
-            $key = is_a($widget, '\\Neochic\\Woodlets\\WidgetInterface') ? $widget->getReadableKey() : $widget->id_base;
-            $widgets[$key] = $widget;
+            $widgets[$widget->id_base] = $widget;
         }
 
         return $widgets;

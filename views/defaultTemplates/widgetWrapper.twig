@@ -1,0 +1,11 @@
+{% if woodletsContentArea %}
+    {{ woodletsBeforeWidget|raw }}
+{% else %}
+    {{ beforeWidget|raw }}
+{% endif %}
+{{ widget|raw }}
+{% if woodletsContentArea %}
+    {{ woodletsAfterWidget|raw }}
+{% else %}
+    {{ afterWidget|raw }}
+{% endif %}
