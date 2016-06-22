@@ -26,7 +26,7 @@ class Widget extends WP_Widget implements WidgetInterface
 
         $this->formManager = $formManager;
 
-        $baseId = 'neochic_woodlets_'.strtolower(str_replace('\\', '_', $id));
+        $baseId = $this->config['settings']['id'] ?: 'neochic_woodlets_'.strtolower(str_replace('\\', '_', $id));
 
         $options = array();
 
@@ -48,8 +48,12 @@ class Widget extends WP_Widget implements WidgetInterface
         );
     }
 
+    /*
+     * deprecated
+     * use $id_base
+     */
     public function getReadableKey() {
-        return $this->config['settings']['alias'] ?: $this->id_base;
+        return $this->id_base;
     }
 
     public function widget( $args, $instance ) {
@@ -57,8 +61,23 @@ class Widget extends WP_Widget implements WidgetInterface
             $instance = array();
         }
 
+        $woodletsContentArea = isset($args['woodlets_content_area']) ? $args['woodlets_content_area'] : false;
+
         $instance['woodlets'] = $this->container['twigHelper'];
-        echo $this->template->renderBlock('view', $instance);
+        $instance['beforeTitle'] = $args['before_title'];
+        $instance['afterTitle'] = $args['after_title'];
+        $instance['woodletsContentArea'] = $woodletsContentArea;
+
+        $wrapperTemplate = $this->twig->loadTemplate('widgetWrapper.twig');
+
+        echo $wrapperTemplate->render(array(
+            'beforeWidget' => $args['before_widget'],
+            'afterWidget' => $args['after_widget'],
+            'woodletsBeforeWidget' => isset($args['woodlets_before_widget']) ? $args['woodlets_before_widget'] : '',
+            'woodletsAfterWidget' => isset($args['woodlets_after_widget']) ? $args['woodlets_after_widget'] : '',
+            'woodletsContentArea' => $woodletsContentArea,
+            'widget' => $this->template->renderBlock('view', $instance)
+        ));
     }
 
     public function widgetPreview($instance) {

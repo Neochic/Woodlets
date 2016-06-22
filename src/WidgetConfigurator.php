@@ -10,7 +10,7 @@ class WidgetConfigurator extends FormConfigurator
     {
         parent::__construct();
         $this->config['settings'] = array(
-            'alias' => null,
+            'id' => null,
             'register' => false
         );
     }
@@ -27,9 +27,18 @@ class WidgetConfigurator extends FormConfigurator
         return $this;
     }
 
+    /*
+     * deprecated
+     * use setId()
+     */
     public function setAlias($alias)
     {
-        $this->config['settings']['alias'] = $alias;
+        return $this->setId($alias);
+    }
+
+    public function setId($id)
+    {
+        $this->config['settings']['id'] = $id;
         return $this;
     }
 
