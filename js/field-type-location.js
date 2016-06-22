@@ -3,171 +3,236 @@
  * Location field type.
  */
 
-/* globals document, google, window */
+/* globals document, google */
 
 define([
     "jquery",
     "debounce",
-], function($, debounce) {
+    "modal"
+], function($, debounce, modal) {
+
+    // reusable stuff (performance increase incase of several locationpickers on one page)
     var geocoder = null;
+    var map = null;
+    var overlayContent = null;
+    var searchInput = null;
+    var changeListenerHelperLat = null;
+    var changeListenerHelperLng = null;
+    var mapPane = null;
+    var saveButton = null;
+    var cancelButton = null;
+    var overlayValueInput = null;
+    var overlayPreviewContainer = null;
+    var newData = {};
+    var center = {
+        // Stuttgart
+        latitude: 48.772292,
+        longitude: 9.168389
+    };
 
     function init(form) {
+
         form = $(form);
-        var locationPickers = form.find('.neochic-woodlets-location-picker');
 
-        if (locationPickers.length) {
-            requirejs(["jquery-locationpicker", "async!https://maps.googleapis.com/maps/api/js?libraries=places"], function() {
-                if (!geocoder) {
-                    geocoder = new google.maps.Geocoder();
-                }
-                
-                locationPickers.each(function(i, e) {
+        form.find('.neochic-woodlets-location-picker:not(.initialized)').each(function(i, e) {
+            e = $(e);
+            e.addClass('initialized');
 
-                    e = $(e);
+            if (!overlayContent) {
+                overlayContent = e.find(".neochic-woodlets-location-overlay-content");
+                searchInput = e.find(".neochic-woodlets-location-search");
+                changeListenerHelperLat = e.find(".neochic-woodlets-location-change-listener-helper-lat");
+                changeListenerHelperLng = e.find(".neochic-woodlets-location-change-listener-helper-lng");
+                mapPane = e.find(".map-pane");
+                overlayValueInput = e.find(".neochic-woodlets-location-overlay-value");
+                saveButton = e.find(".button.save");
+                cancelButton = e.find(".button.cancel");
+                overlayPreviewContainer = e.find(".neochic_container");
+            }
 
-                    var valueInput = e.find(".neochic-woodlets-location-value");
-                    var searchInput = e.find(".neochic-woodlets-location-search");
-                    var changeListenerHelperLat = e.find(".neochic-woodlets-location-change-listener-helper-lat");
-                    var changeListenerHelperLng = e.find(".neochic-woodlets-location-change-listener-helper-lng");
-                    var mapPane = e.find(".map-pane");
-                    var savedData;
-                    var initialLocationSetup = true;
+            var valueInput = e.find(".neochic-woodlets-location-value");
+            var openOverlayButton = e.find(".neochic-woodlets-location-pick-location");
+            var previewContainer = e.children(".preview-container");
+            var locationData;
+            var initialLocationSetup = true;
 
-                    var streetNumberPreview = e.find("input.streetNumber");
-                    var streetNamePreview = e.find("input.streetName");
-                    var cityPreview = e.find("input.city");
-                    var statePreview = e.find("input.state");
-                    var zipPreview = e.find("input.zip");
-                    var countryPreview = e.find("input.country");
+            try {
+                locationData = JSON.parse(valueInput.val());
+                updatePreview(locationData, previewContainer);
+            } catch(exception) {
+                clearData(previewContainer);
+            }
 
-                    searchInput.on("keypress", function(e) {
-                        if (e.keyCode === 13) {
-                            e.preventDefault();
-                            geocoder.geocode({
-                                address: searchInput.val()
-                            }, function(results, status) {
-                                if (status == google.maps.GeocoderStatus.OK) {
-                                    var result = results.shift();
-                                    if(result !== null) {
-                                        mapPane.locationpicker("location", {
-                                            latitude: result.geometry.location.lat(),
-                                            longitude: result.geometry.location.lng()
-                                        });
+            var gotStartLocation;
+            var startLocation;
+
+            defaultLocation(locationData);
+
+            openOverlayButton.add(previewContainer).on("click", function(e) {
+                initialLocationSetup = true;
+                e.preventDefault();
+                modal.open(overlayContent, overlayContent.data("title"));
+
+                requirejs(["jquery-locationpicker", "async!https://maps.googleapis.com/maps/api/js?libraries=places"], function() {
+
+                    if (!map) {
+
+                        geocoder = new google.maps.Geocoder();
+
+                        searchInput.on("keypress", function(e) {
+                            if (e.keyCode === 13) {
+                                e.preventDefault();
+                                geocoder.geocode({
+                                    address: searchInput.val()
+                                }, function(results, status) {
+                                    if (status == google.maps.GeocoderStatus.OK) {
+                                        var result = results.shift();
+                                        if(result !== null) {
+                                            mapPane.locationpicker("location", {
+                                                latitude: result.geometry.location.lat(),
+                                                longitude: result.geometry.location.lng()
+                                            });
+                                        }
                                     }
+                                });
+                            }
+                        });
+                        searchInput.on("keyup", function(){
+                            if ($.trim(searchInput.val()) === "") {
+                                clearData(overlayPreviewContainer);
+                            }
+                        });
+
+                        mapPane.locationpicker({
+                            location: startLocation,
+                            radius: 0,
+                            zoom: gotStartLocation ? 17 : 5,
+                            scrollwheel: true,
+                            inputBinding: {
+                                locationNameInput: searchInput,
+                                latitudeInput: changeListenerHelperLat,
+                                longitudeInput: changeListenerHelperLng
+                            },
+                            enableAutocomplete: true,
+                            enableReverseGeocode: true,
+                            onchanged: updateLocationData,
+                            oninitialized: function(){
+                                updateLocationData();
+                                map = mapPane.locationpicker("map").map;
+
+                                google.maps.event.addListener(map, 'click', function (event) {
+                                    mapPane.locationpicker("location", {
+                                        latitude: event.latLng.lat(),
+                                        longitude: event.latLng.lng()
+                                    });
+                                });
+
+                            }
+                        });
+
+                        changeListenerHelperLat.add(changeListenerHelperLng).on("change", debounce(function() {
+                            if (initialLocationSetup) {
+                                initialLocationSetup = false;
+                                if (!gotStartLocation) {
+                                    clearData(overlayPreviewContainer);
+                                    return;
                                 }
-                            });
-                        }
-                    });
+                            }
 
-                    searchInput.on("keyup", function(){
-                        if ($.trim(searchInput.val()) === "") {
-                            clearData(false);
-                        }
-                    });
-
-                    try {
-                        savedData = JSON.parse(valueInput.val());
-                    } catch(exception) {
-                        clearData(true);
-                    }
-
-                    var gotStartLocation = savedData && savedData.lat && savedData.lng;
-
-                    var startLocation = gotStartLocation ? {
-                        latitude: savedData.lat,
-                        longitude: savedData.lng
-                    } : {
-                        // Stuttgart
-                        latitude: 48.772292,
-                        longitude: 9.168389
-                    };
-
-                    mapPane.locationpicker({
-                        location: startLocation,
-                        radius: 0,
-                        zoom: gotStartLocation ? 17 : 5,
-                        scrollwheel: true,
-                        inputBinding: {
-                            locationNameInput: searchInput,
-                            latitudeInput: changeListenerHelperLat,
-                            longitudeInput: changeListenerHelperLng
-                        },
-                        enableAutocomplete: true,
-                        enableReverseGeocode: true,
-                        onchanged: updateLocationData,
-                        oninitialized: function(){
                             updateLocationData();
 
-                            var foo = function(){
-                                google.maps.event.trigger(mapPane.locationpicker("map").map, 'resize');
-                                window.setTimeout(foo, 1000);
-                            };
+                        }, 50));
 
-                            foo();
-                        }
-                    });
+                        cancelButton.on("click", function(){
 
-                    google.maps.event.addListener(mapPane.locationpicker("map").map, 'click', function (event) {
-                        mapPane.locationpicker("location", {
-                            latitude: event.latLng.lat(),
-                            longitude: event.latLng.lng()
+                            modal.close();
                         });
+
+                    } else {
+                        if(gotStartLocation) {
+                            mapPane.locationpicker("location", startLocation);
+                            map.setZoom(17);
+                        } else {
+                            mapPane.locationpicker("location", startLocation);
+                            clearData(overlayPreviewContainer);
+                            map.setCenter({
+                                lat: startLocation.latitude,
+                                lng: startLocation.longitude
+                            });
+                            map.setZoom(5);
+                        }
+                    }
+                    saveButton.off("click");
+                    saveButton.on("click", function(){
+                        valueInput.val(overlayValueInput.val());
+                        var tmp = JSON.parse(valueInput.val());
+                        updatePreview(tmp, previewContainer);
+                        defaultLocation(tmp);
+
+                        modal.close();
                     });
-
-                    changeListenerHelperLat.add(changeListenerHelperLng).on("change", debounce(function() {
-                        if (initialLocationSetup) {
-                            initialLocationSetup = false;
-                            if (!gotStartLocation) {
-                                clearData(false);
-                                return;
-                            }
-                        }
-
-                        updateLocationData();
-
-                    }, 50));
-
-                    function updateLocationData() {
-                        var newData = {};
-                        var location = mapPane.locationpicker("map").location;
-                        mapPane.locationpicker("map").marker.setVisible(true);
-
-                        newData.streetNumber = location.addressComponents.streetNumber;
-                        newData.streetName = location.addressComponents.streetName;
-                        newData.city = location.addressComponents.city;
-                        newData.state = location.addressComponents.stateOrProvince;
-                        newData.zip = location.addressComponents.postalCode;
-                        newData.country = location.addressComponents.country;
-                        newData.lat = location.latitude;
-                        newData.lng = location.longitude;
-
-                        updatePreview(newData);
-
-                        valueInput.val(JSON.stringify(newData));
-                    }
-
-                    function updatePreview(newData) {
-                        var notAvailable = "-";
-                        streetNumberPreview.val(newData.streetNumber ? newData.streetNumber : notAvailable);
-                        streetNamePreview.val(newData.streetName ? newData.streetName : notAvailable);
-                        cityPreview.val(newData.city ? newData.city : notAvailable);
-                        statePreview.val(newData.state ? newData.state : notAvailable);
-                        zipPreview.val(newData.zip ? newData.zip : notAvailable);
-                        countryPreview.val(newData.country ? newData.country : notAvailable);
-                    }
-
-                    function clearData(skipMapUpdate){
-                        searchInput.val("");
-                        valueInput.val(JSON.stringify({}));
-                        savedData = null;
-                        updatePreview({});
-                        if(!skipMapUpdate) {
-                            mapPane.locationpicker("map").marker.setVisible(false);
-                        }
-                    }
 
                 });
             });
+
+            function defaultLocation(data) {
+                gotStartLocation = !!(data && data.lat && data.lng);
+                startLocation = gotStartLocation ? {
+                    latitude: data.lat,
+                    longitude: data.lng
+                } : center;
+            }
+        });
+    }
+
+    function clearData(container){
+        searchInput.val("");
+        overlayValueInput.val(JSON.stringify({}));
+        updatePreview({}, container);
+        if (map) {
+            mapPane.locationpicker("map").marker.setVisible(false);
+        }
+    }
+
+    function updateLocationData() {
+        newData = {};
+        var location = mapPane.locationpicker("map").location;
+        mapPane.locationpicker("map").marker.setVisible(true);
+
+        newData.streetNumber = location.addressComponents.streetNumber;
+        newData.streetName = location.addressComponents.streetName;
+        newData.city = location.addressComponents.city;
+        newData.state = location.addressComponents.stateOrProvince;
+        newData.zip = location.addressComponents.postalCode;
+        newData.country = location.addressComponents.country;
+        newData.lat = location.latitude;
+        newData.lng = location.longitude;
+
+        updatePreview(newData, overlayPreviewContainer);
+
+        overlayValueInput.val(JSON.stringify(newData));
+    }
+
+    function updatePreview(data, container) {
+
+        $.each(["streetNumber", "streetName", "city", "state", "zip", "country"], function(key, val) {
+            var target = container.find("." + val);
+            if (target.is("input")) {
+                target.val(data[val] ? data[val] : "-");
+                return;
+            }
+            target.text(data[val] ? data[val] : "");
+        });
+
+        if (container.is('.preview-container')) {
+            container.children('div').each(function() {
+                $(this).removeClass('hidden');
+                if ($(this).children(':not(:empty)').length === 0) {
+                    $(this).addClass('hidden');
+                }
+            });
+
+            container.toggleClass('has-location', container.children('div:not(.hidden)').length > 0);
         }
     }
 

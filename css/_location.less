@@ -1,4 +1,26 @@
 .neochic-woodlets-location-picker {
+  .neochic-woodlets-location-overlay-content {
+    display: none;
+  }
+
+  .preview-container {
+    margin-bottom: 20px;
+    cursor: pointer;
+
+    div.hidden {
+      display: none;
+    }
+
+    span:empty {
+      display: none;
+    }
+
+    &.has-location i {
+      display: none;
+    }
+  }
+}
+.neochic-woodlets-location-picker, .neochic-woodlets-location-overlay-content {
   input {
     width: 100%;
   }
@@ -24,7 +46,13 @@
     padding: 10px;
     border: 1px solid #eee;
   }
+  .neochic-woodlets-location-button-container {
+    text-align: right;
+    padding-top: 10px;
+  }
 }
+
+
 .pac-container{
   z-index: 600000;
   &:after{

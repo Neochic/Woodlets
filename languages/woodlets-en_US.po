@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: woodlets\n"
 "POT-Creation-Date: 2016-05-01 01:29+0100\n"
-"PO-Revision-Date: 2016-06-17 18:52+0100\n"
+"PO-Revision-Date: 2016-06-22 18:46+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -63,3 +63,9 @@ msgstr "Country"
 
 msgid "location_saved_data"
 msgstr "Saved Data"
+
+msgid "location_pick_location"
+msgstr "Pick Location"
+
+msgid "location_no_location_selected"
+msgstr "No location set. Please pick a location."
