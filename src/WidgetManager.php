@@ -23,7 +23,6 @@ class WidgetManager
             $id = str_replace('/', '\\', substr($template, 1, -5));
             $widget = new Widget($id, $name, $template, $this->container, $this->twig, $this->wpWrapper, $this->formManager);
             if ($widget->isInternal()) {
-                var_dump($widget->id_base);
                 $this->internalWidgets[$widget->id_base] = $widget;
             } else {
                 $this->wpWrapper->registerWidget('Neochic\\Woodlets\\_Widgets\\'.$id, $widget);

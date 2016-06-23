@@ -123,7 +123,7 @@ class Woodlets
             }
 
             return $content;
-        });
+        }, -99999999999999999);
 
         $this->wpWrapper->addAction( 'show_user_profile', function($user) {
             $this->container['profileManager']->form($user);
