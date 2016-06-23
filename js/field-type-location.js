@@ -24,7 +24,7 @@ define([
     var overlayValueInput = null;
     var overlayPreviewContainer = null;
     var newData = {};
-    var center = {
+    var stgt = {
         // Stuttgart
         latitude: 48.772292,
         longitude: 9.168389
@@ -34,25 +34,32 @@ define([
 
         form = $(form);
 
-        form.find('.neochic-woodlets-location-picker:not(.initialized)').each(function(i, e) {
-            e = $(e);
-            e.addClass('initialized');
+        form.find('.neochic-woodlets-location-picker:not(.initialized)').each(function(i, lpc) {
+            lpc = $(lpc);
+            lpc.addClass('initialized');
+
+            var defaultLat = lpc.data("default-lat");
+            var defaultLng = lpc.data("default-lng");
+            var center = (defaultLat && defaultLng) ? {
+                latitude: defaultLat,
+                longitude: defaultLng
+            } : stgt;
 
             if (!overlayContent) {
-                overlayContent = e.find(".neochic-woodlets-location-overlay-content");
-                searchInput = e.find(".neochic-woodlets-location-search");
-                changeListenerHelperLat = e.find(".neochic-woodlets-location-change-listener-helper-lat");
-                changeListenerHelperLng = e.find(".neochic-woodlets-location-change-listener-helper-lng");
-                mapPane = e.find(".map-pane");
-                overlayValueInput = e.find(".neochic-woodlets-location-overlay-value");
-                saveButton = e.find(".button.save");
-                cancelButton = e.find(".button.cancel");
-                overlayPreviewContainer = e.find(".neochic_container");
+                overlayContent = $(lpc.data("overlay-content"));
+                searchInput = overlayContent.find(".neochic-woodlets-location-search");
+                changeListenerHelperLat = overlayContent.find(".neochic-woodlets-location-change-listener-helper-lat");
+                changeListenerHelperLng = overlayContent.find(".neochic-woodlets-location-change-listener-helper-lng");
+                mapPane = overlayContent.find(".map-pane");
+                overlayValueInput = overlayContent.find(".neochic-woodlets-location-overlay-value");
+                saveButton = overlayContent.find(".button.save");
+                cancelButton = overlayContent.find(".button.cancel");
+                overlayPreviewContainer = overlayContent.find(".neochic_container");
             }
 
-            var valueInput = e.find(".neochic-woodlets-location-value");
-            var openOverlayButton = e.find(".neochic-woodlets-location-pick-location");
-            var previewContainer = e.children(".preview-container");
+            var valueInput = lpc.find(".neochic-woodlets-location-value");
+            var openOverlayButton = lpc.find(".neochic-woodlets-location-pick-location");
+            var previewContainer = lpc.children(".preview-container");
             var locationData;
             var initialLocationSetup = true;
 
@@ -71,7 +78,7 @@ define([
             openOverlayButton.add(previewContainer).on("click", function(e) {
                 initialLocationSetup = true;
                 e.preventDefault();
-                modal.open(overlayContent, overlayContent.data("title"));
+                modal.open(overlayContent, lpc.data("title"));
 
                 requirejs(["jquery-locationpicker", "async!https://maps.googleapis.com/maps/api/js?libraries=places"], function() {
 

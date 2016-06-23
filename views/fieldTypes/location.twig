@@ -1,17 +1,52 @@
-{% extends '@woodlets/fieldType.twig' %}
+{% extends "@woodlets/fieldType.twig" %}
 {% import _self as functions %}
 
-{% macro previewField(class, label, values) %}
+{% macro previewField(class, label) %}
     <div class="post-img">
         <label>
-            {{ ("location_" ~ label)|trans("woodlets") }}
-            <input type="text" disabled="disabled" class="{{ class }}" value="{{ values[class]|default("-") }}" />
+            <span>{{ ("location_" ~ label)|trans("woodlets") }}</span>
+            <input type="text" disabled="disabled" class="{{ class }}" />
         </label>
     </div>
 {% endmacro %}
 
+
 {% block field %}
-    <div class="neochic-woodlets-location-picker">
+
+    {% set overlayContent = '<div class="neochic-woodlets-location-overlay-content">
+        <input class="neochic-woodlets-location-search" type="text"/>
+        <input class="neochic-woodlets-location-change-listener-helper-lat" type="hidden" />
+        <input class="neochic-woodlets-location-change-listener-helper-lng" type="hidden" />
+        <input class="neochic-woodlets-location-overlay-value" type="hidden" />
+        <div class="map-pane" style="height:400px;"></div>
+
+        <fieldset>
+            <legend>'~("location_saved_data"|trans("woodlets"))~'</legend>
+            <div class="neochic_container">
+                <div>
+                    '~(functions.previewField("streetName", "street"))~'
+                    '~(functions.previewField("streetNumber", "street_number"))~'
+                    '~(functions.previewField("city", "city"))~'
+                </div>
+                <div>
+                    '~(functions.previewField("zip", "zip"))~'
+                    '~(functions.previewField("state", "state"))~'
+                    '~(functions.previewField("country", "country"))~'
+                </div>
+            </div>
+        </fieldset>
+        <div class="neochic-woodlets-location-button-container">
+            <span class="save button">Save</span>
+            <span class="cancel button">Cancel</span>
+        </div>
+    </div>' %}
+
+    <div class="neochic-woodlets-location-picker"
+         data-title="{{ "location_pick_location"|trans("woodlets") }}"
+         data-overlay-content="{{ overlayContent|spaceless|escape }}"
+         data-default-lat="{{ field.config.default.lat }}"
+         data-default-lng="{{ field.config.default.lng }}">
+
         <h4>{{ field.config.label ?: field.name }}</h4>
         <input class="neochic-woodlets-location-value" type="hidden" {{ macros.nameOrLink(customizer, name) }} value="{{ value|maybe_json_encode }}" />
         <div class="preview-container">
@@ -21,33 +56,5 @@
             <i>{{ "location_no_location_selected"|trans("woodlets") }}</i>
         </div>
         <button class="neochic-woodlets-location-pick-location button">{{ "location_pick_location"|trans("woodlets") }}</button>
-
-        <div class="neochic-woodlets-location-overlay-content" data-title="{{ "location_pick_location"|trans("woodlets") }}">
-            <input class="neochic-woodlets-location-search" type="text"/>
-            <input class="neochic-woodlets-location-change-listener-helper-lat" type="hidden" />
-            <input class="neochic-woodlets-location-change-listener-helper-lng" type="hidden" />
-            <input class="neochic-woodlets-location-overlay-value" type="hidden" />
-            <div class="map-pane" style="height:400px;"></div>
-
-            <fieldset>
-                <legend>{{ "location_saved_data"|trans("woodlets") }}</legend>
-                <div class="neochic_container">
-                    <div>
-                        {{ functions.previewField("streetName", "street", value) }}
-                        {{ functions.previewField("streetNumber", "street_number", value) }}
-                        {{ functions.previewField("city", "city", value) }}
-                    </div>
-                    <div>
-                        {{ functions.previewField("zip", "zip", value) }}
-                        {{ functions.previewField("state", "state", value) }}
-                        {{ functions.previewField("country", "country", value) }}
-                    </div>
-                </div>
-            </fieldset>
-            <div class="neochic-woodlets-location-button-container">
-                <span class="save button">Save</span>
-                <span class="cancel button">Cancel</span>
-            </div>
-        </div>
     </div>
 {% endblock %}
