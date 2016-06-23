@@ -1,6 +1,6 @@
 {% extends 'layouts/post.twig' %}
 
-{% block view %}
+{% block content %}
     {% for post in woodlets.getPosts() %}
         <article>
             {% block postArticle %}
@@ -14,7 +14,7 @@
                     {% endblock %}
                 </header>
                 <div class="entry-content">
-                    {% block postContent %}
+                    {% block view %}
                         {{ post.content|raw }}
                     {% endblock %}
                 </div>

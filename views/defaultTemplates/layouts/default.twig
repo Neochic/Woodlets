@@ -17,8 +17,10 @@
 </head>
 <body {{ woodlets.body_class() }}>
 {% block body %}
-    {% block content %}
-        {% block view %}{% endblock %}
+    {% block layout %}
+        {% block content %}
+            {% block view %}{% endblock %}
+        {% endblock %}
     {% endblock %}
     {{ woodlets.wp_footer() }}
 {% endblock %}
