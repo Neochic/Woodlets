@@ -41,14 +41,6 @@ class RichtextEditor extends FieldType
         return call_user_func_array('parent::prepare', func_get_args());
     }
 
-    public function input( $twig, $id, $name, $value, $field, $context, $customizer = false, $useValues = null) {
-        /*
-         * load tinymce scripts via WordPress
-         */
-
-        return call_user_func_array('parent::input', func_get_args());
-    }
-
     protected function __createRenderContext($id, $name, $value, $field, $context, $customizer, $useValues = null)
     {
         $renderContext = call_user_func_array('parent::__createRenderContext', func_get_args());

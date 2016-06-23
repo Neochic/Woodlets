@@ -6,9 +6,11 @@ class FieldTypeManager
 {
     protected $fieldTypes;
     protected $twig;
+    protected $container;
 
     public function __construct($wpWrapper, $twig, $container) {
         $this->twig = $twig;
+        $this->container = $container;
 
         $fieldTypes = array(
             'text' => new FieldType('text', 'woodlets'),
@@ -46,6 +48,7 @@ class FieldTypeManager
             isset($context[$field['name']]) ? $context[$field['name']] : null,
             $field,
             $context,
+            $this->container['twigHelper'],
             $isThemeConfig,
             $useValues);
     }
