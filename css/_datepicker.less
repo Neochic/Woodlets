@@ -1,67 +1,59 @@
-.neochic-woodlets-date-jquery-ui {
+.input-group.datetime {
   display: none;
 }
 
-.neochic-woodlets-date-fallback {
-  .neochic-woodlets-date {
+.neochic-woodlets-datetime-container {
+  max-width: 320px;
+  display: block;
+}
+
+.neochic-woodlets-datetime-fallback {
+
+  @import (less) '../bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker-standalone.css';
+  @import (less) '../bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css';
+
+  .neochic-woodlets-datetime {
     display: none;
   }
 
-  .neochic-woodlets-date-jquery-ui {
+  .input-group.datetime {
+    display: block;
+    position: relative;
+  }
+  .neochic-woodlets-datetime-replacement, .input-group-addon {
     display: inline-block;
+    height: 27px;
+  }
+  .bootstrap-datetimepicker-widget {
+    left: 0px !important;
+  }
+  .neochic-woodlets-datetime-replacement {
+    width: ~"calc(100% - 28px)";
+  }
+  .input-group-addon {
+    width: 28px;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    border-left: none;
+    vertical-align: top;
+    position: relative;
+    @radius: 2px;
+    border-top-right-radius: @radius;
+    border-bottom-right-radius: @radius;
+    box-sizing: border-box;
+    * {
+      position: absolute;
+      top: 6px;
+      width: 100%;
+      text-align: center;
+      color: #555;
+      font-weight: 100;
+    }
   }
 }
 
-.neochic-woodlets-datepicker {
-  z-index:100061 !important;
-  background-color: #fff;
-  padding: 10px;
-  border:1px solid #e5e5e5;
-  box-shadow: 0 1px 1px rgba(0,0,0,.04);
-
-  .wp-customizer & {
-    z-index:500002 !important;
-  }
-
-  .ui-datepicker-prev, .ui-datepicker-next {
-    display: inline-block;
-    cursor: pointer;
-    width: 50%;
-  }
-
-  .ui-datepicker-next {
-    text-align: right;
-  }
-
-  .ui-datepicker-title {
-    font-weight: 700;
-    font-size: 14px;
-    display: block;
-    margin: 5px 0 10px;
-    text-align: center;
-  }
-
-  .ui-state-active {
-    color: #fff;
-    background-color: #0085ba;
-  }
-
-  thead {
-    background-color: #f5f5f5;
-
-    span {
-      text-align: center;
-      display: block;
-      padding: 5px;
-    }
-  }
-
-  table {
-    border-collapse: collapse;
-    a {
-      text-align: center;
-      display: block;
-      padding: 5px;
-    }
-  }
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('../bower_components/bootstrap/fonts/glyphicons-halflings-regular.eot');
+  src: url('../bower_components/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../bower_components/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../bower_components/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }

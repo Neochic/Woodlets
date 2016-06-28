@@ -18,7 +18,7 @@ class FieldTypeManager
             'select' => new FieldType('select', 'woodlets'),
             'radio' => new FieldType('radio', 'woodlets'),
             'checkbox' => new FieldType('checkbox', 'woodlets'),
-            'date' => new FieldType('date', 'woodlets'),
+            'datetime' => new DatetimeInput('datetime', 'woodlets', $wpWrapper),
             'location' => new JsonFieldType('location', 'woodlets'),
             'contentArea' => new ContentArea('contentArea', 'woodlets', $container),
             'rte' => new RichtextEditor('rte', 'woodlets', $wpWrapper),

@@ -1,0 +1,41 @@
+{% extends '@woodlets/fieldType.twig' %}
+
+{% block field %}
+    {% set type = (field.config.withtime ? (field.config.withdate ? "datetime-local" : "time") : (field.config.withdate ? "date" : false)) %}
+    {% if type %}
+        {% spaceless %}
+            <p>
+                <label for="{{ id }}" class="neochic-woodlets-datetime-container">{{ field.config.label ?: field.name }}
+                    {% block input %}
+                            {% set lang = (woodlets.get_locale()|slice(0, 2)) %}
+                            <input
+                                    class="widefat neochic-woodlets-datetime"
+                                    type="{{ type }}"
+                                    data-type="{{ type }}"
+                                    id="{{ id }}"
+                                    {{ macros.nameOrLink(customizer, name) }}
+                                    value="{{ value }}"
+                                    data-name="{{ field.name }}"
+                                    data-display-format="{{ field.config.format[lang][type].display }}"
+                                    data-save-format="{{ field.config.format[lang][type].save }}"
+                                    data-inputmask-format="{{ field.config.format[lang][type].inputmask }}"
+                                    data-disable-native="{{ field.config.disableNative }}"
+                                    {{ (field.config.endswith ? 'data-endswith="'~field.config.endswith~'"' : null)| raw }}
+                            />
+                        <span class="input-group datetime">
+                            <input
+                                    class="widefat neochic-woodlets-datetime-replacement form-control"
+                                    type="text"
+                                    id="{{ id }}-jquery-ui" />
+
+                            <span class="input-group-addon" tabindex="0" role="button">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </span>
+
+                    {% endblock %}
+                </label>
+            </p>
+        {% endspaceless %}
+    {% endif %}
+{% endblock %}

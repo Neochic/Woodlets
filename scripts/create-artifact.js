@@ -32,7 +32,8 @@ var files = [
     'languages/**/*',
     'LICENSE',
     'README.md',
-    'woodlets.php'
+    'woodlets.php',
+    'bower_components/bootstrap/fonts/*'
 ];
 
 archive.bulk([

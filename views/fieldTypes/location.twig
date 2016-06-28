@@ -10,40 +10,45 @@
     </div>
 {% endmacro %}
 
+{% macro overlayContent() %}
+    {% import _self as functions %}
+    {% spaceless %}
+        <div class="neochic-woodlets-location-overlay-content">
+            <input class="neochic-woodlets-location-search" type="text"/>
+            <input class="neochic-woodlets-location-change-listener-helper-lat" type="hidden" />
+            <input class="neochic-woodlets-location-change-listener-helper-lng" type="hidden" />
+            <input class="neochic-woodlets-location-overlay-value" type="hidden" />
+            <div class="map-pane" style="height:400px;"></div>
+
+            <fieldset>
+                <legend>{{ "location_saved_data"|trans("woodlets") }}</legend>
+                <div class="neochic_container">
+                    <div>
+                        {{ functions.previewField("streetName", "street") }}
+                        {{ functions.previewField("streetNumber", "street_number") }}
+                        {{ functions.previewField("city", "city") }}
+                    </div>
+                    <div>
+                        {{ functions.previewField("zip", "zip") }}
+                        {{ functions.previewField("state", "state") }}
+                        {{ functions.previewField("country", "country") }}
+                    </div>
+                </div>
+            </fieldset>
+            <div class="neochic-woodlets-location-button-container">
+                <span class="save button">Save</span>
+                <span class="cancel button">Cancel</span>
+            </div>
+        </div>
+    {% endspaceless %}
+{% endmacro %}
+
 
 {% block field %}
 
-    {% set overlayContent = '<div class="neochic-woodlets-location-overlay-content">
-        <input class="neochic-woodlets-location-search" type="text"/>
-        <input class="neochic-woodlets-location-change-listener-helper-lat" type="hidden" />
-        <input class="neochic-woodlets-location-change-listener-helper-lng" type="hidden" />
-        <input class="neochic-woodlets-location-overlay-value" type="hidden" />
-        <div class="map-pane" style="height:400px;"></div>
-
-        <fieldset>
-            <legend>'~("location_saved_data"|trans("woodlets"))~'</legend>
-            <div class="neochic_container">
-                <div>
-                    '~(functions.previewField("streetName", "street"))~'
-                    '~(functions.previewField("streetNumber", "street_number"))~'
-                    '~(functions.previewField("city", "city"))~'
-                </div>
-                <div>
-                    '~(functions.previewField("zip", "zip"))~'
-                    '~(functions.previewField("state", "state"))~'
-                    '~(functions.previewField("country", "country"))~'
-                </div>
-            </div>
-        </fieldset>
-        <div class="neochic-woodlets-location-button-container">
-            <span class="save button">Save</span>
-            <span class="cancel button">Cancel</span>
-        </div>
-    </div>' %}
-
     <div class="neochic-woodlets-location-picker"
          data-title="{{ "location_pick_location"|trans("woodlets") }}"
-         data-overlay-content="{{ overlayContent|spaceless|escape }}"
+         data-overlay-content="{{ functions.overlayContent()|escape }}"
          data-default-lat="{{ field.config.default.lat }}"
          data-default-lng="{{ field.config.default.lng }}">
 

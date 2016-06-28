@@ -84,11 +84,7 @@ class TwigFactory
         $twig->addFilter(new \Twig_SimpleFilter('maybe_json_encode', function ($val) {
             return is_string($val) ? $val : json_encode($val);
         }));
-
-        $twig->addFilter(new \Twig_SimpleFilter('spaceless', function ($str) {
-            return trim(preg_replace('/>\s+</', '><', $str));
-        }));
-
+        
         $twig = $wpWrapper->applyFilters('twig', $twig);
 
         return $twig;
