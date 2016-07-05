@@ -56,17 +56,22 @@ class Widget extends WP_Widget implements WidgetInterface
         return $this->id_base;
     }
 
-    public function widget( $args, $instance ) {
-        if(!is_array($instance)) {
+    public function widget($args, $instance) {
+        if (!is_array($instance)) {
             $instance = array();
         }
 
         $woodletsContentArea = isset($args['woodlets_content_area']) ? $args['woodlets_content_area'] : false;
 
+        if (isset($args['context'])) {
+            $instance = array_merge($instance, $args['context']);
+        }
+        
         $instance['woodlets'] = $this->container['twigHelper'];
         $instance['beforeTitle'] = $args['before_title'];
         $instance['afterTitle'] = $args['after_title'];
         $instance['woodletsContentArea'] = $woodletsContentArea;
+
 
         $wrapperTemplate = $this->twig->loadTemplate('widgetWrapper.twig');
 
@@ -80,11 +85,13 @@ class Widget extends WP_Widget implements WidgetInterface
         ));
     }
 
-    public function widgetPreview($instance) {
-        if(!is_array($instance)) {
-            $instance = array();
+    public function widgetPreview($context) {
+        if(!is_array($context)) {
+            $context = array();
         }
-        return $this->template->renderBlock('preview', $instance);
+
+        $context["woodlets"] = $this->container["twigHelper"];
+        return $this->template->renderBlock('preview', $context);
     }
 
     public function form( $instance ) {
