@@ -119,7 +119,7 @@ class Helper
         return $this->pageConfig;
     }
 
-    public function contentArea($widgets, $config = array()) {
+    public function contentArea($widgets, $config = array(), $renderPreview = false) {
         if (is_string($widgets)) {
             $widgets = json_decode($widgets, true);
         }
@@ -147,7 +147,11 @@ class Helper
                 $widgetConfig['before_widget'] = sprintf($widgetConfig['before_widget'], '', $widget->id_base . '-' . $widget->widget_options['classname']);
                 $widgetConfig['woodlets_before_widget'] = sprintf($widgetConfig['woodlets_before_widget'], '', $widget->id_base . '-' . $widget->widget_options['classname']);
 
-                $widget->widget($widgetConfig, $widgetData['instance']);
+                if ($renderPreview) {
+                    echo $widget->widgetPreview($widgetData['instance']);
+                } else {
+                    $widget->widget($widgetConfig, $widgetData['instance']);
+                }
             }
         }
     }
