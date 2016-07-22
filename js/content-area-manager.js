@@ -11,7 +11,7 @@ define([
             var data = {};
             $areas.each(function () {
                 var col = [];
-                $(this).find('li:not(.no-elements)').each(function () {
+                $(this).find('li[data-widget]:not(.no-elements)').each(function () {
                     col.push({
                         "widgetId": $(this).data('widget'),
                         "instance": $(this).data('instance')
