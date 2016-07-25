@@ -18,9 +18,6 @@ requirejs.config({
         "jquery-ui.slider": "../bower_components/jquery-ui/ui/slider"
     },
     shim: {
-        'jquery-locationpicker': {
-            deps: ['jquery-private', 'async!https://maps.googleapis.com/maps/api/js?libraries=places']
-        },
         'bootstrap-datepicker': {
             deps: ['jquery-private', 'moment']
         },

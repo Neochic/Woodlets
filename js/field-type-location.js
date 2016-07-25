@@ -36,8 +36,13 @@ define([
 
         form.find('.neochic-woodlets-location-picker:not(.initialized)').each(function(i, lpc) {
             lpc = $(lpc);
-            lpc.addClass('initialized');
+            var apiKey = lpc.data("api-key");
 
+            if (!apiKey) {
+                return;
+            }
+
+            lpc.addClass('initialized');
             var defaultLat = lpc.data("default-lat");
             var defaultLng = lpc.data("default-lng");
             var center = (defaultLat && defaultLng) ? {
@@ -79,106 +84,107 @@ define([
                 initialLocationSetup = true;
                 e.preventDefault();
                 modal.open(overlayContent, lpc.data("title"));
+                requirejs(["async!https://maps.googleapis.com/maps/api/js?key="+apiKey+"&libraries=places"], function() {
+                    requirejs(["jquery-locationpicker"], function() {
 
-                requirejs(["jquery-locationpicker", "async!https://maps.googleapis.com/maps/api/js?libraries=places"], function() {
+                        if (!map) {
 
-                    if (!map) {
+                            geocoder = new google.maps.Geocoder();
 
-                        geocoder = new google.maps.Geocoder();
-
-                        searchInput.on("keypress", function(e) {
-                            if (e.keyCode === 13) {
-                                e.preventDefault();
-                                geocoder.geocode({
-                                    address: searchInput.val()
-                                }, function(results, status) {
-                                    if (status == google.maps.GeocoderStatus.OK) {
-                                        var result = results.shift();
-                                        if(result !== null) {
-                                            mapPane.locationpicker("location", {
-                                                latitude: result.geometry.location.lat(),
-                                                longitude: result.geometry.location.lng()
-                                            });
+                            searchInput.on("keypress", function(e) {
+                                if (e.keyCode === 13) {
+                                    e.preventDefault();
+                                    geocoder.geocode({
+                                        address: searchInput.val()
+                                    }, function(results, status) {
+                                        if (status == google.maps.GeocoderStatus.OK) {
+                                            var result = results.shift();
+                                            if(result !== null) {
+                                                mapPane.locationpicker("location", {
+                                                    latitude: result.geometry.location.lat(),
+                                                    longitude: result.geometry.location.lng()
+                                                });
+                                            }
                                         }
-                                    }
-                                });
-                            }
-                        });
-                        searchInput.on("keyup", function(){
-                            if ($.trim(searchInput.val()) === "") {
-                                clearData(overlayPreviewContainer);
-                            }
-                        });
-
-                        mapPane.locationpicker({
-                            location: startLocation,
-                            radius: 0,
-                            zoom: gotStartLocation ? 17 : 5,
-                            scrollwheel: true,
-                            inputBinding: {
-                                locationNameInput: searchInput,
-                                latitudeInput: changeListenerHelperLat,
-                                longitudeInput: changeListenerHelperLng
-                            },
-                            enableAutocomplete: true,
-                            enableReverseGeocode: true,
-                            onchanged: updateLocationData,
-                            oninitialized: function(){
-                                updateLocationData();
-                                map = mapPane.locationpicker("map").map;
-
-                                google.maps.event.addListener(map, 'click', function (event) {
-                                    mapPane.locationpicker("location", {
-                                        latitude: event.latLng.lat(),
-                                        longitude: event.latLng.lng()
                                     });
-                                });
-
-                            }
-                        });
-
-                        changeListenerHelperLat.add(changeListenerHelperLng).on("change", debounce(function() {
-                            if (initialLocationSetup) {
-                                initialLocationSetup = false;
-                                if (!gotStartLocation) {
-                                    clearData(overlayPreviewContainer);
-                                    return;
                                 }
+                            });
+                            searchInput.on("keyup", function(){
+                                if ($.trim(searchInput.val()) === "") {
+                                    clearData(overlayPreviewContainer);
+                                }
+                            });
+
+                            mapPane.locationpicker({
+                                location: startLocation,
+                                radius: 0,
+                                zoom: gotStartLocation ? 17 : 5,
+                                scrollwheel: true,
+                                inputBinding: {
+                                    locationNameInput: searchInput,
+                                    latitudeInput: changeListenerHelperLat,
+                                    longitudeInput: changeListenerHelperLng
+                                },
+                                enableAutocomplete: true,
+                                enableReverseGeocode: true,
+                                onchanged: updateLocationData,
+                                oninitialized: function(){
+                                    updateLocationData();
+                                    map = mapPane.locationpicker("map").map;
+
+                                    google.maps.event.addListener(map, 'click', function (event) {
+                                        mapPane.locationpicker("location", {
+                                            latitude: event.latLng.lat(),
+                                            longitude: event.latLng.lng()
+                                        });
+                                    });
+
+                                }
+                            });
+
+                            changeListenerHelperLat.add(changeListenerHelperLng).on("change", debounce(function() {
+                                if (initialLocationSetup) {
+                                    initialLocationSetup = false;
+                                    if (!gotStartLocation) {
+                                        clearData(overlayPreviewContainer);
+                                        return;
+                                    }
+                                }
+
+                                updateLocationData();
+
+                            }, 50));
+
+                            cancelButton.on("click", function(){
+
+                                modal.close();
+                            });
+
+                        } else {
+                            if(gotStartLocation) {
+                                mapPane.locationpicker("location", startLocation);
+                                map.setZoom(17);
+                            } else {
+                                mapPane.locationpicker("location", startLocation);
+                                clearData(overlayPreviewContainer);
+                                map.setCenter({
+                                    lat: startLocation.latitude,
+                                    lng: startLocation.longitude
+                                });
+                                map.setZoom(5);
                             }
-
-                            updateLocationData();
-
-                        }, 50));
-
-                        cancelButton.on("click", function(){
+                        }
+                        saveButton.off("click");
+                        saveButton.on("click", function(){
+                            valueInput.val(overlayValueInput.val());
+                            var tmp = JSON.parse(valueInput.val());
+                            updatePreview(tmp, previewContainer);
+                            defaultLocation(tmp);
 
                             modal.close();
                         });
 
-                    } else {
-                        if(gotStartLocation) {
-                            mapPane.locationpicker("location", startLocation);
-                            map.setZoom(17);
-                        } else {
-                            mapPane.locationpicker("location", startLocation);
-                            clearData(overlayPreviewContainer);
-                            map.setCenter({
-                                lat: startLocation.latitude,
-                                lng: startLocation.longitude
-                            });
-                            map.setZoom(5);
-                        }
-                    }
-                    saveButton.off("click");
-                    saveButton.on("click", function(){
-                        valueInput.val(overlayValueInput.val());
-                        var tmp = JSON.parse(valueInput.val());
-                        updatePreview(tmp, previewContainer);
-                        defaultLocation(tmp);
-
-                        modal.close();
                     });
-
                 });
             });
 
