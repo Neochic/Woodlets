@@ -35,7 +35,7 @@
     text-indent: -99999px;
     position: relative;
     cursor: pointer;
-    margin: 1px 0;
+    margin: 0 0 1px 4px;
     padding: 0;
     padding-top: 0;
     display: none; //will be shown via js if detection is available
@@ -48,12 +48,12 @@
       position: absolute;
       left: 0;
       height: 100%;
-      background-size: auto 82%;
+      background-size: auto 76%;
       top: 0;
     }
     &:hover{
       &:after{
-        .replaceSvgColors("../img/gps_icon.svg"; "#001337", #444444);
+        .replaceSvgColors("../img/gps_icon.svg"; "#001337", #666);
       }
     }
   }
