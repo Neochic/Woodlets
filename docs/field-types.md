@@ -199,10 +199,7 @@ _Not having set a proper API key will break the functionality of location-type f
 ```
 
 ### Datetime
-The Location field-type provides a convenient user interface for saving location data.
-Since it's based on GoogleMaps, as a prerequisite its mandatory to configure a [Google Maps API Key](https://developers.google.com/maps/documentation/javascript/get-api-key) within your ```wp-config.php```, which will be used to retreive the API inside the backend.
-
-_Not having set a proper API key will break the functionality of location-type fields ._
+The Datetime field-type provides inputs for datetime, date and time data. It can be configured to only act as a fallback for given inputs, or to enforce the custom UI regardless of the availability of native inputs within the current browser. There's also the possibility to link two inputs together to act as a date-range input.
 
 #### Configuration
 * ```label``` - The label text for the form control.
