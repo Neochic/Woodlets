@@ -11,6 +11,9 @@ However it's planned that you can easily write your own field types or install p
 * [Checkbox](#checkbox)
 * [WordPress Media Selector](#wordpress-media-selector)
 * [Content Area](#content-area)
+* [Location](#location)
+* [Datetime](#datetime)
+* [Slider](#slider)
 
 ### Text
 The Text type adds a one-line plain-text input element.
@@ -163,6 +166,132 @@ The Content Area type is the most powerful type in Woodlets so far. It allows yo
   woodlets.add('contentArea', 'subelements', {
     'label': 'Widget area',
     'allowed': ['text', 'some-other-widget']
+  })
+}}
+```
+
+### Location
+The Location field-type provides a convenient user interface for saving location data. Since it's based on GoogleMaps, as a prerequisite its mandatory to configure a [Google Maps API Key](https://developers.google.com/maps/documentation/javascript/get-api-key) within your ```wp-config.php```, which will be used to retreive the API inside the backend.
+
+```php
+define('GOOGLE_MAPS_API_KEY', 'YOUR_API_KEY');
+```
+
+_Not having set a proper API key will break the functionality of location-type fields ._
+
+#### Configuration
+* ```label``` - The label text for the form control.
+* ```default``` - Location Object to be used as default map center, when no location has been selected.
+    * ```lat``` - The locations latitude
+    * ```lat``` - The locations longitude
+
+#### Example
+```twig
+{{
+  woodlets.add('location', 'locationFieldName', {
+    'label': 'My location',
+    'default': {
+        'lat': 48.772292,
+        'lng': 9.168389
+    }
+  })
+}}
+```
+
+### Datetime
+The Location field-type provides a convenient user interface for saving location data.
+Since it's based on GoogleMaps, as a prerequisite its mandatory to configure a [Google Maps API Key](https://developers.google.com/maps/documentation/javascript/get-api-key) within your ```wp-config.php```, which will be used to retreive the API inside the backend.
+
+_Not having set a proper API key will break the functionality of location-type fields ._
+
+#### Configuration
+* ```label``` - The label text for the form control.
+* ```withtime``` default: ```true``` - Should the field incorporate a timepicker?
+* ```withdate``` default: ```true``` - Should the field incorporate a datepicker?
+* ```disableNative``` default: ```true``` - Should the custom input be enforced or just be used as a fallback if there's no native type.
+* ```endswith``` - Set to the field name of another equivalent datetime input in the same form, to have them act together as a date-range.
+* ```format``` - Object containing format information separated by language. The display format will be chosen based on the backend language selected by the current user. As of now, only English and German display formats have been predefined. The format configuration for a single language consists of three subparts for the different input configurations:
+    * ```datetime-local``` - will be used when both, date and time are enabled
+    * ```date``` - will be used when time input is disabled
+    * ```time``` - will be used when date input is disabled
+
+    each of the above again has to contain the following three keys:
+
+    * ```save``` - the format being used for saving the date to the database, according to [MomentJS Format](http://momentjs.com/docs/#/displaying/format/)
+    * ```display``` - the display format, according to [MomentJS Format](http://momentjs.com/docs/#/displaying/format/)
+    * ```inputmask``` - an extra format string, which has to match the display format, to be used with the [Inputmask Library](https://github.com/RobinHerbots/jquery.inputmask). Instead of adding a completely new inputmask-format you'll probably want to use one of [these](https://github.com/RobinHerbots/jquery.inputmask/blob/3.x/README_date.md).
+
+    study the example below, containing the predefined languages English and German, to get an idea.
+
+
+#### Example
+```twig
+{{
+  woodlets.add('datetime', 'event_start', {
+    'label': 'Start',
+    'withtime': true,
+    'withdate': true,
+    'disableNative': true
+    'endswith': 'event_end',
+    'en': {
+            'datetime-local': {
+                'save': 'YYYY[-]MM[-]DD[T]HH[:]mm',
+                'display': 'MM[/]DD[/]YYYY hh:mm A',
+                'inputmask': 'mm/dd/yyyy hh:mm xm'
+            },
+            'date': {
+                'save': 'YYYY[-]MM[-]DD',
+                'display': 'MM[.]DD[.]YYYY',
+                'inputmask': 'mm/dd/yyyy'
+            },
+            'time': {
+                'save': 'HH[:]mm',
+                'display': 'hh[:]mm A',
+                'inputmask': 'hh:mm t'
+            )
+        },
+        'de': {
+            'datetime-local': {
+                'save': 'YYYY[-]MM[-]DD[T]HH[:]mm',
+                'display': 'DD[.]MM[.]YYYY[ - ]HH:mm',
+                'inputmask': 'custom01'
+            },
+            'date': {
+                'save': 'YYYY[-]MM[-]DD',
+                'display': 'DD[.]MM[.]YYYY',
+                'inputmask': 'dd.mm.yyyy'
+            },
+            'time': {
+                'save': 'HH[:]mm',
+                'display': 'HH[:]mm',
+                'inputmask': 'hh:mm'
+            }
+        }
+  })
+
+  .add('datetime', 'event_end', {
+        'label': 'Ende'
+  })
+
+}}
+```
+
+### Slider
+The Slider field-type provides a slider input to be used for number type fields having a minimal and maximal value.
+
+#### Configuration
+* ```min``` default: ```0``` - The minimum value of the slider.
+* ```max``` default: ```100``` - The maximum value of the slider.
+* ```step``` default: ```1``` - Determines the size or amount of each interval or step the slider takes between the min and max. The full specified value range of the slider (max - min) should be evenly divisible by the step.
+
+#### Example
+```twig
+{{
+  woodlets.add('slider', 'zoom', {
+      "label": "Zoom level",
+      "min": 1,
+      "max": 20,
+      "step": 1
   })
 }}
 ```

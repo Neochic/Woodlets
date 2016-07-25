@@ -1,6 +1,6 @@
 # Woodlets [![Build Status](https://travis-ci.org/Neochic/Woodlets.svg)](https://travis-ci.org/Neochic/Woodlets)
 **Caution: This plugin is alpha. Everything might change at any time. Please do not use in production yet.  
-However most of functionality is ready to be tested. Feedback and feature requests are welcome!**
+However most of the functionality is ready to be tested. Feedback and feature requests are welcome!**
 
 Woodlets is a WordPress plugin that makes theme development more productive and fun.  
 The main features are:
@@ -8,8 +8,8 @@ The main features are:
 * Create widgets with a single Twig-Template file
 * Multi column page layouts
 * Custom page template fields with data inheritance
-* Simple way to add controls to theme customizer
-* Compatible to native WordPress widgets
+* Simple way to add controls to the theme customizer
+* Compatible with native WordPress widgets
 
 ## Installation
 Installation via composer is recommended. But there is also a bundled version that can be installed manually, since using composer is not that common in the WordPress world.
@@ -37,11 +37,11 @@ Check ["Woodlets Seed"-Theme composer.json](https://github.com/Neochic/Woodlets-
 ### Install manually
 1. Go to [releases page](https://github.com/Neochic/Woodlets/releases) and download the latest bundled release.
 2. Extract the zip archive to your WordPress plugins directory (usually "wp-content/plugins/").
-3. Activate the plugin on plugins page of your WordPress installation.
+3. Activate the plugin on the plugins page of your WordPress installation.
 
 ## Getting started
-1. Be sure Woodlets plugin is [installed](#installation) and activated.
-2. Create a new theme (as [WordPress documentation says](https://codex.wordpress.org/Theme_Development#Basic_Templates) it should at least contain ```style.css``` and ```index.php```)
+1. Be sure the Woodlets plugin is [installed](#installation) and activated.
+2. Create a new theme (as the [WordPress documentation says](https://codex.wordpress.org/Theme_Development#Basic_Templates) it should at least contain ```style.css``` and ```index.php```)
 3. Put the following lines into your ```index.php```:
 
     ```php
