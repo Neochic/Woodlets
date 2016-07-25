@@ -20,6 +20,7 @@ class FieldTypeManager
             'checkbox' => new FieldType('checkbox', 'woodlets'),
             'datetime' => new DatetimeInput('datetime', 'woodlets', $wpWrapper),
             'location' => new JsonFieldType('location', 'woodlets'),
+            'slider' => new SliderInput('slider', 'woodlets', $wpWrapper),
             'contentArea' => new ContentArea('contentArea', 'woodlets', $container),
             'rte' => new RichtextEditor('rte', 'woodlets', $wpWrapper),
             'media' => new Media('media', 'woodlets', $wpWrapper)

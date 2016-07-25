@@ -1,0 +1,17 @@
+{% extends '@woodlets/fieldType.twig' %}
+
+{% block field %}
+    <div class="neochic-woodlets-slider-input" data-min="{{ field.config.min }}" data-max="{{ field.config.max }}" data-step="{{ field.config.step }}">
+        <h4>{{ field.config.label ?: field.name }}: <span class="display">{{ value }}</span></h4>
+        {% block input %}
+            <input class="neochic-woodlets-slider-value" type="hidden" {{ macros.nameOrLink(customizer, name) }} value="{{ value }}" />
+            <div class="range">
+                <span class="min">{{ field.config.min }}</span>
+                <span class="max">{{ field.config.max }}</span>
+            </div>
+            <div class="sliderBg">
+                <div class="slider"></div>
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}

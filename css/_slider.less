@@ -1,0 +1,37 @@
+.neochic-woodlets-slider-input {
+  margin: 1em 0;
+  .display {
+    font-weight: normal;
+    font-style: italic;
+  }
+
+  .range {
+    display: flex;
+    justify-content: space-between;
+    width:100%;
+  }
+
+  .sliderBg{
+    position: relative;
+    padding: 0 10px;
+    margin: 5px 0 10px;
+    border: 1px solid #ddd;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+    background-color: #fafafa;
+  }
+
+  .ui-slider-handle {
+    width: 20px;
+    height: 19px;
+    display: block;
+    position: relative;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    background-color: #eee;
+    margin: -3px 0 -3px -10px;
+    cursor: pointer;
+    &:hover, &:active, &:focus, &.ui-state-active{
+      background-color: #e3e3e3;
+    }
+  }
+}

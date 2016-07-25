@@ -7,6 +7,7 @@ requirejs([
     'field-type-rte',
     'field-type-datepicker',
     'field-type-location',
+    'field-type-slider',
     'debounce',
     'field-type-content-area',
     'page-config-inheritance',

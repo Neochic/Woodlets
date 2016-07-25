@@ -14,7 +14,8 @@ requirejs.config({
         "inputmask-date-extensions": "../bower_components/jquery.inputmask/dist/inputmask/inputmask.date.extensions",
         "inputmask.dependencyLib": "../bower_components/jquery.inputmask/dist/inputmask/inputmask.dependencyLib.jquery",
         "jquery-inputmask": "../bower_components/jquery.inputmask/dist/inputmask/jquery.inputmask",
-        "jquery-caret": "../bower_components/jquery.caret/dist/jquery.caret-1.5.0"
+        "jquery-caret": "../bower_components/jquery.caret/dist/jquery.caret-1.5.0",
+        "jquery-ui.slider": "../bower_components/jquery-ui/ui/slider"
     },
     shim: {
         'jquery-locationpicker': {
@@ -31,6 +32,11 @@ requirejs.config({
         '*': { 'jquery': 'jquery-private' },
         'jquery-private': { 'jquery': 'jquery' },
         'jquery-ui.sortable': {
+            'core': 'jquery-ui.core',
+            'mouse': 'jquery-ui.mouse',
+            'widget': 'jquery-ui.widget'
+        },
+        'jquery-ui.slider': {
             'core': 'jquery-ui.core',
             'mouse': 'jquery-ui.mouse',
             'widget': 'jquery-ui.widget'
