@@ -231,7 +231,7 @@ _Not having set a proper API key will break the functionality of location-type f
     'label': 'Start',
     'withtime': true,
     'withdate': true,
-    'disableNative': true
+    'disableNative': true,
     'endswith': 'event_end',
     'en': {
             'datetime-local': {
