@@ -1,3 +1,5 @@
+@import "_replaceSvgColors";
+
 .neochic-woodlets-location-picker {
   .neochic-woodlets-location-overlay-content {
     display: none;
@@ -23,6 +25,37 @@
 .neochic-woodlets-location-picker, .neochic-woodlets-location-overlay-content {
   input {
     width: 100%;
+  }
+  .flex-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  .detect {
+    width: 40px;
+    text-indent: -99999px;
+    position: relative;
+    cursor: pointer;
+    margin: 1px 0;
+    padding: 0;
+    padding-top: 0;
+    display: none; //will be shown via js if detection is available
+    &:after {
+      .replaceSvgColors("../img/gps_icon.svg"; "#001337", #aaa);
+      content: "";
+      width: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: absolute;
+      left: 0;
+      height: 100%;
+      background-size: auto 82%;
+      top: 0;
+    }
+    &:hover{
+      &:after{
+        .replaceSvgColors("../img/gps_icon.svg"; "#001337", #444444);
+      }
+    }
   }
   .map-pane {
     height: 400px;

@@ -14,7 +14,10 @@
     {% import _self as functions %}
     {% spaceless %}
         <div class="neochic-woodlets-location-overlay-content">
-            <input class="neochic-woodlets-location-search" type="text"/>
+            <div class="flex-container">
+                <input class="neochic-woodlets-location-search" type="text"/>
+                <button type="button" class="detect">Detect</button>
+            </div>
             <input class="neochic-woodlets-location-change-listener-helper-lat" type="hidden" />
             <input class="neochic-woodlets-location-change-listener-helper-lng" type="hidden" />
             <input class="neochic-woodlets-location-overlay-value" type="hidden" />

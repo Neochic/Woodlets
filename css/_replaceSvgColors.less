@@ -1,0 +1,18 @@
+.replaceSvgColors(@img-url, @replacements...) {
+  .replaceloop(@subject, @i, @max) when (@i < @max) {
+    .replace(escape(extract(@replacements, @i)), escape(extract(@replacements, @i + 1)));
+    .replaceloop(@replaced, (@i + 2), @max);
+    @tmp: @max - 1;
+    .checkLast(@stuff) when (@i = @tmp) {
+      @fooResult: @stuff;
+    }
+    .checkLast(@replaced);
+  }
+  .replace(@a, @b) {
+    @replaced: replace("@{subject}", "@{a}", "@{b}", "gi");
+  }
+  @img-url-new: replace("@{img-url}", "url\('(.+)'\)", '$1');
+  @data-uri: data-uri("image/svg+xml;charset=UTF-8", '@{img-url-new}');
+  .replaceloop(@data-uri, 1, length(@replacements));
+  background-image: e(@fooResult);
+}

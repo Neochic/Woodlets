@@ -3,7 +3,7 @@
  * Location field type.
  */
 
-/* globals document, google */
+/* globals document, google, window, alert */
 
 define([
     "jquery",
@@ -20,6 +20,7 @@ define([
     var changeListenerHelperLng = null;
     var mapPane = null;
     var saveButton = null;
+    var detectButton = null;
     var cancelButton = null;
     var overlayValueInput = null;
     var overlayPreviewContainer = null;
@@ -29,6 +30,31 @@ define([
         latitude: 48.772292,
         longitude: 9.168389
     };
+
+    var geoLocApiLatLng = null;
+
+    function getGeoLocApi() {
+        return window.navigator.geolocation;
+    }
+
+    function updateGeoLocApiLatLng() {
+        var geoLocApi = getGeoLocApi();
+        var deferred = $.Deferred();
+        if (geoLocApi) {
+            geoLocApi.getCurrentPosition(function (position) {
+                geoLocApiLatLng = {
+                    lat: parseFloat(position.coords.latitude),
+                    lng: parseFloat(position.coords.longitude)
+                };
+                deferred.resolve(geoLocApiLatLng);
+            }, function(){
+                deferred.reject("Access to the Gelocation API has been denied by the browser.");
+            });
+        } else {
+            deferred.reject("Gelocation API not available.");
+        }
+        return deferred;
+    }
 
     function init(form) {
 
@@ -60,6 +86,10 @@ define([
                 saveButton = overlayContent.find(".button.save");
                 cancelButton = overlayContent.find(".button.cancel");
                 overlayPreviewContainer = overlayContent.find(".neochic_container");
+                detectButton = overlayContent.find(".detect");
+                if (getGeoLocApi()) {
+                    detectButton.css({display: "block"});
+                }
             }
 
             var valueInput = lpc.find(".neochic-woodlets-location-value");
@@ -182,6 +212,18 @@ define([
                             defaultLocation(tmp);
 
                             modal.close();
+                        });
+
+                        detectButton.off("click");
+                        detectButton.on("click", function(){
+                            updateGeoLocApiLatLng().then(function(position){
+                                mapPane.locationpicker("location", {
+                                    latitude: position.lat,
+                                    longitude: position.lng
+                                });
+                            }, function(reason){
+                                alert(reason);
+                            });
                         });
 
                     });
