@@ -57,7 +57,7 @@
          data-api-key="{{ constant("GOOGLE_MAPS_API_KEY") }}">
 
         <h4>{{ field.config.label ?: field.name }}</h4>
-        <input class="neochic-woodlets-location-value" type="hidden" {{ macros.nameOrLink(customizer, name) }} value="{{ value|maybe_json_encode }}" />
+        <input class="neochic-woodlets-location-value" type="hidden" {{ macros.nameOrLink(customizer, name) }} value="{{ value|maybe_json_encode|escape }}" />
         <div class="preview-container">
             <div><span class="streetName">{{ value.streetName }}</span> <span class="streetNumber">{{ value.streetNumber }}</span></div>
             <div><span class="zip">{{ value.zip }}</span> <span class="city">{{ value.city }}</span></div>

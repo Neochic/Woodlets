@@ -7,8 +7,9 @@
 
 define([
     "jquery",
+    "native-change",
     "jquery-ui.slider"
-], function($) {
+], function($, nativeChange) {
 
     function init(form) {
 
@@ -30,6 +31,9 @@ define([
                 slide: function( event, ui ) {
                     input.val(ui.value);
                     display.text(ui.value);
+                },
+                change: function() {
+                    nativeChange(input.get(0));
                 }
             });
 

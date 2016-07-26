@@ -44,6 +44,13 @@ class ThemeCustomizer
                             ));
                         }
                         return $value;
+                    },
+                    'sanitize_js_callback' => function ($value) use ($field) {
+                        $fieldType = $this->container['fieldTypeManager']->getFieldType($field['type']);
+                        if ($fieldType) {
+                            return $fieldType->getJsValue($value);
+                        }
+                        return $value;
                     }
                 ));
 

@@ -10,11 +10,12 @@ define([
     'moment',
     'debounce',
     'inputmask',
+    'native-change',
     'jquery-inputmask',
     'inputmask-date-extensions',
     'bootstrap-datepicker',
     'jquery-caret'
-], function($, moment, debounce, Inputmask) {
+], function($, moment, debounce, Inputmask, nativeChange) {
 
     var $document = $(document);
 
@@ -177,6 +178,7 @@ define([
                         inputVisible.range(lastSelectRange.start, lastSelectRange.end);
                         lastSelectRange = null;
                     }
+                    nativeChange(inputHidden.get(0));
                 }).on("dp.show", function(){
                     pickerVisible = true;
                 }).on("dp.hide", function(){

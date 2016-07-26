@@ -8,8 +8,9 @@
 define([
     "jquery",
     "debounce",
-    "modal"
-], function($, debounce, modal) {
+    "modal",
+    "native-change"
+], function($, debounce, modal, nativeChange) {
 
     // reusable stuff (performance increase incase of several locationpickers on one page)
     var geocoder = null;
@@ -210,8 +211,8 @@ define([
                             var tmp = JSON.parse(valueInput.val());
                             updatePreview(tmp, previewContainer);
                             defaultLocation(tmp);
-
                             modal.close();
+                            nativeChange(valueInput.get(0));
                         });
 
                         detectButton.off("click");

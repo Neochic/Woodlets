@@ -8,4 +8,8 @@ class JsonFieldType extends FieldType
         $newValue = call_user_func_array('parent::update', func_get_args());
         return json_decode($newValue, true);
     }
+
+    public function getJsValue($value) {
+        return json_encode($value);
+    }
 }

@@ -39,6 +39,10 @@ class FieldType implements FieldTypeInterface
         return $newValue;
     }
 
+    public function getJsValue($value) {
+        return $value;
+    }
+
     protected function __createRenderContext($id, $name, $value, $field, $context, $customizer, $useValues = null) {
         return array(
             'id' => $id,
