@@ -5,6 +5,8 @@ class Woodlets
 {
     protected $wpWrapper;
     protected $container;
+	protected $theContentFilterSaveContent = null;
+	protected $withinWoodletsTemplate = false;
 
     public function __construct($container, $wpWrapper)
     {
@@ -15,6 +17,7 @@ class Woodlets
     public function init()
     {
         $this->wpWrapper->addAction('neochic_woodlets_render_template', function () {
+	        $this->withinWoodletsTemplate = true;
             echo $this->container['templateManager']->display();
         });
 
@@ -107,22 +110,34 @@ class Woodlets
         });
 
         $this->wpWrapper->addFilter('the_content', function ($content) {
-            if ($this->wpWrapper->isPage()) {
-                $this->container['twigHelper']->reloadPostMeta();
-                $templateConfig = $this->container['templateManager']->getConfiguration();
+        	if ($this->withinWoodletsTemplate) {
+        		return $content;
+	        }
 
-                //if there is no column just display the whole template
-                if (count($templateConfig["columns"]) < 1) {
-                    return $this->container['templateManager']->display(true);
-                }
+        	$this->container['twigHelper']->reloadPostMeta();
+            $templateConfig = $this->container['templateManager']->getConfiguration();
 
-                //else display the main column
-                ob_start();
-                $this->container['twigHelper']->getCol($templateConfig['settings']['mainCol']);
-                return ob_get_clean();
+	        // prevent recursive loop if the_content() is used inside the template
+	        if ($this->theContentFilterSaveContent !== null) {
+	        	$content = $this->theContentFilterSaveContent;
+	        	$this->theContentFilterSaveContent = null;
+		        return $content;
+	        }
+
+	        $this->theContentFilterSaveContent = $content;
+
+            //if there is no column just display the whole template
+            if (count($templateConfig["columns"]) < 1) {
+	            $content = $this->container['templateManager']->display(true);
+	            $this->theContentFilterSaveContent = null;
+	            return $content;
             }
 
-            return $content;
+            //else display the main column
+            ob_start();
+	        $this->container['twigHelper']->getCol($templateConfig['settings']['mainCol']);
+	        $this->theContentFilterSaveContent = null;
+	        return ob_get_clean();
         }, -99999999999999999);
 
         $this->wpWrapper->addAction( 'show_user_profile', function($user) {

@@ -82,7 +82,9 @@ requirejs([
         }
     });
 
-    window.jQuery(document).on('widget-added widget-updated', function() {
-        initWidgets();
-    });
+    if (window.jQuery) {
+        window.jQuery(document).on('widget-added widget-updated', function() {
+            initWidgets();
+        });
+    }
 });

@@ -1,51 +1,53 @@
 {% extends 'layouts/post.twig' %}
 
+{% block view %}
+    {{ woodlets.the_content()|raw }}
+{% endblock %}
+
 {% block content %}
-    {% for post in woodlets.getPosts() %}
-        <article>
-            {% block postArticle %}
-                <header>
-                    {% block postHeader %}
-                        <h1>{{ post.title }}</h1>
+    {% set post = woodlets.getPosts().0 %}
+    <article>
+        {% set parentContent = parent() %}
+        {% block postArticle %}
+            <header>
+                {% block postHeader %}
+                    <h1>{{ post.title }}</h1>
 
-                        {% if post.post_thumbnail %}
-                            {{ post.post_thumbnail|raw }}
-                        {% endif %}
-                    {% endblock %}
-                </header>
-                <div class="entry-content">
-                    {% block view %}
-                        {{ post.content|raw }}
-                    {% endblock %}
-                </div>
-
-                <footer>
-                    {% block postFooter %}
-                        <span class="posted-on">{{ post.date }}</span>
-                        <span class="author">{{ post.author_link|raw }}</span>
-                    {% endblock %}
-                </footer>
-            {% endblock %}
-        </article>
-
-        {% block postComments %}
-            {% if not woodlets.post_password_required() %}
-                <div id="comments">
-                    {{ woodlets.comment_form() }}
-                    {% if woodlets.get_comments_number() %}
-                        <h2 class="comments-title">{{ "comments_title"|trans("woodlets", [woodlets.get_comments_number(), post.title]) }}</h2>
-                        <ol>
-                            {{
-                                woodlets.wp_list_comments({
-                                    'style': 'ol',
-                                    'short_ping': true,
-                                    'avatar_size': 56
-                                }, post.comments)
-                            }}
-                        </ol>
+                    {% if post.post_thumbnail %}
+                        {{ post.post_thumbnail|raw }}
                     {% endif %}
-                </div>
-            {% endif %}
+                {% endblock %}
+            </header>
+            <div class="entry-content">
+                {{ parentContent|raw }}
+            </div>
+
+            <footer>
+                {% block postFooter %}
+                    <span class="posted-on">{{ post.date }}</span>
+                    <span class="author">{{ post.author_link|raw }}</span>
+                {% endblock %}
+            </footer>
         {% endblock %}
-    {% endfor %}
+    </article>
+
+    {% block postComments %}
+        {% if not woodlets.post_password_required() %}
+            <div id="comments">
+                {{ woodlets.comment_form() }}
+                {% if woodlets.get_comments_number() %}
+                    <h2 class="comments-title">{{ "comments_title"|trans("woodlets", [woodlets.get_comments_number(), post.title]) }}</h2>
+                    <ol>
+                        {{
+                            woodlets.wp_list_comments({
+                                'style': 'ol',
+                                'short_ping': true,
+                                'avatar_size': 56
+                            }, post.comments)
+                        }}
+                    </ol>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endblock %}
 {% endblock %}

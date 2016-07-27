@@ -171,17 +171,17 @@ class Helper
 
     protected function __initPostData()
     {
-        $this->posts = array();
+	    $this->posts = array();
         rewind_posts();
-        while (have_posts()) {
+	    while (have_posts()) {
             $post = array();
             the_post();
 
-            foreach ($this->loopFunctions as $attribute) {
-                if ($attribute === 'content') {
-                    ob_start();
+		    foreach ($this->loopFunctions as $attribute) {
+			    if ($attribute === 'content') {
+	                ob_start();
                     the_content();
-                    $post[$attribute] = ob_get_clean();
+	                $post[$attribute] = ob_get_clean();
                     continue;
                 }
                 $post[$attribute] = call_user_func('get_the_' . $attribute);

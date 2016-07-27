@@ -10,6 +10,7 @@ class TemplateManager
     protected $templates;
     protected $twigHelper;
     protected $widgetManager;
+    protected $postTypes;
     protected $defaultTemplates = array(
         "page" => "pages/default.twig",
         "post" => "posts/default.twig",
@@ -28,10 +29,12 @@ class TemplateManager
         $this->widgetManager = $widgetManager;
         $this->fieldTypeManager = $fieldTypeManager;
         $this->twigHelper = $twigHelper;
-        $this->templates = array(
-            "page" => $this->wpWrapper->applyFilters('page_templates', $this->twig->getLoader()->searchTemplates('pages/*.twig')),
-            "post" => $this->wpWrapper->applyFilters('post_templates', $this->twig->getLoader()->searchTemplates('posts/*.twig'))
-        );
+        $this->postTypes = $this->wpWrapper->applyFilters('post_types', array("page" => "pages", "post" => "posts"));
+        $this->templates = array();
+
+        foreach($this->postTypes as $postType => $directory) {
+            $this->templates[$postType] = $this->wpWrapper->applyFilters($postType . '_templates', $this->twig->getLoader()->searchTemplates($directory . '/*.twig'));
+        }
     }
 
     public function display($withoutParent = false) {
@@ -51,10 +54,7 @@ class TemplateManager
 
     public function getTemplateName($type = "page")
     {
-        if (!isset($this->defaultTemplates[$type])) {
-            $type = "404";
-        }
-        $template = $this->wpWrapper->applyFilters('default_template_' . $type, $this->defaultTemplates[$type]);
+        $template = $this->wpWrapper->applyFilters('default_template_' . $type, $this->_getDefaultTemplate($type));
         $data = $this->wpWrapper->getPostMeta();
         $postType = $this->wpWrapper->getPostType();
 
@@ -70,6 +70,10 @@ class TemplateManager
         return $this->wpWrapper->applyFilters('template', $template);
     }
 
+    public function getPostTypes() {
+        return $this->postTypes;
+    }
+
     public function getTemplateList($type = "page") {
         return $this->templates[$type];
     }
@@ -78,5 +82,31 @@ class TemplateManager
         $templateName = $this->getTemplateName($this->wpWrapper->getTemplateType());
         $template = new Template($templateName, $this->twig, $this->widgetManager, $this->fieldTypeManager);
         return $template->getConfig();
+    }
+
+    protected function _getDefaultTemplate($type) {
+        if (isset($this->defaultTemplates[$type])) {
+            return $this->defaultTemplates[$type];
+        }
+
+        /*
+         * it may be a custom post type
+         */
+        if(isset($this->postTypes[$type])) {
+            $default = $this->twig->getLoader()->searchTemplates($this->postTypes[$type] . '/default.twig');
+            if (count($default)) {
+                return $this->postTypes[$type] . '/default.twig';
+            }
+
+            /*
+             * if the custom template doesn't have a default template fall back to page template
+             */
+            return $this->defaultTemplates['page'];
+        }
+
+        /*
+         * invalid type => 404
+         */
+        return $this->defaultTemplates['404'];
     }
 }

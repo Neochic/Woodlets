@@ -45,17 +45,21 @@ class EditorManager
 
     public function addMetaBox()
     {
-        $this->wpWrapper->addMetaBox('page-settings', 'Woodlets', function () {
+        $postTypes = $this->templateManager->getPostTypes();
+
+        $this->wpWrapper->addMetaBox('page-settings', 'Woodlets', function () use ($postTypes) {
             $template = $this->twig->loadTemplate('@woodlets/metaBox.twig');
             $data = $this->_getData();
             $postType = $this->wpWrapper->getPostType();
 
+
             echo $template->render(array(
                 'templates' => $this->templateManager->getTemplateList($postType),
                 'template' => $this->templateManager->getTemplateName($postType),
+                'templatesPath' => $postTypes[$postType] . '/',
                 'disabled' => isset($data['disabled']) ? $data['disabled'] : false
             ));
-        }, ['page', 'post'], 'side', 'core');
+        }, array_keys($postTypes), 'side', 'core');
     }
 
     public function preparePostData()

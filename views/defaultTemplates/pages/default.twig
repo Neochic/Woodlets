@@ -1,13 +1,11 @@
 {% extends 'layouts/page.twig' %}
 
-{% block form %}
-    {{
-    woodlets.addCol('main', 'Main Col',{
-        'allowed': ['text']
-    })
-    }}
+{% block view %}
+    {{ woodlets.the_content() }}
 {% endblock %}
 
-{% block view %}
-    {{ woodlets.getCol('main') }}
+{% block content %}
+    {{ woodlets.the_post() }}
+    {{ woodlets.the_title() }}
+    {{ parent() }}
 {% endblock %}

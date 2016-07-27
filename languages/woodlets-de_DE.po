@@ -8,7 +8,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: de_DE\n"
@@ -63,6 +63,9 @@ msgstr "Land"
 
 msgid "location_saved_data"
 msgstr "Gespeicherte Daten"
+
+msgid "no_templates_found"
+msgstr "Keine Templates gefunden. Bitte lege das Template %sdefault.twig an."
 
 msgid "location_pick_location"
 msgstr "Ort Wählen"
