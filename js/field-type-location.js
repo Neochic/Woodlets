@@ -9,7 +9,8 @@ define([
     "jquery",
     "debounce",
     "modal",
-    "native-change"
+    "native-change",
+    "async"
 ], function($, debounce, modal, nativeChange) {
 
     // reusable stuff (performance increase incase of several locationpickers on one page)

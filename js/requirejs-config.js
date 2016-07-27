@@ -23,6 +23,9 @@ requirejs.config({
         },
         "jquery-caret": {
             deps: ["jquery"]
+        },
+        "jquery-locationpicker": {
+            deps: ["jquery"]
         }
     },
     map: {
