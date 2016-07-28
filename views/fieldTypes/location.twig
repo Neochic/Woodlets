@@ -54,7 +54,7 @@
          data-overlay-content="{{ functions.overlayContent()|escape }}"
          data-default-lat="{{ field.config.default.lat }}"
          data-default-lng="{{ field.config.default.lng }}"
-         data-api-key="{{ constant("GOOGLE_MAPS_API_KEY") }}">
+         data-api-key="{{ defined('GOOGLE_MAPS_API_KEY') ? constant("GOOGLE_MAPS_API_KEY") : "" }}">
 
         <h4>{{ field.config.label ?: field.name }}</h4>
         <input class="neochic-woodlets-location-value" type="hidden" {{ macros.nameOrLink(customizer, name) }} value="{{ value|maybe_json_encode|escape }}" />
@@ -64,6 +64,6 @@
             <div><span class="country">{{ value.country }}</span></div>
             <i>{{ "location_no_location_selected"|trans("woodlets") }}</i>
         </div>
-        <button class="neochic-woodlets-location-pick-location button">{{ "location_pick_location"|trans("woodlets") }}</button>
+        <button type="button" class="neochic-woodlets-location-pick-location button">{{ "location_pick_location"|trans("woodlets") }}</button>
     </div>
 {% endblock %}

@@ -84,6 +84,10 @@ class TwigFactory
         $twig->addFilter(new \Twig_SimpleFilter('maybe_json_encode', function ($val) {
             return is_string($val) ? $val : json_encode($val);
         }));
+
+        $twig->addFunction(new \Twig_SimpleFunction('defined', function ($varName) {
+            return defined($varName);
+        }));
         
         $twig = $wpWrapper->applyFilters('twig', $twig);
 

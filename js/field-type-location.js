@@ -66,7 +66,13 @@ define([
             lpc = $(lpc);
             var apiKey = lpc.data("api-key");
 
+            var openOverlayButton = lpc.find(".neochic-woodlets-location-pick-location");
+            var previewContainer = lpc.children(".preview-container");
+
             if (!apiKey) {
+                openOverlayButton.add(previewContainer).on("click", function() {
+                    alert("For the location picker to work, you must set a Google Maps API Key in your wp-config:\r\ndefine('GOOGLE_MAPS_API_KEY', 'YOUR_API_KEY');\r\n");
+                });
                 return;
             }
 
@@ -95,8 +101,6 @@ define([
             }
 
             var valueInput = lpc.find(".neochic-woodlets-location-value");
-            var openOverlayButton = lpc.find(".neochic-woodlets-location-pick-location");
-            var previewContainer = lpc.children(".preview-container");
             var locationData;
             var initialLocationSetup = true;
 

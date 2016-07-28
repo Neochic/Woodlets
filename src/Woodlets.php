@@ -4,33 +4,33 @@ namespace Neochic\Woodlets;
 class Woodlets
 {
     protected $wpWrapper;
-    protected $container;
+    public static $container = null;
 	protected $theContentFilterSaveContent = null;
 	protected $withinWoodletsTemplate = false;
 
     public function __construct($container, $wpWrapper)
     {
         $this->wpWrapper = $wpWrapper;
-        $this->container = $container;
+        self::$container = $container;
     }
 
     public function init()
     {
         $this->wpWrapper->addAction('neochic_woodlets_render_template', function () {
 	        $this->withinWoodletsTemplate = true;
-            echo $this->container['templateManager']->display();
+            echo self::$container['templateManager']->display();
         });
 
         $this->wpWrapper->addAction('plugins_loaded', function () {
-            $this->wpWrapper->loadPluginTextdomain('woodlets', false, basename($this->container["basedir"]) . "/languages");
+            $this->wpWrapper->loadPluginTextdomain('woodlets', false, basename(self::$container["basedir"]) . "/languages");
         });
 
         $this->wpWrapper->addAction('widgets_init', function () {
-            $this->container['widgetManager']->addWidgets();
+            self::$container['widgetManager']->addWidgets();
         });
 
         $this->wpWrapper->addAction('customize_register', function ($wp_customize) {
-            $themeCustomizer = new ThemeCustomizer($wp_customize, $this->container);
+            $themeCustomizer = new ThemeCustomizer($wp_customize, self::$container);
             $this->wpWrapper->doAction('theme', $themeCustomizer);
             $themeCustomizer->addControls();
         });
@@ -46,7 +46,7 @@ class Woodlets
                 return $editor;
             }
 
-            $editorManager = $this->container['editorManager'];
+            $editorManager = self::$container['editorManager'];
             $woodletsEditor = $editorManager->getEditor();
 
             if(!$woodletsEditor) {
@@ -67,13 +67,13 @@ class Woodlets
             if ($this->wpWrapper->pageNow() === 'revision.php' && $_GET['action'] === 'restore') {
                 $data = $this->wpWrapper->getPostMeta(null, $_GET['revision'], true);
             } else {
-                $data = $this->container['editorManager']->preparePostData();
+                $data = self::$container['editorManager']->preparePostData();
             }
 
 
-            $templateManager = $this->container['templateManager'];
+            $templateManager = self::$container['templateManager'];
             $data = $this->wpWrapper->unslash($data);
-            $this->container['twigHelper']->setPostMeta($data);
+            self::$container['twigHelper']->setPostMeta($data);
 
             $config = $templateManager->getConfiguration();
             if (!is_array($config["columns"]) || count($config["columns"]) < 1) {
@@ -96,17 +96,17 @@ class Woodlets
                 return;
             }
 
-            $this->container['editorManager']->save($postId);
-            $this->container['pageConfigurationManager']->save();
+            self::$container['editorManager']->save($postId);
+            self::$container['pageConfigurationManager']->save();
         });
 
         $this->wpWrapper->addAction('wp_restore_post_revision', function($postId, $revisionId) {
-            $this->container['editorManager']->revert($revisionId);
+            self::$container['editorManager']->revert($revisionId);
         }, 90, 2);
         
         $this->wpWrapper->addAction('add_meta_boxes', function () {
-            $this->container['pageConfigurationManager']->addMetaBoxes();
-            $this->container['editorManager']->addMetaBox();
+            self::$container['pageConfigurationManager']->addMetaBoxes();
+            self::$container['editorManager']->addMetaBox();
         });
 
         $this->wpWrapper->addFilter('the_content', function ($content) {
@@ -114,8 +114,8 @@ class Woodlets
         		return $content;
 	        }
 
-        	$this->container['twigHelper']->reloadPostMeta();
-            $templateConfig = $this->container['templateManager']->getConfiguration();
+        	self::$container['twigHelper']->reloadPostMeta();
+            $templateConfig = self::$container['templateManager']->getConfiguration();
 
 	        // prevent recursive loop if the_content() is used inside the template
 	        if ($this->theContentFilterSaveContent !== null) {
@@ -128,29 +128,29 @@ class Woodlets
 
             //if there is no column just display the whole template
             if (count($templateConfig["columns"]) < 1) {
-	            $content = $this->container['templateManager']->display(true);
+	            $content = self::$container['templateManager']->display(true);
 	            $this->theContentFilterSaveContent = null;
 	            return $content;
             }
 
             //else display the main column
             ob_start();
-	        $this->container['twigHelper']->getCol($templateConfig['settings']['mainCol']);
+	        self::$container['twigHelper']->getCol($templateConfig['settings']['mainCol']);
 	        $this->theContentFilterSaveContent = null;
 	        return ob_get_clean();
         }, -99999999999999999);
 
         $this->wpWrapper->addAction( 'show_user_profile', function($user) {
-            $this->container['profileManager']->form($user);
+            self::$container['profileManager']->form($user);
         });
         $this->wpWrapper->addAction( 'edit_user_profile', function($user) {
-            $this->container['profileManager']->form($user);
+            self::$container['profileManager']->form($user);
         });
         $this->wpWrapper->addAction( 'personal_options_update', function($userId) {
-            $this->container['profileManager']->save($userId);
+            self::$container['profileManager']->save($userId);
         });
         $this->wpWrapper->addAction( 'edit_user_profile_update', function($userId) {
-            $this->container['profileManager']->save($userId);
+            self::$container['profileManager']->save($userId);
         });
 
         $this->wpWrapper->addAction('admin_enqueue_scripts', function ($hook) {
@@ -158,7 +158,7 @@ class Woodlets
             $isWidgets = ($hook === 'widgets.php' && $this->wpWrapper->pageNow() === 'widgets.php');
 
             if (in_array($hook, array('post-new.php', 'post.php', 'profile.php')) || $isCustomize || $isWidgets) {
-                $this->container['scriptsManager']->addScripts();
+                self::$container['scriptsManager']->addScripts();
             }
         });
 
@@ -167,7 +167,7 @@ class Woodlets
             /**
              * @var \Neochic\Woodlets\WidgetManager $widgetManager;
              */
-            $widgetManager = $this->container['widgetManager'];
+            $widgetManager = self::$container['widgetManager'];
 
             echo $widgetManager->getWidgetList(isset($_REQUEST['allowed']) ? $_REQUEST['allowed'] : array());
             $this->wpWrapper->wpDie();
@@ -176,14 +176,14 @@ class Woodlets
         $this->wpWrapper->addAction('wp_ajax_neochic_woodlets_get_widget_preview', function () {
             $instance = json_decode($this->wpWrapper->unslash($_REQUEST['instance']), true);
             $widget = $this->wpWrapper->unslash($_REQUEST['widget']);
-            echo $this->container['editorManager']->getWidgetPreview($widget, $instance);
+            echo self::$container['editorManager']->getWidgetPreview($widget, $instance);
             wp_die();
         });
 
         $this->wpWrapper->addAction('wp_ajax_neochic_woodlets_get_widget_form', function () {
             $instance = isset($_REQUEST['instance']) ? $_REQUEST['instance'] : array();
             $instance = json_decode($this->wpWrapper->unslash($instance), true);
-            $widgetManager = $this->container['widgetManager'];
+            $widgetManager = self::$container['widgetManager'];
             $widget = $widgetManager->getWidget($_REQUEST['widget']);
             if($widget) {
                 $widget->form($instance);
@@ -192,7 +192,7 @@ class Woodlets
         });
 
         $this->wpWrapper->addAction('wp_ajax_neochic_woodlets_get_widget_update', function () {
-            $widgetManager = $this->container['widgetManager'];
+            $widgetManager = self::$container['widgetManager'];
             $widgetName = $this->wpWrapper->unslash($_REQUEST['widget']);
             $widget = $widgetManager->getWidget($widgetName);
 
@@ -201,5 +201,7 @@ class Woodlets
             echo json_encode($widget->update(current($widgetData), array()));
             wp_die();
         });
+
+        $this->wpWrapper->doAction("init");
     }
 }
