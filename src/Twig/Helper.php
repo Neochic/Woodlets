@@ -128,7 +128,16 @@ class Helper
             return;
         }
 
+        $contentAreaIndex = 0;
+        $contentAreaTotal = sizeof($widgets);
+
         foreach ($widgets as $widgetData) {
+
+            $widgetData['instance'] = array_merge($widgetData['instance'], array(
+                "contentAreaIndex" => ++$contentAreaIndex,
+                "contentAreaTotal" => $contentAreaTotal
+            ));
+
             $widget = $this->widgetManager->getWidget($widgetData['widgetId']);
 
             if($widget) {
