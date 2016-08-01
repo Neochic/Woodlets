@@ -11,7 +11,7 @@ define([
             var data = {};
             $areas.each(function () {
                 var col = [];
-                $(this).find('li[data-widget]:not(.no-elements)').each(function () {
+                $(this).find('> ul, > div > ul').find('> li[data-widget]:not(.no-elements)').each(function () {
                     col.push({
                         "widgetId": $(this).data('widget'),
                         "instance": $(this).data('instance')
@@ -23,8 +23,8 @@ define([
             callback(data);
         };
 
-        $areas.find('ul').sortable({
-            connectWith: $areas.find('ul'),
+        $areas.find('> ul, > div > ul').sortable({
+            connectWith: $areas.find('> ul, > div > ul'),
             placeholder: "neochic-woodlets-placeholder",
             delay: 250,
             update: updateData,
@@ -63,7 +63,7 @@ define([
                         }
                     }).done(function (result) {
                         var item = $(result);
-                        $area.find('ul').append(item);
+                        $area.find('> ul, > div > ul').append(item);
                         updateData();
                         if (!preventClose) {
                             modal.close();
@@ -95,7 +95,7 @@ define([
             updateData();
         });
 
-        $areas.on('click', 'li:not(.no-elements)', function (e) {
+        $areas.on('click', '> ul > li.neochic-woodlets-widget, > div > ul > li.neochic-woodlets-widget', function (e) {
             /*
              * stop propagation to prevent widget getting collapsed by WordPress
              */
@@ -147,7 +147,7 @@ define([
                                 "instance": JSON.stringify(instance)
                             }
                         }).done(function (result) {
-                            el.replaceWith(result);
+                            el.replaceWith($(result));
                         });
                         modal.close();
                         updateData();
