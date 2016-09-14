@@ -49,11 +49,11 @@ class PageConfigurationManager
         }
 
         foreach($config['forms'] as $key => $section) {
-            $data['data'] = $this->formManager->update(
+            $data['data'] = array_merge($this->formManager->update(
                 $section['config']->getConfig(),
                 $this->wpWrapper->unslash($_POST['woodlets_page_settings']),
                 $data['data']
-            );
+            ));
         }
 
         $useValues = isset($_POST["woodlets_page_use_values"]) ? $_POST["woodlets_page_use_values"] : array();
