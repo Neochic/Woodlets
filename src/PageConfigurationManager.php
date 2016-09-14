@@ -49,7 +49,7 @@ class PageConfigurationManager
         }
 
         foreach($config['forms'] as $key => $section) {
-            $data['data'] = array_merge($this->formManager->update(
+            $data['data'] = array_merge($data['data'], $this->formManager->update(
                 $section['config']->getConfig(),
                 $this->wpWrapper->unslash($_POST['woodlets_page_settings']),
                 $data['data']
