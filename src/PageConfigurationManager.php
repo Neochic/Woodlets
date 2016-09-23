@@ -26,6 +26,8 @@ class PageConfigurationManager
         }
 
         foreach($config['forms'] as $key => $section) {
+            $postTypes = $this->templateManager->getPostTypes();
+
             $this->wpWrapper->addMetaBox('page_section_' . $key, $section['title'], function () use ($data, $section) {
                 $this->formManager->form($section['config']->getConfig(), $data['data'], function($name) {
                     return array(
@@ -33,7 +35,7 @@ class PageConfigurationManager
                         "name" => 'woodlets_page_settings['. $name . ']'
                     );
                 }, false, $data['useValues']);
-            }, ['page', 'post'], 'normal', 'core');
+            }, array_keys($postTypes), 'normal', 'core');
         }
     }
 
