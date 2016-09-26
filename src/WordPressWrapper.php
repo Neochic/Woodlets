@@ -279,4 +279,15 @@ class WordPressWrapper
         return get_post($postId);
     }
 
+    public function getOption($option, $default = false) {
+    	return get_option($option, $default);
+    }
+
+    public function dateI18n($dateformatstring = null, $unixtimestamp = false, $gmt = false) {
+		if($dateformatstring === null) {
+			$dateformatstring = $this->getOption('date_format');
+		}
+
+		return date_i18n( $dateformatstring, $unixtimestamp, $gmt );
+    }
 }

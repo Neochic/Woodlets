@@ -88,7 +88,11 @@ class TwigFactory
         $twig->addFunction(new \Twig_SimpleFunction('defined', function ($varName) {
             return defined($varName);
         }));
-        
+
+	    $twig->addFilter(new \Twig_SimpleFilter('woodlets_date', function ($val) use ($wpWrapper) {
+		    return $wpWrapper->dateI18n(null, strtotime($val));
+	    }));
+
         $twig = $wpWrapper->applyFilters('twig', $twig);
 
         return $twig;
