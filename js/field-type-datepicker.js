@@ -142,6 +142,8 @@ define([
                             retVal = moment();
                             retVal.hours(tmp[0]);
                             retVal.minutes(tmp[1]);
+                        } else {
+                            retVal = moment("");
                         }
                     }
                     return retVal;
@@ -189,10 +191,10 @@ define([
                 inputHidden.on("change", function() {
                     var newVal = inputHidden.val();
                     if(lastVal !== newVal) {
+                        lastVal = newVal;
                         var tmp = getMomentFromHiddenVal(newVal);
                         if (tmp.isValid()) {
                             datePicker.date(tmp);
-                            lastVal = newVal;
                         }
                     }
                 });
