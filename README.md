@@ -1,6 +1,9 @@
 # Woodlets [![Build Status](https://travis-ci.org/Neochic/Woodlets.svg)](https://travis-ci.org/Neochic/Woodlets)
-**Caution: This plugin is alpha. Everything might change at any time. Please do not use in production yet.  
-However most of the functionality is ready to be tested. Feedback and feature requests are welcome!**
+**Caution: This plugin is still alpha. There might be breaking changes.  
+However the only change that is planned until beta release that may break anything is the restructuring of the default templates.  
+They are used to inherit from in your theme templates. Just keep that in mind and check the changes on the default templates you inherit from before you update until beta is released.  
+Beta is going to be released very soon.  
+Feedback and feature requests are welcome!**
 
 Woodlets is a WordPress plugin that makes theme development more productive and fun.  
 The main features are:
@@ -50,10 +53,12 @@ Check ["Woodlets Seed"-Theme composer.json](https://github.com/Neochic/Woodlets-
     ```
     The action ```neochic_woodlets_render_template``` initializes the template rendering.
 4. Activate your new theme.
-5. Edit a page or create and try the Woodlets column editor.
-   By default there is only the native WordPress Text-Widget enabled. Continue reading to learn [how to create custom widgets](docs/widgets.md).
-6. Check the content you added in the frontend.
-   Woodlets provides very basic layout and page templates as base for your own layouts. Learn [how to create your own page templates](docs/page-templates.md).
+5. Create your first page template with at least one column.
+   Learn [how to create your own page templates](docs/page-templates.md).
+6. Create your first Woodlets widget.
+   Learn [how to create custom widgets](docs/widgets.md).
+7. Add your new widget to the allowed widgets configuration of your page template column.
+8. Create or edit a page and use your new page layout to test your widget in backend and frontend.
 
 For the creation of new Woodlets themes you may download the ["Woodlets Seed"-Theme](https://github.com/Neochic/Woodlets-Seed) instead of starting from scratch.
 It might also be a good idea to take a look at the ["Woodlets Example"-Theme](https://github.com/Neochic/Woodlets-Example).

@@ -4,7 +4,7 @@ Since Woodlets replaces all WordPress Theme templates with Twig templates there 
 ## Post details
 Like page templates the templates for post details can also contain additional fields. And you can add multiple templates for different post types.
 To create a post details template just add a template file to ```ẁoodlets/posts/```.  
-They work nearly like the [page templates](page-templates.md) with the difference that they can't contain columns.
+They work exactly like the [page templates](page-templates.md), you can even create columns for advanced post layouts.
 
 #### Example
 ```twig

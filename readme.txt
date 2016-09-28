@@ -30,7 +30,12 @@ The main features are:
     ```
     The action ```neochic_woodlets_render_template``` initializes the template rendering.
 4. Activate your new theme.
-5. Read the documentation on the [Woodlets Github Page](https://github.com/Neochic/Woodlets#user-content-further-reading) to learn how to create new widgets and page templates.
+5. Create your first page template with at least one column.
+   Learn [how to create your own page templates](docs/page-templates.md).
+6. Create your first Woodlets widget.
+   Learn [how to create custom widgets](docs/widgets.md).
+7. Add your new widget to the allowed widgets configuration of your page template column.
+8. Create or edit a page and use your new page layout to test your widget in backend and frontend.
 
 For the creation of new Woodlets themes you may download the ["Woodlets Seed"-Theme](https://github.com/Neochic/Woodlets-Seed) instead of starting from scratch.
 
