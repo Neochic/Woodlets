@@ -157,7 +157,7 @@ class Woodlets
             $isCustomize = ($hook === 'widgets.php' && $this->wpWrapper->pageNow() === 'customize.php');
             $isWidgets = ($hook === 'widgets.php' && $this->wpWrapper->pageNow() === 'widgets.php');
 
-            if (in_array($hook, array('post-new.php', 'post.php', 'profile.php')) || $isCustomize || $isWidgets) {
+            if (in_array($hook, array('post-new.php', 'post.php', 'profile.php', 'user-edit.php')) || $isCustomize || $isWidgets) {
                 self::$container['scriptsManager']->addScripts();
             }
         });
