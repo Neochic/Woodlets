@@ -1,6 +1,8 @@
-# Woodlets [![Build Status](https://travis-ci.org/Neochic/Woodlets.svg)](https://travis-ci.org/Neochic/Woodlets)
-
+# Woodlets 
+[![Build Status](https://travis-ci.org/Neochic/Woodlets.svg)](https://travis-ci.org/Neochic/Woodlets)
 [![Join the chat at https://gitter.im/Woodlets/Lobby](https://badges.gitter.im/Woodlets/Lobby.svg)](https://gitter.im/Woodlets/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+
 **Caution: This plugin is still alpha. There might be breaking changes.  
 However the only change that is planned until beta release that may break anything is the restructuring of the default templates.  
 They are used to inherit from in your theme templates. Just keep that in mind and check the changes on the default templates you inherit from before you update until beta is released.  

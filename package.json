@@ -19,7 +19,7 @@
     "bower": "^1.4.1",
     "gitbook-cli": "^2.2.0",
     "jshint": "^2.8.0",
-    "less": "^2.5.1",
+    "less": "^2.7.1",
     "less-plugin-clean-css": "^1.5.1",
     "requirejs": "^2.1.20",
     "svgexport": "^0.3.2"

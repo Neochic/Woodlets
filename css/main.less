@@ -4,12 +4,20 @@
 @import "_location";
 @import "_slider";
 
+#woodlets-fake-editor {
+  display:none;
+}
+
 .neochic-woodlets-editor-active {
   .wp-editor-tabs,
   .wp-editor-tools,
   #post-status-info,
   .layout-test-wrap .form-wrap {
     display:none;
+  }
+
+  #wp-content-wrap {
+    padding-top: 0 !important;
   }
 }
 

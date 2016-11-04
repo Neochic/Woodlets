@@ -1,4 +1,7 @@
 <div class="neochic-woodlets-editor">
+    <div id="woodlets-fake-editor">
+        <input id="content" />
+    </div>
     <input type="hidden" name="neochic_woodlets_data" value="{{ data|json_encode }}" />
     <div class="neochic-woodlets-row">
         {% for col in config.columns %}

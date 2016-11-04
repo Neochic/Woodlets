@@ -17,6 +17,8 @@ requirejs([
         /*
          * init main content editor
          */
+        $('#woodlets-fake-editor').detach();
+
         var $editor = $('.neochic-woodlets-editor');
         var $input = $editor.children('input[name=neochic_woodlets_data]');
 
