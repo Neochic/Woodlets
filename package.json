@@ -1,6 +1,6 @@
 {
   "name": "@neochic/woodlets",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Create WordPress Widgets using Twig Templates",
   "scripts": {
     "postinstall": "npm run install:composer && npm run install:bower",
