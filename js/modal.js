@@ -12,6 +12,7 @@ define(['jquery'], function($) {
     var breadCrumbTrail = $('<ul class="woodlets-breadcrumb"></ul>');
     var $body = $();
     var stack = [];
+    var mouseDownEle;
 
     $(document).ready(function() {
        $body = $('body');
@@ -70,8 +71,12 @@ define(['jquery'], function($) {
         clear();
     };
 
+    overlay.on('mousedown', function(e) {
+        mouseDownEle = e.target;
+    });
+
     overlay.on('click', function(e) {
-        if(e.target === this) {
+        if(e.target === this && mouseDownEle === this) {
             stack = [];
             close();
         }
