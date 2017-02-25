@@ -25,8 +25,8 @@ class EditorManager
         $data = $this->_getData();
         $widgets = array();
 
-        foreach ($data['cols'] as $col => $widgets) {
-            foreach ($widgets as $key => $widget) {
+        foreach ($data['cols'] as $col => $colWidgets) {
+            foreach ($colWidgets as $key => $widget) {
                 $widgets[$widget['widgetId']] = $this->widgetManager->getWidget($widget['widgetId']);
             }
         }
