@@ -3,6 +3,11 @@ php:
   - 5.4
 install: npm run build --@neochic/woodlets:version=${TRAVIS_TAG:-latest}
 script: npm test
+cache:
+  directories:
+    - node_modules
+    - vendor
+    - bower_components
 deploy:
   provider: releases
   api_key:
