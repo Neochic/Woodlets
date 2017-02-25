@@ -12,7 +12,7 @@ requirejs.config({
         'moment': '../bower_components/moment/moment',
         "inputmask": "../bower_components/jquery.inputmask/dist/inputmask/inputmask",
         "inputmask-date-extensions": "../bower_components/jquery.inputmask/dist/inputmask/inputmask.date.extensions",
-        "inputmask.dependencyLib": "../bower_components/jquery.inputmask/dist/inputmask/inputmask.dependencyLib.jquery",
+        "inputmask.dependencyLib": "../bower_components/jquery.inputmask/dist/inputmask/inputmask.dependencyLib",
         "jquery-inputmask": "../bower_components/jquery.inputmask/dist/inputmask/jquery.inputmask",
         "jquery-caret": "../bower_components/jquery.caret/dist/jquery.caret-1.5.0",
         "jquery-ui.slider": "../bower_components/jquery-ui/ui/slider"
