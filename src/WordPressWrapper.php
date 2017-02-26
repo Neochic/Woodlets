@@ -283,6 +283,10 @@ class WordPressWrapper
     	return get_option($option, $default);
     }
 
+    public function updateOption( $option, $value, $autoload = null ) {
+	    return call_user_func_array('update_option', func_get_args());
+    }
+
     public function dateI18n($dateformatstring = null, $unixtimestamp = false, $gmt = false) {
 		if($dateformatstring === null) {
 			$dateformatstring = $this->getOption('date_format');
@@ -290,4 +294,56 @@ class WordPressWrapper
 
 		return date_i18n( $dateformatstring, $unixtimestamp, $gmt );
     }
+
+    public function addOptionsPage($page_title, $menu_title, $capability, $menu_slug, $function) {
+	    return call_user_func_array('add_options_page', func_get_args());
+    }
+	public function settingsFields($option_group) {
+		return call_user_func_array('settings_fields', func_get_args());
+	}
+	public function doSettingsSections($page) {
+		return call_user_func_array('do_settings_sections', func_get_args());
+	}
+	public function submitButton($text = null, $type = 'primary', $name = 'submit', $wrap = true, $other_attributes = null) {
+		return call_user_func_array('submit_button', func_get_args());
+	}
+	public function registerSetting($option_group, $option_name, $args = array()) {
+		return call_user_func_array('register_setting', func_get_args());
+	}
+	public function addSettingsField($id, $title, $callback, $page, $section, $args = array()) {
+		return call_user_func_array('add_settings_field', func_get_args());
+	}
+	public function currentUserCan($capability) {
+		return call_user_func_array('current_user_can', func_get_args());
+	}
+	public function addSettingsSection($id, $title, $callback, $page) {
+		return call_user_func_array('add_settings_section', func_get_args());
+	}
+	public function getAdminPageTitle() {
+		return call_user_func_array('get_admin_page_title', func_get_args());
+	}
+	public function escUrl( $url, $protocols = null, $_context = 'display' ) {
+		return call_user_func_array('esc_url', func_get_args());
+	}
+	public function getAdminUrl( $blog_id = null, $path = '', $scheme = 'admin' ) {
+		return call_user_func_array('get_admin_url', func_get_args());
+	}
+	public function wpHttpSupports( $capabilities = array(), $url = null ) {
+		return call_user_func_array('wp_http_supports', func_get_args());
+	}
+	public function setUrlScheme( $url, $scheme = null  ) {
+		return call_user_func_array('set_url_scheme', func_get_args());
+	}
+	public function wpRemoteGet( $url, $args = array() ) {
+		return call_user_func_array('wp_remote_get', func_get_args());
+	}
+	public function isWpError( $thing ) {
+		return call_user_func_array('is_wp_error', func_get_args());
+	}
+	public function wpRemoteRetrieveBody( $response ) {
+		return call_user_func_array('wp_remote_retrieve_body', func_get_args());
+	}
+	public function getPluginData( $plugin_file, $markup = true, $translate = true ) {
+		return call_user_func_array('get_plugin_data', func_get_args());
+	}
 }

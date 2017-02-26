@@ -63,6 +63,14 @@ class ContainerFactory
             return new ProfileManager($c['wordpressWrapper'], $c['twig'], $c['fieldTypeManager'], $c['formManager']);
         };
 
+	    $container['settings'] = function ($c) {
+		    return new Settings($c['twig'], $c['wordpressWrapper']);
+	    };
+
+	    $container['updater'] = function ($c) {
+		    return new Updater($c['twig'], $c['wordpressWrapper'], $c['baseName'], $c['pluginFile']);
+	    };
+
         $container['wordpressWrapper'] = function ($c) {
             return new WordPressWrapper($c['dataKey']);
         };

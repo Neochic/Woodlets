@@ -202,6 +202,26 @@ class Woodlets
             wp_die();
         });
 
-        $this->wpWrapper->doAction("init");
+	    $this->wpWrapper->addAction( 'admin_init', function () {
+		    self::$container['settings']->init();
+	    } );
+
+	    $this->wpWrapper->addAction( 'admin_menu', function () {
+		    self::$container['settings']->addPage();
+	    } );
+
+	    $this->wpWrapper->addAction( 'admin_notices', function () {
+		    return self::$container['updater']->check();
+	    } );
+
+	    $this->wpWrapper->addFilter( 'pre_set_site_transient_update_plugins', function ($transient) {
+		    return self::$container['updater']->updateCheck($transient);
+	    } );
+
+	    $this->wpWrapper->addFilter( 'plugins_api', function ($false, $action, $arg) {
+		    return self::$container['updater']->getInfo($false, $action, $arg);
+	    }, 10, 3);
+
+	    $this->wpWrapper->doAction("init");
     }
 }
