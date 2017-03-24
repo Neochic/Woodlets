@@ -19,27 +19,32 @@ The main features are:
 * Compatible with native WordPress widgets
 
 ## Installation
-Installation via composer is recommended. But there is also a bundled version that can be installed manually, since using composer is not that common in the WordPress world.
-### Install via composer
-You need to to set [installer path](https://getcomposer.org/doc/faqs/how-do-i-install-a-package-to-a-custom-path-for-my-framework.md) for ```wordpress-plugin``` type.
-```json
-{
-    "extra": {
-        "installer-paths": {
-          "vendor/WordPress/wp-content/plugins/{$name}/": [
-            "type:wordpress-plugin"
-          ]
-        }
-    }
-}
-```
+Installation via [TGM Plugin Activation](http://tgmpluginactivation.com/) is recommended. With TGMPA Plugin Activation you can define Woodlets as a required dependency for your theme.  
+But there is also a bundled version that can be installed manually.
+### Install via TGM Plugin Activation
+1. Install TGM Plugin Activation as they explain in their [installation manual](http://tgmpluginactivation.com/installation/).
+2. Include and configure the TGM Plugin Activation library to load Woodlets:
 
-Install Woodlets via composer:
-```
-composer require neochic/woodlets
-```
+    ```php
+    <?php
+    require_once dirname( __FILE__ ) . '/class-tgm-plugin-activation.php';
+    
+    add_action( 'tgmpa_register', function() {
+        $plugins = array(
+            array(
+                'name'               => 'Woodlets',
+                'slug'               => 'woodlets',
+                'source'             => 'https://github.com/Neochic/Woodlets/releases/download/v0.2.6/woodlets-v0.2.6-bundled.zip',
+                'required'           => true,
+                'force_activation'   => true,
+                'force_deactivation' => true
+            )
+        );
+        tgmpa( $plugins );
+    });
+    ```
 
-Check ["Woodlets Seed"-Theme composer.json](https://github.com/Neochic/Woodlets-Seed/blob/master/composer.json) for a working example.
+Check ["Woodlets Seed"-Theme Tgm.php](https://github.com/Neochic/Woodlets-Seed/blob/master/src/services/Tgm.php) for a working example.
 
 ### Install manually
 1. Go to [releases page](https://github.com/Neochic/Woodlets/releases) and download the latest bundled release.
@@ -47,6 +52,10 @@ Check ["Woodlets Seed"-Theme composer.json](https://github.com/Neochic/Woodlets-
 3. Activate the plugin on the plugins page of your WordPress installation.
 
 ## Getting started
+For the creation of new Woodlets themes we recommend to use ["Woodlets-CLI"](https://github.com/Neochic/Woodlets-CLI) instead of starting from scratch.
+It might also be a good idea to take a look at the ["Woodlets Example"-Theme](https://github.com/Neochic/Woodlets-Example).
+
+### Create a theme manually
 1. Be sure the Woodlets plugin is [installed](#installation) and activated.
 2. Create a new theme (as the [WordPress documentation says](https://codex.wordpress.org/Theme_Development#Basic_Templates) it should at least contain ```style.css``` and ```index.php```)
 3. Put the following lines into your ```index.php```:
@@ -63,9 +72,6 @@ Check ["Woodlets Seed"-Theme composer.json](https://github.com/Neochic/Woodlets-
    Learn [how to create custom widgets](docs/widgets.md).
 7. Add your new widget to the allowed widgets configuration of your page template column.
 8. Create or edit a page and use your new page layout to test your widget in backend and frontend.
-
-For the creation of new Woodlets themes you may download the ["Woodlets Seed"-Theme](https://github.com/Neochic/Woodlets-Seed) instead of starting from scratch.
-It might also be a good idea to take a look at the ["Woodlets Example"-Theme](https://github.com/Neochic/Woodlets-Example).
 
 ### Further Reading:
 * [Widgets](docs/widgets.md)
