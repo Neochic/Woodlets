@@ -3,11 +3,10 @@
 [![Join the chat at https://gitter.im/Woodlets/Lobby](https://badges.gitter.im/Woodlets/Lobby.svg)](https://gitter.im/Woodlets/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
-**Caution: This plugin is still alpha. There might be breaking changes.  
-However the only change that is planned until beta release that may break anything is the restructuring of the default templates.  
-They are used to inherit from in your theme templates. Just keep that in mind and check the changes on the default templates you inherit from before you update until beta is released.  
-Beta is going to be released very soon.  
-Feedback and feature requests are welcome!**
+**Woodlets is beta. We think it's stable enough be used it in productive environments and we do so.  
+However you should copy the default templates directory from views/defaultTemplates into the woodlets directory of your theme. This helps to prevent incompatibilities with future Woodlets versions.**  
+
+**Feedback and feature requests are welcome!**
 
 Woodlets is a WordPress plugin that makes theme development more productive and fun.  
 The main features are:
@@ -34,7 +33,7 @@ But there is also a bundled version that can be installed manually.
             array(
                 'name'               => 'Woodlets',
                 'slug'               => 'woodlets',
-                'source'             => 'https://github.com/Neochic/Woodlets/releases/download/v0.2.6/woodlets-v0.2.6-bundled.zip',
+                'source'             => 'https://github.com/Neochic/Woodlets/releases/download/v0.5.0/woodlets-v0.5.0-bundled.zip',
                 'required'           => true,
                 'force_activation'   => true,
                 'force_deactivation' => true
