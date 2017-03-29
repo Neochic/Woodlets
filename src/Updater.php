@@ -19,8 +19,9 @@ class Updater
 	}
 
 	public function check() {
+		$activated = $this->wpWrapper->getOption('neochic_woodlets_check_for_updates');
 		$notified = $this->wpWrapper->getUserMeta($this->wpWrapper->getCurrentUserId(), 'neochic_woodlets_notice_dismissed_'.$this->settingsKey);
-		if(!$notified) {
+		if(!$notified && !$activated) {
 			$template = $this->twig->loadTemplate('@woodlets/autoUpdateNotice.twig');
 			echo $template->render(array(
 				'url' => $this->wpWrapper->escUrl( $this->wpWrapper->getAdminUrl(null, 'options-general.php?page=neochic_woodlets') ),
