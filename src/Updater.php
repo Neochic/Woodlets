@@ -8,7 +8,7 @@ class Updater
 	protected $twig;
 	protected $baseName;
 	protected $pluginFile;
-	protected $settingsKey = 'neochic_woodlets_enable_updates_notification';
+	protected $settingsKey = 'enable_updates_notification';
 	protected $checkResponse = null;
 
 	public function __construct($twig, WordPressWrapper $wpWrapper, $baseName, $pluginFile) {
