@@ -211,8 +211,16 @@ class Woodlets
 	    } );
 
 	    $this->wpWrapper->addAction( 'admin_notices', function () {
-		    return self::$container['updater']->check();
+		    if (in_array($this->wpWrapper->pageNow(), array('post.php', 'post-new.php'))) {
+			    self::$container['updater']->check();
+		    }
 	    } );
+
+	    $this->wpWrapper->addAction('wp_ajax_neochic_woodlets_dismiss_admin_notice', function () {
+		    $this->wpWrapper->setUserMeta($this->wpWrapper->getCurrentUserId(), true, 'neochic_woodlets_notice_dismissed_'.$_REQUEST['key']);
+	    	echo json_encode(true);
+		    wp_die();
+	    });
 
 	    $this->wpWrapper->addFilter( 'pre_set_site_transient_update_plugins', function ($transient) {
 		    return self::$container['updater']->updateCheck($transient);

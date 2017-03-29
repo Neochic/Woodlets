@@ -113,6 +113,10 @@ class WordPressWrapper
         return update_user_meta($userId, $key, $value);
     }
 
+	public function getCurrentUserId() {
+        return get_current_user_id();
+	}
+
     public function addStyle($name, $url) {
         wp_register_style('neochic-woodlets-'.$name, $url, array(), $this->getPluginVersion());
         wp_enqueue_style('neochic-woodlets-'.$name);

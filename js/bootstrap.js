@@ -1,4 +1,4 @@
-/* globals document, window */
+/* globals document, window, ajaxurl */
 
 requirejs([
     'jquery',
@@ -89,4 +89,24 @@ requirejs([
             initWidgets();
         });
     }
+
+    /*
+     * init dismission of notifications
+     */
+
+    $(document).on('click', '.neochic-woodlets-notice .notice-dismiss', function() {
+        var key = $(this).closest('.neochic-woodlets-notice').data('key');
+        if (!key) {
+            return;
+        }
+
+        $.ajax({
+            method: "post",
+            url: ajaxurl,
+            data: {
+                action: "neochic_woodlets_dismiss_admin_notice",
+                key: key
+            }
+        });
+    });
 });

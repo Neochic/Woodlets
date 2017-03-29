@@ -19,13 +19,13 @@ class Updater
 	}
 
 	public function check() {
-		$notified = $this->wpWrapper->getOption($this->settingsKey);
+		$notified = $this->wpWrapper->getUserMeta($this->wpWrapper->getCurrentUserId(), 'neochic_woodlets_notice_dismissed_'.$this->settingsKey);
 		if(!$notified) {
 			$template = $this->twig->loadTemplate('@woodlets/autoUpdateNotice.twig');
 			echo $template->render(array(
-				'url' => $this->wpWrapper->escUrl( $this->wpWrapper->getAdminUrl(null, 'options-general.php?page=neochic_woodlets') )
+				'url' => $this->wpWrapper->escUrl( $this->wpWrapper->getAdminUrl(null, 'options-general.php?page=neochic_woodlets') ),
+				'key' => $this->settingsKey
 			));
-			$this->wpWrapper->updateOption($this->settingsKey, 1, true);
 		}
 	}
 
