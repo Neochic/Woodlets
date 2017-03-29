@@ -11,6 +11,7 @@ class TemplateManager
     protected $twigHelper;
     protected $widgetManager;
     protected $postTypes;
+	protected $notificationKey = 'copy_default_templates';
     protected $defaultTemplates = array(
         "page" => "pages/default.twig",
         "post" => "posts/default.twig",
@@ -82,6 +83,29 @@ class TemplateManager
         $templateName = $this->getTemplateName($this->wpWrapper->getTemplateType());
         $template = new Template($templateName, $this->twig, $this->widgetManager, $this->fieldTypeManager);
         return $template->getConfig();
+    }
+
+    public function checkLocalCopy() {
+	    $notified = $this->wpWrapper->getUserMeta($this->wpWrapper->getCurrentUserId(), 'neochic_woodlets_notice_dismissed_'.$this->notificationKey);
+	    if (!$notified) {
+
+		    $found = false;
+		    foreach ($this->wpWrapper->getThemePaths() as $path) {
+			    $defaultTemplatePath = $path . '/woodlets/defaultTemplates/';
+			    if (is_dir($defaultTemplatePath)) {
+				    $found = true;
+				    break;
+			    }
+		    }
+
+		    if(!$found) {
+			    $template = $this->twig->loadTemplate('@woodlets/copyDefaultTemplatesNotice.twig');
+			    echo $template->render(array(
+				    'url' => $this->wpWrapper->escUrl( $this->wpWrapper->getAdminUrl(null, 'options-general.php?page=neochic_woodlets') ),
+				    'key' => $this->notificationKey
+			    ));
+		    }
+	    }
     }
 
     protected function _getDefaultTemplate($type) {

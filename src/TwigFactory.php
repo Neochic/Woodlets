@@ -17,11 +17,18 @@ class TwigFactory
          */
         foreach ($wpWrapper->getThemePaths() as $path) {
             $path = $path . '/woodlets/';
+	        $defaultTemplatePath = $path . '/defaultTemplates/';
 
             if (is_dir($path)) {
                 array_push($paths, array(
                     'path' => $path
                 ));
+            }
+
+            if(is_dir($defaultTemplatePath)) {
+	            array_push($paths, array(
+		            'path' => $defaultTemplatePath
+	            ));
             }
         }
 

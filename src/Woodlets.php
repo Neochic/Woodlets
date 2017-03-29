@@ -213,6 +213,7 @@ class Woodlets
 	    $this->wpWrapper->addAction( 'admin_notices', function () {
 		    if (in_array($this->wpWrapper->pageNow(), array('post.php', 'post-new.php'))) {
 			    self::$container['updater']->check();
+			    self::$container['templateManager']->checkLocalCopy();
 		    }
 	    } );
 
