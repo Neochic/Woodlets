@@ -210,7 +210,8 @@ class WordPressWrapper
     }
 
     public function getTemplateType() {
-        if (in_the_loop()) {
+	    $post = $this->getPost();
+        if (in_the_loop() && $post) {
             return $this->getPost()->post_type;
         }
 
@@ -221,7 +222,7 @@ class WordPressWrapper
             return "post";
         }
 
-        if ($this->pageNow() === 'post.php') {
+        if ($this->pageNow() === 'post.php' && $post) {
             return $this->getPost()->post_type;
         }
 

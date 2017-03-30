@@ -84,15 +84,13 @@ class Woodlets
         });
 
         $this->wpWrapper->addAction('save_post', function ($postId) {
-            $post = $this->wpWrapper->getPost();
-
             //check nonce to prevent XSS
             if (!isset($_POST['_wpnonce']) || !$this->wpWrapper->verifyNonce($_POST['_wpnonce'], 'update-post_' . $postId)) {
                 return;
             }
 
             //check user permission
-            if (!$this->wpWrapper->isAllowed('edit_page', $post->ID)) {
+            if (!$this->wpWrapper->isAllowed('edit_page', $postId)) {
                 return;
             }
 
