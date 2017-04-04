@@ -42,11 +42,21 @@ class TemplateManager
         $templateName = $this->getTemplateName($this->wpWrapper->getTemplateType());
         $template = $this->twig->loadTemplate($templateName);
 
+        $viewBlockAvailable = false;
+	    $checkForView = $template;
+	    while($checkForView) {
+	        $checkForView = $checkForView->getParent(array());
+	        if ($checkForView && $checkForView->hasBlock('view')) {
+		        $viewBlockAvailable = true;
+	        	break;
+	        }
+        }
+
         /*
          * If template is extending or no view/form block combination is used
          * the template should be rendered directly, else just render the view block.
          */
-        if(($template->getParent(array()) && !$withoutParent) || !$template->hasBlock('view')) {
+        if(($template->getParent(array()) && !$withoutParent) || !$viewBlockAvailable) {
             return $template->render(array('woodlets' => $this->twigHelper));
         }
 
