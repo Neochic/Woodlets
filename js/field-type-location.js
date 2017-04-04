@@ -161,6 +161,7 @@ define([
                                     latitudeInput: changeListenerHelperLat,
                                     longitudeInput: changeListenerHelperLng
                                 },
+                                addressFormat: "street_number",
                                 enableAutocomplete: true,
                                 enableReverseGeocode: true,
                                 onchanged: updateLocationData,
