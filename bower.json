@@ -18,7 +18,7 @@
     "lesshat": "~3.0.2",
     "bluebird": "^3.3.5",
     "requirejs-plugins": "^1.0.3",
-    "jquery-locationpicker-plugin": "Logicify/jquery-locationpicker-plugin#^0.1.12",
+    "jquery-locationpicker-plugin": "Logicify/jquery-locationpicker-plugin#^0.1.15",
     "eonasdan-bootstrap-datetimepicker": "^4.17.37",
     "jquery.inputmask": "^3.3.1",
     "bootstrap": "^3.3.6",
