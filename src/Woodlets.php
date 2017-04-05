@@ -80,7 +80,14 @@ class Woodlets
                 return $content;
             }
 
-            return $templateManager->display(true);
+            $content = $templateManager->display(true);
+
+            /*
+             * if the templates does a wp_query we've to recover the global post variable
+             * wp_reset_postdata() doesn't seem to work correct while saving
+             */
+	        $GLOBALS['post'] = $this->wpWrapper->getPost($_POST['post_ID']);
+            return $content;
         });
 
         $this->wpWrapper->addAction('save_post', function ($postId) {

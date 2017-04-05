@@ -73,7 +73,8 @@ class WordPressWrapper
         }
 
         if ($postId === null) {
-            $postId = $this->getPost() ? $this->getPost()->ID : null;
+	        $post = $this->getPost();
+            $postId = $post ? $post->ID : null;
         }
 
         if ($useRevision) {
@@ -88,7 +89,11 @@ class WordPressWrapper
             $key = $this->dataKey;
         }
         if($postId === null) {
-            $postId = $this->getPost()->ID;
+	        $post = $this->getPost();
+	        if(!$post) {
+	        	return false;
+	        }
+        	$postId = $post->ID;
         }
 
         /*
@@ -186,8 +191,7 @@ class WordPressWrapper
     }
 
     public function isPage() {
-        $post = $this->getPost();
-        return $post && $post->post_type === 'page';
+        return $this->getPostType() === 'page';
     }
 
     public function inTheLoop() {
@@ -212,7 +216,7 @@ class WordPressWrapper
     public function getTemplateType() {
 	    $post = $this->getPost();
         if (in_the_loop() && $post) {
-            return $this->getPost()->post_type;
+            return $post->post_type;
         }
 
         if ($this->pageNow() === 'post-new.php') {
@@ -223,7 +227,7 @@ class WordPressWrapper
         }
 
         if ($this->pageNow() === 'post.php' && $post) {
-            return $this->getPost()->post_type;
+            return $post->post_type;
         }
 
         if (is_attachment()) {
