@@ -58,8 +58,12 @@ class Woodlets
         });
 
         $this->wpWrapper->addFilter('content_save_pre', function($content) {
-            if (!in_array($this->wpWrapper->pageNow() ,array("post.php", "post-new.php"))) {
+            if (!in_array($this->wpWrapper->pageNow() ,array("post.php", "post-new.php", "revision.php"))) {
                 return $content;
+            }
+
+            if (!isset($_POST['post_ID']) && !isset($_GET['revision'])) {
+	            return $content;
             }
 
             $data = null;
@@ -86,7 +90,16 @@ class Woodlets
              * if the templates does a wp_query we've to recover the global post variable
              * wp_reset_postdata() doesn't seem to work correct while saving
              */
-	        $GLOBALS['post'] = $this->wpWrapper->getPost($_POST['post_ID']);
+	        if ($this->wpWrapper->pageNow() === 'revision.php' && $_GET['action'] === 'restore') {
+		        $post = $this->wpWrapper->getPost($_GET['revision']);
+		        if($post && $post->post_parent > 0) {
+		        	$post = $this->wpWrapper->getPost($post->post_parent);
+		        }
+		        $GLOBALS['post'] = $post;
+	        } else {
+		        $GLOBALS['post'] = $this->wpWrapper->getPost($_POST['post_ID']);
+	        }
+
             return $content;
         });
 

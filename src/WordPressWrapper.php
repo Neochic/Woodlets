@@ -99,8 +99,14 @@ class WordPressWrapper
         /*
          * if it's a revision save it also to the revision
          */
-        if (wp_is_post_revision($postId)) {
-            add_metadata('post', $postId, $key, $value);
+	    $revision = $this->getLatestRevision($postId);
+	    if(!$revision) {
+		    $post = $this->getPost($postId);
+		    $revision = $this->getLatestRevision($post->post_parent);
+	    }
+
+        if (wp_is_post_revision($revision)) {
+        	add_metadata('post', $revision->ID, $key, $value);
         }
 
         return update_post_meta($postId, $key, $value);
@@ -108,6 +114,20 @@ class WordPressWrapper
 
     public function getUserMeta($userId, $key = null) {
         return get_user_meta($userId, $key, true) ?: array();
+    }
+
+    public function getLatestRevision($postId) {
+    	if($postId < 1) {
+    		return null;
+	    }
+
+	    $revisions = wp_get_post_revisions( $postId , array ('posts_per_page' => 1));
+
+	    if(count($revisions) > 0) {
+		    return current($revisions);
+	    }
+
+	    return null;
     }
 
     public function setUserMeta($userId, $value, $key = null) {
