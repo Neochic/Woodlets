@@ -38,8 +38,11 @@ class TemplateManager
         }
     }
 
-    public function display($withoutParent = false) {
-        $templateName = $this->getTemplateName($this->wpWrapper->getTemplateType());
+    /*
+     * use data parameter to display anything else than the current post (revision or not yet saved data)
+     */
+    public function display($withoutParent = false, $data = null) {
+        $templateName = $this->getTemplateName($this->wpWrapper->getTemplateType(), $data);
         $template = $this->twig->loadTemplate($templateName);
 
         $viewBlockAvailable = false;
@@ -63,10 +66,12 @@ class TemplateManager
         return $template->renderBlock('view', array('woodlets' => $this->twigHelper));
     }
 
-    public function getTemplateName($type = "page")
+    public function getTemplateName($type = "page", $data = null)
     {
         $template = $this->wpWrapper->applyFilters('default_template_' . $type, $this->_getDefaultTemplate($type));
-        $data = $this->wpWrapper->getPostMeta();
+		if(!$data) {
+			$data = $this->wpWrapper->getPostMeta();
+		}
         $postType = $this->wpWrapper->getPostType();
 
         if (isset($data['template']) && $postType && isset($this->templates[$postType][$data['template']])) {

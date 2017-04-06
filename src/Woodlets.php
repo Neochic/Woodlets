@@ -84,7 +84,7 @@ class Woodlets
                 return $content;
             }
 
-            $content = $templateManager->display(true);
+            $content = $templateManager->display(true, $data);
 
             /*
              * if the templates does a wp_query we've to recover the global post variable

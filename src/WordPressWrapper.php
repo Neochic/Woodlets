@@ -246,7 +246,7 @@ class WordPressWrapper
             return "post";
         }
 
-        if ($this->pageNow() === 'post.php' && $post) {
+        if (in_array($this->pageNow(), array('revision.php', 'post.php')) && $post) {
             return $post->post_type;
         }
 
