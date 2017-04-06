@@ -3,7 +3,9 @@
 <head>
     {% block head %}
         {{ woodlets.wp_head() }}
-        <title>{% block title %}{{ woodlets.the_title() }}{% endblock %}</title>
+        {% block titleTag %}
+            <title>{% block title %}{{ woodlets.wp_get_document_title()|raw }}{% endblock %}</title>
+        {% endblock %}
         {% block baseTag %}
             <base href="{{ woodlets.get_home_url() }}" />
         {% endblock %}
