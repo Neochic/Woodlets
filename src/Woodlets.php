@@ -58,7 +58,7 @@ class Woodlets
         });
 
         $this->wpWrapper->addFilter('content_save_pre', function($content) {
-            if (!in_array($this->wpWrapper->pageNow() ,array("post.php", "post-new.php", "revision.php"))) {
+            if (!in_array($this->wpWrapper->pageNow() ,array("post.php", "post-new.php"))) {
                 return $content;
             }
 
