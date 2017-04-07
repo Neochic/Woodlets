@@ -235,7 +235,7 @@ class Woodlets
 	    } );
 
 	    $this->wpWrapper->addAction('wp_ajax_neochic_woodlets_dismiss_admin_notice', function () {
-		    $this->wpWrapper->setUserMeta($this->wpWrapper->getCurrentUserId(), true, 'neochic_woodlets_notice_dismissed_'.$_REQUEST['key']);
+		    $this->wpWrapper->setUserMeta($this->wpWrapper->getCurrentUserId(), $_REQUEST['value'], 'neochic_woodlets_notice_dismissed_'.$_REQUEST['key']);
 	    	echo json_encode(true);
 		    wp_die();
 	    });

@@ -96,6 +96,7 @@ requirejs([
 
     $(document).on('click', '.neochic-woodlets-notice .notice-dismiss', function() {
         var key = $(this).closest('.neochic-woodlets-notice').data('key');
+        var value = $(this).closest('.neochic-woodlets-notice').data('value') || true;
         if (!key) {
             return;
         }
@@ -105,7 +106,8 @@ requirejs([
             url: ajaxurl,
             data: {
                 action: "neochic_woodlets_dismiss_admin_notice",
-                key: key
+                key: key,
+                value: value
             }
         });
     });
