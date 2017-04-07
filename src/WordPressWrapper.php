@@ -324,6 +324,14 @@ class WordPressWrapper
 		return date_i18n( $dateformatstring, $unixtimestamp, $gmt );
     }
 
+    public function rootDir() {
+    	return ABSPATH;
+    }
+
+    public function siteUrl() {
+	    return get_site_url();
+    }
+
     public function addOptionsPage($page_title, $menu_title, $capability, $menu_slug, $function) {
 	    return call_user_func_array('add_options_page', func_get_args());
     }

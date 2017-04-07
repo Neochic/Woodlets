@@ -1,6 +1,10 @@
 {% extends 'layouts/404.twig' %}
 
 {% block view %}
-    <h1>{{ "404_title"|trans("woodlets") }}</h1>
-    <p>{{ "404_body"|trans("woodlets") }}</p>
+    {% block notFoundHeader %}
+        <h1>{% block notFoundHeaderContent %}{{ "404_title"|trans("woodlets") }}{% endblock %}</h1>
+    {% endblock %}
+    {% block notFoundBody %}
+        <p>{% block notFoundBodyContent %}{{ "404_body"|trans("woodlets") }}{% endblock %}</p>
+    {% endblock %}
 {% endblock %}

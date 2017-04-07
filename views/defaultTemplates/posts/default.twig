@@ -4,50 +4,93 @@
     {{ woodlets.the_content()|raw }}
 {% endblock %}
 
+{% block postThumbnail %}
+    {{ post.post_thumbnail|raw }}
+{% endblock %}
+
+{% block noPostThumbnail %}{% endblock %}
+
 {% block content %}
     {% set post = woodlets.getPosts().0 %}
+    {% block postArticleTag %}
     <article>
-        {% set parentContent = parent() %}
+        {% set contentBlockContent = parent() %}
         {% block postArticle %}
+            {% block postHeaderTag %}
             <header>
                 {% block postHeader %}
-                    <h1>{{ post.title }}</h1>
-
+                    {% block postTitleTag %}
+                        <h1>{% block postTitle %}{{ post.title }}{% endblock %}</h1>
+                    {% endblock %}
+                    {% block postThumbnailsCondition %}
                     {% if post.post_thumbnail %}
-                        {{ post.post_thumbnail|raw }}
+                        {{ block('postThumbnail') }}
+                    {% else %}
+                        {{ block('noPostThumbnail') }}
                     {% endif %}
+                    {% endblock %}
                 {% endblock %}
             </header>
+            {% endblock %}
+            {% block postContentTag %}
             <div class="entry-content">
-                {{ parentContent|raw }}
+                {% block postContent %}{{ contentBlockContent|raw }}{% endblock %}
             </div>
-
+            {% endblock %}
+            {% block postFooterTag %}
             <footer>
                 {% block postFooter %}
-                    <span class="posted-on">{{ post.date }}</span>
-                    <span class="author">{{ post.author_link|raw }}</span>
+                    {% block postDateTag %}
+                        <span class="posted-on">{% block postDate %}{{ post.date }}{% endblock %}</span>
+                    {% endblock %}
+                    {% block postAuthorTag %}
+                        <span class="author">{% block postAuthor %}{{ post.author_link|raw }}{% endblock %}</span>
+                    {% endblock %}
                 {% endblock %}
             </footer>
+            {% endblock %}
         {% endblock %}
     </article>
+    {% endblock %}
 
+    {# this block doesn't have the correct name, but we keep it for backward compatibility. use the postCommentsCondition block! #}
     {% block postComments %}
-        {% if not woodlets.post_password_required() %}
-            <div id="comments">
-                {{ woodlets.comment_form() }}
-                {% if woodlets.get_comments_number() %}
-                    <h2 class="comments-title">{{ "comments_title"|trans("woodlets", [woodlets.get_comments_number(), post.title]) }}</h2>
-                    <ol>
-                        {{
-                            woodlets.wp_list_comments({
-                                'style': 'ol',
-                                'short_ping': true,
-                                'avatar_size': 56
-                            }, post.comments)
-                        }}
-                    </ol>
-                {% endif %}
-            </div>
-        {% endif %}
+        {% block postCommentsCondition %}
+            {% if not woodlets.post_password_required() %}
+                {% block postCommentsTag %}
+                <div id="comments">
+                    {% block postCommentsFormAndList %}
+                        {% block postCommentsForm %}
+                            {{ woodlets.comment_form() }}
+                        {% endblock %}
+                    {% block postCommentsListCondition %}
+                    {% if woodlets.get_comments_number() %}
+                        {% block postCommentsContent %}
+                        {% block postCommentsTitleTag %}
+                            <h2 class="comments-title">
+                                {% block postCommentsListTitle %}{{ "comments_title"|trans("woodlets", [woodlets.get_comments_number(), post.title]) }}{% endblock %}
+                            </h2>
+                        {% endblock %}
+                        {% block postCommentsListTag %}
+                        <ol>
+                            {% block postCommentsList %}
+                            {{
+                                woodlets.wp_list_comments({
+                                    'style': 'ol',
+                                    'short_ping': true,
+                                    'avatar_size': 56
+                                }, post.comments)
+                            }}
+                            {% endblock %}
+                        </ol>
+                        {% endblock %}
+                        {% endblock %}
+                    {% endif %}
+                    {% endblock %}
+                    {% endblock %}
+                </div>
+                {% endblock %}
+            {% endif %}
+        {% endblock %}
     {% endblock %}
 {% endblock %}

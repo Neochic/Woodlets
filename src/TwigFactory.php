@@ -96,6 +96,19 @@ class TwigFactory
             return defined($varName);
         }));
 
+	    $twig->addFilter(new \Twig_SimpleFilter('cachebust', function ($path) use ($wpWrapper) {
+		    $siteUrl = $wpWrapper->siteUrl();
+		    $file = $path;
+		    if(substr($path, 0, strlen($siteUrl)) === $siteUrl) {
+			    $file = substr($path, strlen($siteUrl));
+		    }
+		    $file = $wpWrapper->rootDir() . $file;
+		    if(file_exists($file)) {
+		    	return $path . '?' . filemtime($file);
+		    }
+		    return $path;
+	    }));
+
 	    $twig->addFilter(new \Twig_SimpleFilter('woodlets_date', function ($val) use ($wpWrapper) {
 		    return $wpWrapper->dateI18n(null, strtotime($val));
 	    }));

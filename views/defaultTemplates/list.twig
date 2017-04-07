@@ -1,40 +1,84 @@
 {% extends 'layouts/blog-list.twig' %}
 
+{% block listArticleThumbnail %}
+    {{ post.post_thumbnail|raw }}
+{% endblock %}
+
+{% block noListArticleThumbnail %}{% endblock %}
+
 {% block view %}
+    {% block listCondition %}
     {% if woodlets.getPosts()|length %}
+        {% block listContent %}
+        {% block listLoop %}
         {% for post in woodlets.getPosts() %}
+            {% block listArticleTag %}
             <article>
+                {# this block doesn't have the correct name, but we keep it for backward compatibility. use the listArticle block! #}
                 {% block postArticle %}
+                {% block listArticle %}
+                    {% block listArticleHeaderTag %}
                     <header>
+                        {# this block doesn't have the correct name, but we keep it for backward compatibility. use the listArticleHeader block! #}
                         {% block postHeader %}
+                        {% block listArticleHeader %}
+                            {% block listArticleTitleTag %}
                             <h2>
-                                <a href="{{ post.permalink }}" rel="bookmark">{{ post.title }}</a>
+                                {% block listArticleTitleLinkTag %}
+                                    <a href="{{ post.permalink }}" rel="bookmark">{% block listArticleTitleLink %}{{ post.title }}{% endblock %}</a>
+                                {% endblock %}
                             </h2>
-                            {% if post.post_thumbnail %}
-                                {{ post.post_thumbnail|raw }}
-                            {% endif %}
+                            {% endblock %}
+                            {% block listArticleThumbnailsCondition %}
+                                {% if post.post_thumbnail %}
+                                    {{ block('listArticleThumbnail') }}
+                                {% else %}
+                                    {{ block('noListArticleThumbnail') }}
+                                {% endif %}
+                            {% endblock %}
+                        {% endblock %}
                         {% endblock %}
                     </header>
-
+                    {% endblock %}
+                    {% block listArticleContentTag %}
                     <div class="entry-content">
+                        {# this block doesn't have the correct name, but we keep it for backward compatibility. use the listArticleContent block! #}
                         {% block postContent %}
+                        {% block listArticleContent %}
                             {{ post.excerpt|raw }}
                         {% endblock %}
+                        {% endblock %}
                     </div>
+                    {% endblock %}
 
+                    {% block listArticleFooterTag %}
                     <footer>
+                        {# this block doesn't have the correct name, but we keep it for backward compatibility. use the listArticleFooter block! #}
                         {% block postFooter %}
+                        {% block listArticleFooter %}
+                            {% block listArticleDateTag %}
                             <span class="posted-on">
-                                <a href="{{ post.permalink }}" rel="bookmark">{{ post.date }}</a>
+                                {% block listArticleDateLinkTag %}
+                                <a href="{{ post.permalink }}" rel="bookmark">{% block listArticleDate %}{{ post.date }}{% endblock %}</a>
+                                {% endblock %}
                             </span>
+                            {% endblock %}
+                            {% block listArticleAuthorTag %}
                             <span class="author">
-                                {{ post.author_link|raw }}
+                                {% block listArticleAuthor %}{{ post.author_link|raw }}{% endblock %}
                             </span>
+                            {% endblock %}
+                        {% endblock %}
                         {% endblock %}
                     </footer>
+                    {% endblock %}
+                {% endblock %}
                 {% endblock %}
             </article>
+            {% endblock %}
         {% endfor %}
+        {% endblock %}
+        {% block listPagination %}
         {{
             woodlets.the_posts_pagination({
                 'screen_reader_text': 'posts_navigation_screen_reader_text'|trans('woodlets'),
@@ -42,10 +86,20 @@
                 'next_text': 'posts_navigation_next_page'|trans('woodlets')
             })
         }}
+        {% endblock %}
+        {% endblock %}
     {% else %}
+        {# this block doesn't have the correct name, but we keep it for backward compatibility. use the listNoEntries block! #}
         {% block noEntries %}
-            <h1>{{ "404_title"|trans("woodlets") }}</h1>
-            <p>{{ "404_body"|trans("woodlets") }}</p>
+        {% block listNoEntries %}
+            {% block listNoEntriesTitleTag %}
+                <h1>{% block listNoEntriesTitle %}{{ "404_title"|trans("woodlets") }}{% endblock %}</h1>
+            {% endblock %}
+            {% block listNoEntriesContentTag %}
+                <p>{% block listNoEntriesContent %}{{ "404_body"|trans("woodlets") }}{% endblock %}</p>
+            {% endblock %}
+        {% endblock %}
         {% endblock %}
     {% endif %}
+    {% endblock %}
 {% endblock %}

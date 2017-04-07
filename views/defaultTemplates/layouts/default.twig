@@ -1,5 +1,9 @@
+{% block document %}
 <!DOCTYPE html>
+{% block htmlTag %}
 <html {% block htmlAttributes %}{% endblock %}>
+{% block html %}
+{% block headTag %}
 <head>
     {% block head %}
         {{ woodlets.wp_head() }}
@@ -13,10 +17,12 @@
             <meta name="viewport" content="width=device-width, user-scalable=yes">
         {% endblock %}
         {% block style %}
-            <link rel="stylesheet" href="{{ woodlets.get_stylesheet_uri() }}" type="text/css" media="all" />
+            <link rel="stylesheet" href="{{ woodlets.get_stylesheet_uri()|cachebust }}" type="text/css" media="all" />
         {% endblock %}
     {% endblock %}
 </head>
+{% endblock %}
+{% block bodyTag %}
 <body {{ woodlets.body_class() }}>
 {% block body %}
     {% block layout %}
@@ -24,7 +30,13 @@
             {% block view %}{% endblock %}
         {% endblock %}
     {% endblock %}
-    {{ woodlets.wp_footer() }}
+    {% block wpFooter %}
+        {{ woodlets.wp_footer() }}
+    {% endblock %}
 {% endblock %}
 </body>
+{% endblock %}
+{% endblock %}
 </html>
+{% endblock %}
+{% endblock %}
