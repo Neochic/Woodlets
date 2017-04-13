@@ -1,4 +1,4 @@
-/* globals document, window, ajaxurl */
+/* globals document, window, ajaxurl, MutationObserver */
 
 requirejs([
     'jquery',
