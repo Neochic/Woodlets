@@ -36,4 +36,11 @@ define(['jquery', 'native-change'], function($, nativeChange) {
     $(document).on('neochic-woodlets-modal-unstack', function (e, form) {
         init(form);
     });
+
+    $(document).on('neochic-woodlets-form-end, neochic-woodlets-modal-close, neochic-woodlets-modal-stack', function (e, form) {
+        $(form).find('.neochic-woodlets-rte').each(function () {
+            var id = $(this).attr('id');
+            tinymce.execCommand('mceRemoveEditor', false, id);
+        });
+    });
 });

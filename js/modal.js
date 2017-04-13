@@ -59,6 +59,7 @@ define(['jquery'], function($) {
     };
 
     var close = function() {
+        $(contentFrame).trigger('neochic-woodlets-modal-close', contentFrame);
         stack.pop();
 
         if (stack.length > 0) {
