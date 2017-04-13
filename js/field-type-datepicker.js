@@ -104,8 +104,7 @@ define([
                         }
 
                         return isValid;
-                    }
-                    ,
+                    },
                     cardinality: 2,
                     prevalidator: [{
                         validator: function (chrs, maskset, pos, strict, opts) {
@@ -124,8 +123,7 @@ define([
                         },
                         cardinality: 1
                     }]
-                }
-                ,
+                },
                 "s": { //seconds || minutes
                     validator: "[0-5][0-9]",
                     cardinality: 2,
@@ -146,18 +144,15 @@ define([
                         },
                         cardinality: 1
                     }]
-                }
-                ,
+                },
                 "t": { //am/pm
                     validator: function (chrs, maskset, pos, strict, opts) {
                         return opts.regex.ampm.test(chrs + "m");
-                    }
-                    ,
+                    },
                     casing: "lower",
                     cardinality: 1
                 }
-            }
-            ,
+            },
             insertMode: false,
             autoUnmask: false
         }
