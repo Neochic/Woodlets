@@ -36,6 +36,33 @@ requirejs([
         var $cc = $('#customize-controls');
         if($cc.length) {
             $(document).trigger('neochic-woodlets-form-init', $cc);
+
+            if (MutationObserver) {
+                var observer = new MutationObserver(function (mutations) {
+                    for (var i in mutations) {
+                        var mutation = mutations[i];
+                        if(mutation.type !== 'attributes' || mutation.attributeName !== 'class') {
+                            continue;
+                        }
+
+                        var $target = $(mutation.target);
+                        if(!$target.is('.customize-pane-child')) {
+                            continue;
+                        }
+                        if($target.is('.open.busy')) {
+                            $(document).trigger('neochic-woodlets-form-init', $target);
+                        } else if($target.is('.busy:not(.open)')) {
+                            $(document).trigger('neochic-woodlets-form-end', $target);
+                        }
+                    }
+                });
+
+                observer.observe($cc.get(0), {
+                    attributes: true,
+                    attributeFilter: ['class'],
+                    subtree: true
+                });
+            }
         }
 
         /*

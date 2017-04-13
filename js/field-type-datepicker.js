@@ -113,7 +113,8 @@ define([
         var $form = $(form);
         var linkInputFunctions = [];
 
-        $form.find('.neochic-woodlets-datetime').each(function(i, e) {
+        $form.find('.neochic-woodlets-datetime:not(.initialized)').each(function(i, e) {
+            $(this).addClass('initialized');
 
             var inputHidden = $(e);
             var datepickerElement = inputHidden.next();

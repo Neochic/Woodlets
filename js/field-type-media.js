@@ -34,48 +34,49 @@ define(['jquery', 'native-change'], function($, nativeChange) {
             $input.siblings('label').after(preview);
         }
 
-        $form.find('.neochic-woodlets-media input').each(function() {
-            createPreview($(this));
-        });
+        $form.find('.neochic-woodlets-media:not(.initialized)').each(function() {
+            $(this).addClass('initialized');
+            createPreview($(this).find('input'));
 
-        $form.on('click', '.neochic-woodlets-upload, .neochic-woodlets-preview, .neochic-woodlets-media label', function(e) {
-            e.preventDefault();
+            $(this).on('click', '.neochic-woodlets-upload, .neochic-woodlets-preview, .neochic-woodlets-media label', function(e) {
+                e.preventDefault();
 
-            var $input = $(this).siblings('input');
-            var wpMedia = $input.data('wpMedia');
+                var $input = $(this).siblings('input');
+                var wpMedia = $input.data('wpMedia');
 
-            if (wpMedia) {
+                if (wpMedia) {
+                    wpMedia.open();
+                    return;
+                }
+
+                wpMedia = wp.media($input.data('settings'));
+                $input.data('wpMedia', wpMedia);
+
+                wpMedia.on('select', function () {
+                    var attachment = wpMedia.state().get('selection').first().toJSON();
+
+                    $input.val(attachment.id);
+                    nativeChange($input.get(0));
+                    $input.data('value', attachment);
+                    $input.parent().removeClass('neochic-woodlets-media-empty');
+
+                    createPreview($input);
+                });
+
                 wpMedia.open();
-                return;
-            }
-
-            wpMedia = wp.media($input.data('settings'));
-            $input.data('wpMedia', wpMedia);
-
-            wpMedia.on('select', function () {
-                var attachment = wpMedia.state().get('selection').first().toJSON();
-
-                $input.val(attachment.id);
-                nativeChange($input.get(0));
-                $input.data('value', attachment);
-                $input.parent().removeClass('neochic-woodlets-media-empty');
-
-                createPreview($input);
             });
 
-            wpMedia.open();
-        });
+            $(this).on('click', '.neochic-woodlets-remove', function(e) {
+                e.preventDefault();
 
-        $form.on('click', '.neochic-woodlets-remove', function(e) {
-            e.preventDefault();
+                var $input = $(this).siblings('input');
 
-            var $input = $(this).siblings('input');
+                $input.val('');
+                nativeChange($input.get(0));
+                $input.parent().addClass('neochic-woodlets-media-empty');
 
-            $input.val('');
-            nativeChange($input.get(0));
-            $input.parent().addClass('neochic-woodlets-media-empty');
-
-            removePreview($input);
+                removePreview($input);
+            });
         });
     });
 });

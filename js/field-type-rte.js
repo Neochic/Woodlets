@@ -29,6 +29,13 @@ define(['jquery', 'native-change'], function($, nativeChange) {
         });
     }
 
+    function end(form) {
+        $(form).find('.neochic-woodlets-rte').each(function () {
+            var id = $(this).attr('id');
+            tinymce.execCommand('mceRemoveEditor', false, id);
+        });
+    }
+
     $(document).on('neochic-woodlets-form-init', function (e, form) {
         init(form);
     });
@@ -37,10 +44,15 @@ define(['jquery', 'native-change'], function($, nativeChange) {
         init(form);
     });
 
-    $(document).on('neochic-woodlets-form-end, neochic-woodlets-modal-close, neochic-woodlets-modal-stack', function (e, form) {
-        $(form).find('.neochic-woodlets-rte').each(function () {
-            var id = $(this).attr('id');
-            tinymce.execCommand('mceRemoveEditor', false, id);
-        });
+    $(document).on('neochic-woodlets-form-end', function(e, form) {
+        end(form);
+    });
+
+    $(document).on('neochic-woodlets-modal-close', function(e, form) {
+        end(form);
+    });
+
+    $(document).on('neochic-woodlets-modal-stack', function(e, form) {
+        end(form);
     });
 });

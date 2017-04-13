@@ -5,7 +5,9 @@ define([
     'jquery-ui.sortable'
 ], function ($, modal) {
     return function(areas, callback) {
-        var $areas = $(areas);
+        var $areas = $(areas).filter(':not(.initialized)');
+
+        $areas.addClass('initialized');
 
         var updateData = function() {
             var data = {};

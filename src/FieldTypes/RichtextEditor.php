@@ -7,6 +7,7 @@ use \_WP_Editors;
 class RichtextEditor extends FieldType
 {
     protected $defaultSettings;
+    protected $buttonStylesAlreadyIncluded = false;
 
     public function __construct($name = null, $namespace = null, $wpWrapper)
     {
@@ -60,4 +61,18 @@ class RichtextEditor extends FieldType
         $renderContext['rteSettings'] = $settings;
         return $renderContext;
     }
+
+	public function input( $twig, $id, $name, $value, $field, $context, $twigHelper, $customizer = false, $useValues = null) {
+		/*
+		 * they may already be included by _WP_Editors
+		 * we're including it again (we can't know what they do),
+		 * but that shouldn't cause any harm
+		 */
+		if (!$this->buttonStylesAlreadyIncluded) {
+			wp_print_styles( 'editor-buttons' );
+			$this->buttonStylesAlreadyIncluded = true;
+		}
+
+		return call_user_func_array('parent::input', func_get_args());
+	}
 }
