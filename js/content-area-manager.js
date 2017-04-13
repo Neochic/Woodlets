@@ -41,6 +41,12 @@ define([
         });
 
         $areas.on('click', '.add-element', function (e) {
+            var $button = $(this);
+            if ($button.hasClass('blocked')) {
+                return;
+            }
+            $button.addClass('blocked');
+
             e.preventDefault();
             var $area = $(this).closest('.woodlets-content-area');
             $.ajax({
@@ -89,6 +95,7 @@ define([
                 });
 
                 modal.open($content, 'Add item');
+                $button.removeClass('blocked');
             });
         });
 
@@ -98,6 +105,13 @@ define([
         });
 
         $areas.on('click', '> ul > li.neochic-woodlets-widget, > div > ul > li.neochic-woodlets-widget', function (e) {
+            var el = $(this);
+            if (el.hasClass('blocked')) {
+                return;
+            }
+
+            el.addClass('blocked');
+
             /*
              * stop propagation to prevent widget getting collapsed by WordPress
              */
@@ -114,8 +128,6 @@ define([
 
             //this should be done more elegant!
             var name = $(this).find(".widget-title h4").text();
-
-            var el = $(this);
 
             var data = {
                 action: "neochic_woodlets_get_widget_form",
@@ -164,6 +176,7 @@ define([
 
                 modal.open(form, name);
                 $(document).trigger('neochic-woodlets-form-init', form);
+                el.removeClass('blocked');
             });
         });
     };
