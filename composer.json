@@ -16,7 +16,7 @@
         "source": "https://github.com/Neochic/woodlets/"
     },
     "dist": {
-        "url": "https://github.com/Neochic/Woodlets/releases/download/v0.5.7/woodlets-v0.5.7.zip",
+        "url": "https://github.com/Neochic/Woodlets/releases/download/v0.5.8/woodlets-v0.5.8.zip",
         "type": "zip"
     },
     "require": {
