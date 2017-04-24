@@ -16,7 +16,8 @@ class RichtextEditor extends FieldType
         	'plugins' => 'wordpress, wpautoresize, wpdialogs, wpeditimage, wpembed, wpemoji, wpgallery, wplink, wptextpattern, wpview',
             'toolbar1' => 'bold, italic, underline, strikethrough, bullist, numlist, link, unlink, removeformat',
             'toolbar2' => '',
-	        'menubar' => false
+	        'menubar' => false,
+	        'wpautop' => false
         ));
     }
 
@@ -33,7 +34,8 @@ class RichtextEditor extends FieldType
          */
         $set = \_WP_Editors::parse_settings(null, array(
             'tinymce' => true,
-            'quicktags' => false
+            'quicktags' => false,
+	        'wpautop' => false
         ));
 
         \_WP_Editors::editor_settings('woodlets_tiny_mce', $set);
