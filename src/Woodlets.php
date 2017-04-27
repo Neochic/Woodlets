@@ -54,7 +54,7 @@ class Woodlets
             }
 
             //note: escape % because wp is throwing it through printf
-            return str_replace("%", "%%", $woodletsEditor);
+            return $editor.str_replace("%", "%%", $woodletsEditor);
         });
 
         $this->wpWrapper->addFilter('content_save_pre', function($content) {
