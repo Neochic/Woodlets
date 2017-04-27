@@ -12,9 +12,9 @@
 
 {% block content %}
     {% set post = woodlets.getPosts().0 %}
+    {% set contentBlockContent = parent() %}
     {% block postArticleTag %}
     <article>
-        {% set contentBlockContent = parent() %}
         {% block postArticle %}
             {% block postHeaderTag %}
             <header>
