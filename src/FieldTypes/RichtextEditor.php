@@ -19,6 +19,8 @@ class RichtextEditor extends FieldType
 	        'menubar' => false,
 	        'wpautop' => false
         ));
+
+	    $this->__loadTinyMce();
     }
 
     protected function __loadTinyMce()
@@ -42,7 +44,6 @@ class RichtextEditor extends FieldType
     }
 
     public function prepare() {
-        $this->__loadTinyMce();
         return call_user_func_array('parent::prepare', func_get_args());
     }
 
