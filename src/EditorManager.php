@@ -46,13 +46,20 @@ class EditorManager
     public function addMetaBox()
     {
         $postTypes = $this->templateManager->getPostTypes();
+        $template = $this->twig->loadTemplate('@woodlets/metaBox.twig');
+        $data = $this->_getData();
+        $postType = $this->wpWrapper->getPostType();
 
-        $this->wpWrapper->addMetaBox('page-settings', 'Woodlets', function () use ($postTypes) {
-            $template = $this->twig->loadTemplate('@woodlets/metaBox.twig');
-            $data = $this->_getData();
-            $postType = $this->wpWrapper->getPostType();
+        /*
+         * don't show template selection for "list" page
+         * this might need to be changed eventually if
+         * there are more options than template selection at one point
+         */
+        if(!$postType) {
+            return;
+        }
 
-
+        $this->wpWrapper->addMetaBox('page-settings', 'Woodlets', function () use ($postTypes, $template, $data, $postType) {
             echo $template->render(array(
                 'templates' => $this->templateManager->getTemplateList($postType),
                 'template' => $this->templateManager->getTemplateName($postType),
