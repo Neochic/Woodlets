@@ -1,4 +1,4 @@
-/* globals document, ajaxurl */
+/* globals document, ajaxurl, tinymce */
 define([
     'jquery',
     'modal',
@@ -10,6 +10,10 @@ define([
         $areas.addClass('initialized');
 
         var updateData = function() {
+            if(typeof tinymce !== 'undefined' && tinymce.get('content')) {
+                //use WordPress native beforeunload warning if content is modified
+                tinymce.get('content').isNotDirty = false;
+            }
             var data = {};
             $areas.each(function () {
                 var col = [];
@@ -120,7 +124,7 @@ define([
             /*
              * do not open widget form if an action (like "delete") is clicked
              */
-            if ($(e.target).closest('.row-actions').length > 0) {
+            if (!$(e.target).is('.edit') && $(e.target).closest('.row-actions').length > 0) {
                 return;
             }
 
