@@ -64,6 +64,7 @@ define([
                 var $content = $(data);
                 var selectWidget = function($widget, preventClose) {
                     var widget = $widget.closest('.widget').data('widget');
+                    $button.removeClass('blocked');
 
                     $.ajax({
                         method: "post",
@@ -99,7 +100,6 @@ define([
                 });
 
                 modal.open($content, 'Add item');
-                $button.removeClass('blocked');
             });
         });
 
