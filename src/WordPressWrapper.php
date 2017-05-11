@@ -62,10 +62,17 @@ class WordPressWrapper
         return $translation;
     }
 
+    public function getPageForPostsId() {
+        return get_option( 'page_for_posts' );
+    }
+
     public function getPostMeta($key = null, $postId = null, $useRevision = false) {
         if (!is_admin() && !is_singular() && !$this->inTheLoop()) {
             // do not retrieve meta data for first post on list views
-            return null;
+            $postId = $this->getPageForPostsId();
+            if($this->getTemplateType() !== 'list' || !$postId) {
+                return null;
+            }
         }
 
         if ($key === null) {
@@ -227,7 +234,7 @@ class WordPressWrapper
 
     public function getPostType() {
         $post = $this->getPost();
-        if ($post) {
+        if ($post && $this->getPageForPostsId() !== $post->ID) {
             return $post->post_type;
         }
         return null;
@@ -247,6 +254,10 @@ class WordPressWrapper
         }
 
         if (in_array($this->pageNow(), array('revision.php', 'post.php')) && $post) {
+            if($this->getPageForPostsId() === $post->ID) {
+                return "list";
+            }
+
             return $post->post_type;
         }
 
