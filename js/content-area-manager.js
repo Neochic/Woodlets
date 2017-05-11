@@ -1,4 +1,4 @@
-/* globals document, ajaxurl, tinymce */
+/* globals document, ajaxurl, tinymce, window */
 define([
     'jquery',
     'modal',
