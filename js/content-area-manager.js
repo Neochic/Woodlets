@@ -17,7 +17,7 @@ define([
             var data = {};
             $areas.each(function () {
                 var col = [];
-                $(this).find('> ul, > div > ul').find('> li[data-widget]:not(.no-elements)').each(function () {
+                $(this).find('> ul, > div > ul').find('> li[data-widget]:not(.removed)').each(function () {
                     col.push({
                         "widgetId": $(this).data('widget'),
                         "instance": $(this).data('instance')
@@ -103,14 +103,24 @@ define([
             });
         });
 
-        $areas.on('click', '.delete', function (e) {
-            $(e.target).closest('.neochic-woodlets-widget').remove();
+        $areas.on('click', '.delete', function () {
+            var removed = $(this).closest('.neochic-woodlets-widget');
+            removed.addClass('removed');
             updateData();
+        });
+
+        $areas.on('click', '.revert-removal a', function() {
+            var reverted = $(this).closest('.neochic-woodlets-widget');
+            //we wan't the click event to bubble first
+            window.setTimeout(function() {
+                reverted.removeClass('removed');
+                updateData();
+            }, 4);
         });
 
         $areas.on('click', '> ul > li.neochic-woodlets-widget, > div > ul > li.neochic-woodlets-widget', function (e) {
             var el = $(this);
-            if (el.hasClass('blocked')) {
+            if (el.hasClass('blocked') || el.hasClass('removed')) {
                 return;
             }
 

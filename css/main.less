@@ -66,9 +66,35 @@ body:not(.neochic-woodlets-editor-inactive) {
 
 .neochic-woodlets-widget {
   cursor: pointer;
+  position: relative;
 
   .row-actions {
     margin-top:12px;
+  }
+
+  .revert-removal {
+    position: absolute;
+    left: 1px;
+    right: 1px;
+    top: 1px;
+    bottom: 1px;
+    background-color: rgba(255,255,255, 0.8);
+    padding: 20px;
+    display: none;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: default;
+
+    a {
+      cursor: pointer;
+    }
+  }
+
+  &.removed {
+    .revert-removal {
+      display: flex;
+    }
   }
 
   &:hover, &:focus, &:active {
