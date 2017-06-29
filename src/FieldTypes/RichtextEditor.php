@@ -13,7 +13,7 @@ class RichtextEditor extends FieldType
     {
         call_user_func_array('parent::__construct', func_get_args());
         $this->defaultSettings = $wpWrapper->applyFilters('rte_settings', array(
-        	'plugins' => 'wordpress, wpautoresize, wpdialogs, wpeditimage, wpembed, wpemoji, wpgallery, wplink, wptextpattern, wpview, lists',
+        	'plugins' => 'wordpress, wpautoresize, wpdialogs, wpeditimage, wpemoji, wpgallery, wplink, wptextpattern, wpview, lists',
             'toolbar1' => 'bold, italic, underline, strikethrough, bullist, numlist, link, unlink, removeformat',
             'toolbar2' => '',
 	        'menubar' => false,
