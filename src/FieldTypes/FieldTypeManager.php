@@ -12,21 +12,26 @@ class FieldTypeManager
         $this->twig = $twig;
         $this->container = $container;
 
-        $fieldTypes = array(
-            'text' => new FieldType('text', 'woodlets'),
-            'textarea' => new FieldType('textarea', 'woodlets'),
-            'select' => new FieldType('select', 'woodlets'),
-            'radio' => new FieldType('radio', 'woodlets'),
-            'checkbox' => new FieldType('checkbox', 'woodlets'),
-            'datetime' => new DatetimeInput('datetime', 'woodlets', $wpWrapper),
-            'location' => new JsonFieldType('location', 'woodlets'),
-            'slider' => new SliderInput('slider', 'woodlets', $wpWrapper),
-            'contentArea' => new ContentArea('contentArea', 'woodlets', $container),
-            'rte' => new RichtextEditor('rte', 'woodlets', $wpWrapper),
-            'media' => new Media('media', 'woodlets', $wpWrapper)
-        );
-        
-        $this->fieldTypes = $wpWrapper->applyFilters('field_types', $fieldTypes);
+        if($wpWrapper->isAdmin()) {
+	        $fieldTypes = array(
+		        'text' => new FieldType('text', 'woodlets'),
+		        'textarea' => new FieldType('textarea', 'woodlets'),
+		        'select' => new FieldType('select', 'woodlets'),
+		        'radio' => new FieldType('radio', 'woodlets'),
+		        'checkbox' => new FieldType('checkbox', 'woodlets'),
+		        'datetime' => new DatetimeInput('datetime', 'woodlets', $wpWrapper),
+		        'location' => new JsonFieldType('location', 'woodlets'),
+		        'slider' => new SliderInput('slider', 'woodlets', $wpWrapper),
+		        'contentArea' => new ContentArea('contentArea', 'woodlets', $container),
+		        'rte' => new RichtextEditor('rte', 'woodlets', $wpWrapper),
+		        'media' => new Media('media', 'woodlets', $wpWrapper)
+	        );
+
+	        $this->fieldTypes = $wpWrapper->applyFilters('field_types', $fieldTypes);
+	        return;
+        }
+
+	    $this->fieldTypes = array();
     }
 
     public function getFieldType($id) {

@@ -40,6 +40,10 @@ class WordPressWrapper
         return false;
     }
 
+	public function isAdmin() {
+    	return is_admin();
+	}
+
     public function isAllowed() {
         return call_user_func_array('current_user_can', func_get_args());
     }
