@@ -12,7 +12,9 @@ requirejs.config({
         'moment': '../bower_components/moment/moment',
         "inputmask": "../bower_components/jquery.inputmask/dist/inputmask/inputmask",
         "inputmask-date-extensions": "../bower_components/jquery.inputmask/dist/inputmask/inputmask.date.extensions",
-        "inputmask.dependencyLib": "../bower_components/jquery.inputmask/dist/inputmask/inputmask.dependencyLib",
+        "inputmask.dependencyLib": "../bower_components/jquery.inputmask/dist/inputmask/dependencyLibs/inputmask.dependencyLib",
+        "inputmask.document": "../bower_components/jquery.inputmask/dist/inputmask/global/document",
+        "inputmask.window": "../bower_components/jquery.inputmask/dist/inputmask/global/window",
         "jquery-inputmask": "../bower_components/jquery.inputmask/dist/inputmask/jquery.inputmask",
         "jquery-caret": "../bower_components/jquery.caret/dist/jquery.caret-1.5.0",
         "jquery-ui.slider": "../bower_components/jquery-ui/ui/slider"
@@ -43,6 +45,20 @@ requirejs.config({
         },
         'jquery-ui.mouse': {
             'widget': 'jquery-ui.widget'
+        },
+        'inputmask.dependencyLib': {
+            '../global/document': 'inputmask.document',
+            '../global/window': 'inputmask.window'
+        },
+        'inputmask-date-extensions': {
+            'dependencyLibs/inputmask.dependencyLib': 'inputmask.dependencyLib',
+            'global/document': 'inputmask.document',
+            'global/window': 'inputmask.window'
+        },
+        'inputmask': {
+            'dependencyLibs/inputmask.dependencyLib': 'inputmask.dependencyLib',
+            'global/document': 'inputmask.document',
+            'global/window': 'inputmask.window'
         }
     },
     wrap: true,
