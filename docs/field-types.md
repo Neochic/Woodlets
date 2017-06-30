@@ -280,6 +280,7 @@ The Slider field-type provides a slider input to be used for number type fields 
 * ```min``` default: ```0``` - The minimum value of the slider.
 * ```max``` default: ```100``` - The maximum value of the slider.
 * ```step``` default: ```1``` - Determines the size or amount of each interval or step the slider takes between the min and max. The full specified value range of the slider (max - min) should be evenly divisible by the step.
+* ```default``` default: ```0``` - Sets the slider's default value. The actual value will be clipped to to ```[min, max]```.
 
 #### Example
 ```twig
@@ -288,7 +289,8 @@ The Slider field-type provides a slider input to be used for number type fields 
       "label": "Zoom level",
       "min": 1,
       "max": 20,
-      "step": 1
+      "step": 1,
+      "default": 10
   })
 }}
 ```

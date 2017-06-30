@@ -12,7 +12,8 @@ class SliderInput extends FieldType
         $this->defaultSettings = $wpWrapper->applyFilters('datetime_input_settings', array(
             'min' => 0,
             'max' => 100,
-            'step' => 1
+            'step' => 1,
+            'default' => 0
         ));
     }
 
@@ -20,6 +21,9 @@ class SliderInput extends FieldType
     {
         $renderContext = call_user_func_array('parent::__createRenderContext', func_get_args());
         $renderContext['field']['config'] = array_merge($this->defaultSettings, $renderContext['field']['config']);
+        $renderContext['field']['config']['default'] = min($renderContext['field']['config']['max'], $renderContext['field']['config']['default']);
+        $renderContext['field']['config']['default'] = max($renderContext['field']['config']['min'], $renderContext['field']['config']['default']);
+        $renderContext['value'] = $renderContext['value'] === null ? $renderContext['field']['config']['default'] : $renderContext['value'];
         return $renderContext;
     }
 }
