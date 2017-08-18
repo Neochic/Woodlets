@@ -2,6 +2,8 @@
 
 namespace Neochic\Woodlets;
 
+use Neochic\Woodlets\Twig\Helper;
+
 class FormConfigurator
 {
     protected $config;
@@ -13,6 +15,10 @@ class FormConfigurator
         );
     }
 
+    static function getBackendPageId() {
+        return Helper::getBackendPageId();
+    }
+
     public function add($type, $name, $config)
     {
         array_push($this->config['fields'], array('type' => $type, 'name' => $name, 'config' => $config));
@@ -22,10 +28,6 @@ class FormConfigurator
     public function getConfig()
     {
         return $this->config;
-    }
-
-    public function getPageId() {
-        return (isset($_REQUEST['woodletsPageId']) ? $_REQUEST['woodletsPageId'] : null);
     }
 
     public function __toString()

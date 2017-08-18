@@ -33,6 +33,11 @@ class Helper
         $this->reloadPostMeta();
     }
 
+    static function getBackendPageId() {
+        $wpid = get_the_ID();
+        return ($wpid ? $wpid : (isset($_REQUEST['woodletsPageId']) ? $_REQUEST['woodletsPageId'] : null));
+    }
+
     public function reloadPostMeta() {
         $this->postMeta = $this->wpWrapper->getPostMeta();
     }

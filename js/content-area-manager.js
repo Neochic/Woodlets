@@ -165,20 +165,25 @@ define([
                     $.ajax({
                         method: "post",
                         url: ajaxurl,
-                        data: $(this).serialize() + '&widget=' + widget + '&action=neochic_woodlets_get_widget_update'
+                        data: $(this).serialize() + '&widget=' + widget + '&action=neochic_woodlets_get_widget_update' + (pageIdEle.length ? '&woodletsPageId=' + pageIdEle.val() : "")
                     }).done(function (result) {
                         var instance = $.parseJSON(result);
 
                         el.data('instance', instance);
 
+                        var previewData = {
+                            "action": "neochic_woodlets_get_widget_preview",
+                            "widget": widget,
+                            "instance": JSON.stringify(instance)
+                        };
+                        if (pageIdEle.length) {
+                            previewData.woodletsPageId = pageIdEle.val();
+                        }
+
                         $.ajax({
                             method: "post",
                             url: ajaxurl,
-                            data: {
-                                "action": "neochic_woodlets_get_widget_preview",
-                                "widget": widget,
-                                "instance": JSON.stringify(instance)
-                            }
+                            data: previewData
                         }).done(function (result) {
                             el.replaceWith($(result));
                         });
