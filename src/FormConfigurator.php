@@ -24,6 +24,10 @@ class FormConfigurator
         return $this->config;
     }
 
+    public function getPageId() {
+        return (isset($_REQUEST['woodletsPageId']) ? $_REQUEST['woodletsPageId'] : null);
+    }
+
     public function __toString()
     {
         return '';

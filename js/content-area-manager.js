@@ -149,6 +149,11 @@ define([
                 instance: JSON.stringify(el.data('instance'))
             };
 
+            var pageIdEle = $("#post_ID");
+            if (pageIdEle.length) {
+                data.woodletsPageId = pageIdEle.val();
+            }
+
             $.ajax({
                 method: "post",
                 url: ajaxurl,
