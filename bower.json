@@ -1,6 +1,6 @@
 {
   "name": "neochic-woodlets",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "authors": [
     "Christoph Stickel <christoph@neochic.de>"
   ],
@@ -18,7 +18,7 @@
     "lesshat": "~3.0.2",
     "bluebird": "^3.3.5",
     "requirejs-plugins": "^1.0.3",
-    "jquery-locationpicker-plugin": "Logicify/jquery-locationpicker-plugin#^0.1.15",
+    "jquery-locationpicker-plugin": "Mnemik/jquery-locationpicker-plugin#master",
     "eonasdan-bootstrap-datetimepicker": "^4.17.37",
     "jquery.inputmask": "3.3.7",
     "bootstrap": "^3.3.6",

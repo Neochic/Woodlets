@@ -165,6 +165,7 @@ define([
                                 enableAutocomplete: true,
                                 enableReverseGeocode: true,
                                 onchanged: updateLocationData,
+                                longNameComponents: ["locality", "street_number", "route", "sublocality"],
                                 oninitialized: function(){
                                     updateLocationData();
                                     map = mapPane.locationpicker("map").map;
