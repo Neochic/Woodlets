@@ -18,7 +18,10 @@ class WidgetManager
     }
 
     public function addWidgets() {
-        $widgets = $this->twig->getLoader()->searchTemplates('widgets/*.twig');
+        $widgets = $this->twig->getLoader()->searchTemplates(
+            'widgets/*.twig',
+            array(Twig\Loader::MAIN_NAMESPACE)
+        );
         foreach($widgets as $template => $name) {
             $id = str_replace('/', '\\', substr($template, 1, -5));
             $widget = new Widget($id, $name, $template, $this->container, $this->twig, $this->wpWrapper, $this->formManager);

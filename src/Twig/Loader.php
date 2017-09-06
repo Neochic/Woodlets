@@ -6,10 +6,10 @@ use \Twig_Loader_Filesystem;
 
 class Loader extends Twig_Loader_Filesystem
 {
-    public function searchTemplates($search) {
+    public function searchTemplates($search, $namespaces = null) {
+        $namespaces = $namespaces !== null ? $namespaces : $this->getNamespaces();
         $matches = array();
-
-        foreach($this->getNamespaces() as $namespace) {
+        foreach($namespaces as $namespace) {
             foreach($this->getPaths($namespace) as $templateDir) {
                 $files = glob($templateDir.'/'.$search);
 
