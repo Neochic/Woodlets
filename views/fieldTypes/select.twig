@@ -3,7 +3,7 @@
 {% block input %}
     <select class="widefat" id="{{ id }}"  {{ macros.nameOrLink(customizer, name) }}>
         {% for optionValue, label in field.config.options %}
-            <option value="{{ optionValue }}"{% if optionValue == value %} selected="selected"{% endif %}>{{ label }}</option>
+            <option value="{{ optionValue }}"{% if (value != null and optionValue == value) or (value == null and optionValue == field.config.default)%} selected="selected"{% endif %}>{{ label }}</option>
         {% endfor %}
     </select>
 {% endblock %}

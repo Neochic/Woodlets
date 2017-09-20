@@ -75,6 +75,7 @@ The Selectbox type adds a selectbox form control with single item selection.
 #### Configuration
 * ```label``` - The label text for the form control.
 * ```options``` - A key-value object with the options. Keys are used as item value and value is used as item label.  
+* ```default``` - The key to be used to preselect an option, if the corresponding field still has a value of null.
 
 #### Example
 ```twig
@@ -84,7 +85,8 @@ The Selectbox type adds a selectbox form control with single item selection.
     'options': {
       'red': 'Red',
       'blue': 'Blue'
-    }
+    },
+    'default': 'blue'
   })
 }}
 ```
