@@ -162,7 +162,8 @@ class Helper
                 $widgetConfig['woodlets_before_widget'] = sprintf($widgetConfig['woodlets_before_widget'], '', $widget->id_base . '-' . $widget->widget_options['classname']);
 
                 if ($renderPreview) {
-                    echo $widget->widgetPreview($widgetData['instance']);
+                    $context = isset($config['context']) ? array_merge($widgetData['instance'],  $config['context']) : $widgetData['instance'];
+                    echo $widget->widgetPreview($context);
                 } else {
                     $widget->widget($widgetConfig, $widgetData['instance']);
                 }
