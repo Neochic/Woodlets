@@ -1,7 +1,7 @@
 {% extends '@woodlets/fieldType.twig' %}
 
 {% block field %}
-    <div class="woodlets-rte-frame">
+    <div class="{% block fieldTypeExtraClass %}woodlets-rte-frame {{ parent() }}{% endblock %}">
         <label for="{{ id }}">{{ field.config.label ?: field.name }}</label>
         <div class="wp-editor-container">
             <textarea class="neochic-woodlets-rte" id="{{ id }}" {{ macros.nameOrLink(customizer, name) }} data-settings="{{ rteSettings|json_encode }}">{{ value }}</textarea>

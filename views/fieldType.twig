@@ -3,7 +3,7 @@
 {% endmacro %}
 {% import _self as macros %}
 {% block field %}
-<p>
+<p class="{% block fieldTypeExtraClass %}{{ field.config.extraClass }}{% endblock %}">
     <label for="{{ id }}">{{ field.config.label ?: field.name }}
         {% block input %}{% endblock %}
     </label>

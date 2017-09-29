@@ -49,7 +49,7 @@
 
 {% block field %}
 
-    <div class="neochic-woodlets-location-picker"
+    <div class="{% block fieldTypeExtraClass %}neochic-woodlets-location-picker {{ parent() }}{% endblock %}"
          data-title="{{ "location_pick_location"|trans("woodlets") }}"
          data-overlay-content="{{ functions.overlayContent()|escape }}"
          data-default-lat="{{ field.config.default.lat }}"
