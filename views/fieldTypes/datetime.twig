@@ -4,7 +4,7 @@
     {% set type = (field.config.withtime ? (field.config.withdate ? "datetime-local" : "time") : (field.config.withdate ? "date" : false)) %}
     {% if type %}
         {% spaceless %}
-            <p>
+            <p class="{% block fieldTypeExtraClass %}{{ parent() }}{% endblock %}">
                 <label for="{{ id }}" class="neochic-woodlets-datetime-container">{{ field.config.label ?: field.name }}
                     {% block input %}
                             {% set lang = (woodlets.get_locale()|slice(0, 2)) %}

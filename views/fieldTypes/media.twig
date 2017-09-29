@@ -1,7 +1,7 @@
 {% extends '@woodlets/fieldType.twig' %}
 
 {% block field %}
-    <p class="neochic-woodlets-media{% if not value %} neochic-woodlets-media-empty{% endif %}">
+    <p class="{% block fieldTypeExtraClass %}neochic-woodlets-media{% if not value %} neochic-woodlets-media-empty{% endif %} {{ parent() }}{% endblock %}">
         <label for="{{ id }}">{{ field.config.label ?: field.name }}</label>
         <a class="neochic-woodlets-upload button" href="#">Select media</a>
         <a class="neochic-woodlets-remove button" href="#">Remove</a>

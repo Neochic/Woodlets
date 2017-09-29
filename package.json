@@ -1,6 +1,7 @@
 {
   "name": "@neochic/woodlets",
-  "version": "0.6.6",
+  "license": "MIT",
+  "version": "0.6.7",
   "description": "Create WordPress Widgets using Twig Templates",
   "scripts": {
     "postinstall": "npm run install:composer && npm run install:bower",
@@ -12,7 +13,8 @@
     "build:less": "lessc css/main.less --clean-css > css/main.css",
     "build:artifact": "node scripts/create-artifact.js",
     "test": "npm run test:jshint",
-    "test:jshint": "jshint js/"
+    "test:jshint": "jshint js/",
+    "patch": "bump --patch --commit --all --tag --grep composer.json README.md woodlets.php"
   },
   "devDependencies": {
     "archiver": "^0.15.0",
@@ -22,6 +24,7 @@
     "less": "^2.7.1",
     "less-plugin-clean-css": "^1.5.1",
     "requirejs": "^2.1.20",
-    "svgexport": "^0.3.2"
+    "svgexport": "^0.3.2",
+    "version-bump-prompt": "^3.1.2"
   }
 }

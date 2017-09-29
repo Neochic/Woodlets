@@ -296,3 +296,23 @@ The Slider field-type provides a slider input to be used for number type fields 
   })
 }}
 ```
+
+## Styling the Backend
+If it's required to add more specific styles to the backend, 
+custom classes can be added to the top level wrapper of each input,
+by setting the ```extraClass``` key of an input's configuration object.
+For example, in order to to simplify adding custom styles to a select box, by adding the clas 'customSelect':
+
+```twig
+{{
+  woodlets.add('select', 'color', {
+    'label': 'Color',
+    'options': {
+      'red': 'Red',
+      'blue': 'Blue'
+    },
+    'extraClass': 'customSelect'
+  })
+}}
+```
+
