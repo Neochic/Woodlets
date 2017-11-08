@@ -8,6 +8,33 @@ use \Twig_Extension_Debug;
 class TwigFactory
 {
 
+    const TWIG_CACHE_DIR = 'wp-content/woodlets-twig-cache';
+
+    public static function rrmdir($src) {
+        $dir = opendir($src);
+        while(false !== ( $file = readdir($dir)) ) {
+            if (( $file != '.' ) && ( $file != '..' )) {
+                $full = $src . '/' . $file;
+                if ( is_dir($full) ) {
+                    self::rrmdir($full);
+                }
+                else {
+                    unlink($full);
+                }
+            }
+        }
+        closedir($dir);
+        return rmdir($src);
+    }
+
+    public static function clearTwigCache() {
+        $dir = ABSPATH . self::TWIG_CACHE_DIR;
+        if (is_dir($dir)) {
+            return self::rrmdir($dir);
+        }
+        return true;
+    }
+
     public static function createTwig($wpWrapper, $baseDir, $i18n)
     {
         $paths = array();
@@ -56,7 +83,10 @@ class TwigFactory
          * create the Twig environment
          */
         $loader = new Twig\Loader();
-        $twig = new Twig_Environment($loader);
+        $cacheEnabled = $wpWrapper->getOption('neochic_woodlets_enable_twig_cache') && !$wpWrapper->isDebug();
+        $twig = new Twig_Environment($loader, $cacheEnabled ? array(
+            'cache' => ABSPATH . self::TWIG_CACHE_DIR,
+        ) : array());
 
         /*
          * add template paths to loader

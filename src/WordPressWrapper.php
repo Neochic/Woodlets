@@ -205,6 +205,10 @@ class WordPressWrapper
         return admin_url('admin-ajax.php');
     }
 
+    public function adminPostUrl() {
+        return admin_url('admin-post.php');
+    }
+
     public function unslash($val) {
         return wp_unslash($val);
     }

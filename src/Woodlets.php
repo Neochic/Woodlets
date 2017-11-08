@@ -121,7 +121,7 @@ class Woodlets
         $this->wpWrapper->addAction('wp_restore_post_revision', function($postId, $revisionId) {
             self::$container['editorManager']->revert($revisionId);
         }, 90, 2);
-        
+
         $this->wpWrapper->addAction('add_meta_boxes', function () {
             self::$container['pageConfigurationManager']->addMetaBoxes();
             self::$container['editorManager']->addMetaBox();
@@ -174,8 +174,9 @@ class Woodlets
         $this->wpWrapper->addAction('admin_enqueue_scripts', function ($hook) {
             $isCustomize = ($hook === 'widgets.php' && $this->wpWrapper->pageNow() === 'customize.php');
             $isWidgets = ($hook === 'widgets.php' && $this->wpWrapper->pageNow() === 'widgets.php');
+            $isSettingsPage = ($hook === "settings_page_neochic_woodlets");
 
-            if (in_array($hook, array('post-new.php', 'post.php', 'profile.php', 'user-edit.php')) || $isCustomize || $isWidgets) {
+            if (in_array($hook, array('post-new.php', 'post.php', 'profile.php', 'user-edit.php')) || $isCustomize || $isWidgets || $isSettingsPage) {
                 self::$container['scriptsManager']->addScripts();
             }
         });
@@ -217,6 +218,14 @@ class Woodlets
             $widgetData = $this->wpWrapper->unslash($_REQUEST['widget-' . $widget->id_base]);
 
             echo json_encode($widget->update(current($widgetData), array()));
+            wp_die();
+        });
+
+        $this->wpWrapper->addAction('wp_ajax_neochic_woodlets_clear_twig_cache', function () {
+            $ret = TwigFactory::clearTwigCache();
+            echo json_encode(array(
+                "success" => $ret
+            ));
             wp_die();
         });
 

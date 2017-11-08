@@ -21,6 +21,8 @@ class Settings
 		);
 
 		$this->checkbox('check_for_updates', 'Check for updates', 'Enable automatic updates');
+        $this->checkbox('enable_twig_cache', 'Enable Twig Cache', 'Enable Cache for Twig (not recommended, use WP Supercache or similar if possible)');
+        $this->button('clear_twig_cache', 'Clear Cache', 'Clear Twig Cache', true);
 	}
 
 	public function addPage() {
@@ -63,4 +65,23 @@ class Settings
 			'neochic_woodlets'
 		);
 	}
+
+    protected function button($action, $title, $label, $isAjaxAction) {
+        $id = 'neochic_woodlets_action_'.$action;
+
+        $this->wpWrapper->addSettingsField(
+            $id,
+            $title,
+            function() use ($label, $action, $isAjaxAction) {
+                $template = $this->twig->loadTemplate('@woodlets/settings/button.twig');
+                echo $template->render(array(
+                    'action' => $action,
+                    'label' => $label,
+                    'isAjaxAction' => $isAjaxAction
+                ));
+            },
+            'neochic_woodlets',
+            'neochic_woodlets'
+        );
+    }
 }

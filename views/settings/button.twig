@@ -1,0 +1,5 @@
+{% if isAjaxAction %}
+    <span class="button neochic-woodlets-ajax-action" data-ajax-action="neochic_woodlets_{{ action }}">{{ label }}</span>
+{% else %}
+    <a href="?page=neochic_woodlets&{{ action }}" class="button">{{ label }}</a>
+{% endif %}

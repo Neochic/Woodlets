@@ -117,6 +117,17 @@ requirejs([
         });
     }
 
+    $(document).on('click', '.neochic-woodlets-ajax-action', function() {
+        var action = $(this).data("ajax-action");
+        $.ajax({
+            method: "post",
+            url: ajaxurl,
+            data: {
+                action: action
+            }
+        });
+    });
+
     /*
      * init dismission of notifications
      */
