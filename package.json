@@ -1,7 +1,7 @@
 {
   "name": "@neochic/woodlets",
   "license": "MIT",
-  "version": "0.6.7",
+  "version": "0.6.8",
   "description": "Create WordPress Widgets using Twig Templates",
   "scripts": {
     "postinstall": "npm run install:composer && npm run install:bower",
