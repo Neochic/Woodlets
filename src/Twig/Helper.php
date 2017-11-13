@@ -201,7 +201,10 @@ class Helper
                 }
                 $post[$attribute] = call_user_func('get_the_' . $attribute);
             }
-            $post["comments"] = get_comments(array('post_id' => $post['ID']));
+            $post["comments"] = get_comments(array(
+                'post_id' => $post['ID'],
+                'status' => 'approve'
+            ));
             array_push($this->posts, $post);
         }
     }
