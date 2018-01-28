@@ -63,7 +63,7 @@ The most important methods are ```getCol($id)``` and ```getPageConfig()```. The 
 {% endblock %}
 
 {% block content %}
-  {% set pageConfig = woodlets.getPageConfig() }
+  {% set pageConfig = woodlets.getPageConfig() %}
   <div class="{{ pageConfig.color }}">
     <div class="header">
       {{
