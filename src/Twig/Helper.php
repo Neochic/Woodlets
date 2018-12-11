@@ -174,6 +174,10 @@ class Helper
     public function isDebug() {
         return $this->wpWrapper->isDebug();
     }
+    
+    public function getWpWrapper() {
+        return $this->wpWrapper;
+    }
 
     public function __call($name, $arguments)
     {
