@@ -1,21 +1,21 @@
 language: php
 php:
-  - 5.4
+- 5.4
 install: npm run build --@neochic/woodlets:version=${TRAVIS_TAG:-latest}
 script: npm test
 cache:
   directories:
-    - node_modules
-    - vendor
-    - bower_components
+  - node_modules
+  - vendor
+  - bower_components
 deploy:
   provider: releases
   api_key:
-    secure: H2H80h53mXHfy8Zc2vfhkiUVeNuPvvJCWGQCjDIMvzYUzf44S5zkd/+NxoZM6BQmj9wfMOM0en2fElNPDIMzJp6iYSJ8LoUw01fFP3dDfdaTkH2nJQsG910lUd0WuW1L2fLwPLQ1207s985jKt6DIac8tSiSxHVNTTezzh4FT1pv5RbSyN54k/PxTmiQm3qJ7/VVkOQT9ofErKemWcuJxdR63O2jql5p+YCwU3FqxuKFe9rOLmyfh6xPum+AeNtD4QixBP0YvAehRGIi+qSRGY+pRy6hszl8ONFuKowdM1JpcB3R9q9e133STdEgG5ZfiMOHA0dFv8UuPXfphqOvDCxmIgbrDd+Y8Szw3gYcbwJQWXumP1s1hX8gbsAN29E1FaUmlQi4KY2k+HyhIHDlx0fQyyZ/bwFqmdtXxlbUf44rfkSDbnfomltxouTCVgAClcsLG+0o/xbWgC9zg7sjHazJvZDbjeB7+6JuLwWrur0FGY3VenaN1D/UU8I098kDxKEy/jG0nzcdBIpNGq8/ji298bktGYUQyONG05i0BHxIZv2Xh13qyTF7RdwsFDYp6yQIuHvszYyUjrAF8u0PyjShAlfx7LUXc/B50X3Nlk6mePPvszUVCzCFSZ3bGwro6NJ2g18zOoXMgbCgwndEtq9roNqwSdW6X1ClSa890WA=
+    secure: olc+yL9HtSfZVQf6ugp4/ZCvkdzHxkYpwrkmXCd9UASoGPizr288sXYS7yi7zvDBlvOg+NrJkRkt6dYL3d2/oFvJ8KWGPtVeftUwUFRWjAE327uRba+EJoVRXP2ewKapvYW2wPiFxRl4YCK+URqw7u4mVIWFzOTloCMJySl6gtpLyVTzTdvoIXp8oFKved5UbJP5bWiKaH28OfsItF09pwVlurw+K4C8gUkcj+/aa/4CNHzavPRhoTAfzRrnoyaFXB3VRGdLWyLTKx6pAIW7W4hnUbeiexGVkyQ7pHpApRvAyWgcvpf+5pQa2NYkUf7RJa/cfbemgMSlW7n/Z8jt7PyE7Jz0mOX36YPmKRTH4Z+Rke4kklbdBtVHcS9LguZFAiexIKWruUUmPO+v/E+mR8J8Ari8rWMS1t/E5XhDVqTOwjiHcq7C5iNqBrC1xWtr8KwAoPE5JZkDzG6ebuca7d61QQOYmb6Xt2bNhkEmJ8ZBeSccxR3PHiTipeCRAl4hQfNTCe841qJl74i+eQF0iMOoX9CMeLqjz1o1L/1Npc0huxL66UNooG4DR3IS+AiFZuBs5ixxCx+3l3+liEZPdDn8kyvqkX7WMj+1+ivJkBGZ8vR6Ex8v6TTreZwfz6DBd/BfZWC+htQWPdaxOD7jClNnOzxhkVa8PyUlDQQQnZc=
   file_glob: true
   file:
-    - woodlets-*.zip
-    - woodlets-*.pdf
+  - woodlets-*.zip
+  - woodlets-*.pdf
   skip_cleanup: true
   on:
     repo: Neochic/Woodlets
