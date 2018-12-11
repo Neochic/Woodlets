@@ -33,7 +33,7 @@ But there is also a bundled version that can be installed manually.
             array(
                 'name'               => 'Woodlets',
                 'slug'               => 'woodlets',
-                'source'             => 'https://github.com/Neochic/Woodlets/releases/download/v0.6.9/woodlets-v0.6.9-bundled.zip',
+                'source'             => 'https://github.com/Neochic/Woodlets/releases/download/v0.6.12/woodlets-v0.6.12-bundled.zip',
                 'required'           => true,
                 'force_activation'   => true,
                 'force_deactivation' => true
